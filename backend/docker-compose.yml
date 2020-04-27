@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  server:
+    container_name: RESPONSIVE_BACKEND
+    build: '.'
+    volumes:
+      - ./:/node-app/src
+      - ./node_modules:/node-app/node_modules
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - '9001:9001'
+
+  db:
+    image: 'mongo'
+    container_name: RESPONSIVE_DB
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodata:/data/db
+
+volumes:
+  mongodata:
