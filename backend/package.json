@@ -14,5 +14,9 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.10",
     "nodemon": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.4",
+    "typescript": "^3.8.3"
   }
 }
