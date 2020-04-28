@@ -23,4 +23,5 @@ mongoose
     console.log(error);
   });
 
-app.listen(9001, () => console.log('Server ativo na porta 9000'));
+const port = 9001;
+app.listen(port, () => console.log(`Server ativo na porta ${port}`));
