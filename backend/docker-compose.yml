@@ -5,7 +5,7 @@ services:
     container_name: RESPONSIVE_BACKEND
     build: '.'
     volumes:
-      - ./:/node-app/src
+      - ./:/node-app/build
       - ./node_modules:/node-app/node_modules
     environment:
       NODE_ENV: development

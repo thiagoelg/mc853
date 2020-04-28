@@ -16,10 +16,10 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(result => {
+  .then((result: any) => {
     console.log('MongoDB Conectado');
   })
-  .catch(error => {
+  .catch((error: any) => {
     console.log(error);
   });
 
