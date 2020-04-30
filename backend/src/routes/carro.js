@@ -1,11 +1,15 @@
-const express = require('express');
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
 
-const Carro = require('../models/Carro');
+import Carro, {
+  find,
+  findOneAndUpdate,
+  findOneAndDelete
+} from '../models/Carro';
 
 // Retorna um array com todos os documentos do banco de dados
 router.get('/', (req, res) => {
-  Carro.find()
+  find()
     .then(carros => {
       res.json(carros);
     })
@@ -33,7 +37,7 @@ router.post('/novo', (req, res) => {
 router.put('/editar/:id', (req, res) => {
   const novosDados = { marca: req.body.marca, modelo: req.body.modelo };
 
-  Carro.findOneAndUpdate({ _id: req.params.id }, novosDados, { new: true })
+  findOneAndUpdate({ _id: req.params.id }, novosDados, { new: true })
     .then(carro => {
       res.json(carro);
     })
@@ -42,11 +46,11 @@ router.put('/editar/:id', (req, res) => {
 
 // Deletando um carro do banco de dados
 router.delete('/delete/:id', (req, res) => {
-  Carro.findOneAndDelete({ _id: req.params.id })
+  findOneAndDelete({ _id: req.params.id })
     .then(carro => {
       res.json(carro);
     })
     .catch(error => res.status(500).json(error));
 });
 
-module.exports = router;
+export default router;

@@ -1,13 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
 const app = express();
 
 app.use(bodyParser.json());
 
 // Adicionando arquivo de rota no endpoint /carros
-const carros = require('./routes/carro');
+import carros from './routes/carro';
 
 app.use('/api/carros', carros);
 
@@ -16,10 +16,10 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then((result: any) => {
+  .then(result => {
     console.log('MongoDB Conectado');
   })
-  .catch((error: any) => {
+  .catch(error => {
     console.log(error);
   });
 
