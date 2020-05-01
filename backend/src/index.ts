@@ -1,10 +1,14 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).json(error);
+});
 
 // Adicionando arquivo de rota no endpoint /carros
 import carros from './routes/carro';
