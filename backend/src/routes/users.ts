@@ -14,3 +14,5 @@ router.post('/', (req, res) => {
 router.get('/', (_, res) => {
   User.find().then(users => res.json(users));
 });
+
+export default router;
