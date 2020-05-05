@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+import Knex from 'knex'
+import knexConfig from './knexfile'
 
 const app = express();
 

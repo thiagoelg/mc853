@@ -17,12 +17,32 @@ services:
       - '9001:9001'
 
   db:
-    image: 'mongo'
+    image: postgres
     container_name: RESPONSIVE_DB
+    environment:
+      POSTGRES_PASSWORD: "pgadmin"
     ports:
-      - '27017:27017'
+      - "15432:5432"
     volumes:
-      - mongodata:/data/db
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - pg-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "pgadmin"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - db
+    networks:
+      - pg-network
 
 volumes:
-  mongodata:
+  pgdata:
+
+networks: 
+  pg-network:
+    driver: bridge
