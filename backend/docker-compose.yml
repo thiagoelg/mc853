@@ -9,6 +9,10 @@ services:
       - ./node_modules:/node-app/node_modules
     environment:
       NODE_ENV: development
+      DB_PASSWORD: pgadmin
+      DB_USER: pgadmin
+      DB_NAME: responsive
+      DB_HOST: db
     depends_on:
       - db
     links:
@@ -20,7 +24,9 @@ services:
     image: postgres
     container_name: RESPONSIVE_DB
     environment:
-      POSTGRES_PASSWORD: "pgadmin"
+      POSTGRES_USER: pgadmin
+      POSTGRES_PASSWORD: pgadmin
+      POSTGRES_DB: responsive
     ports:
       - "15432:5432"
     volumes:
@@ -31,8 +37,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      PGADMIN_DEFAULT_EMAIL: "pgadmin"
-      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+      PGADMIN_DEFAULT_EMAIL: pgadmin
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
     ports:
       - "16543:80"
     depends_on:
