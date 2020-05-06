@@ -3,7 +3,7 @@ import { Model } from 'objection';
 export default class BaseModel extends Model {
   id!: number;
   createdAt!: string;
-  updatedAt: string;
+  updatedAt: string = '';
   $beforeUpdate() {
     this.updatedAt = new Date().toISOString();
   }

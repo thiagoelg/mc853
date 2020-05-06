@@ -13,10 +13,13 @@ services:
       DB_USER: pgadmin
       DB_NAME: responsive
       DB_HOST: db
+      DB_PORT: 5432
     depends_on:
       - db
     links:
       - db
+    networks:
+      - pg-network
     ports:
       - '9001:9001'
 

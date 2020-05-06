@@ -1,16 +1,18 @@
 import express from 'express';
-import Knex from 'knex';
+import Knex, { Config } from 'knex';
 import knexConfig from './knexfile';
 import { Model } from 'objection';
+import bodyParser from 'body-parser';
 import routes from './routes';
 
 // Initialize knex.
-const knex = Knex(knexConfig.production);
+const knex = Knex(knexConfig[process.env.NODE_ENV as 'production' | 'development'] as Config);
 
 // Bind Models to knex instance.
 Model.knex(knex);
 
 const app = express();
+app.use(bodyParser());
 
 app.use('/api', routes);
 
