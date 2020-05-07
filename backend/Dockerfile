@@ -8,10 +8,8 @@ RUN npm install --quiet
 
 RUN npm install nodemon -g --quiet
 
-RUN npx tsc
-
 COPY . . 
 
 EXPOSE 9001
 
-CMD nodemon -L --watch . build/index.js
+CMD cd src && npx knex migrate:latest && npm run start:watch
