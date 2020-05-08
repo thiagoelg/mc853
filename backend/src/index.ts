@@ -5,6 +5,9 @@ import { Model } from 'objection';
 import bodyParser from 'body-parser';
 import routes from './routes';
 
+// This is temporary, just so we can get JSON output for errors.
+require('./errorToString');
+
 // Initialize knex.
 const knex = Knex(knexConfig[process.env.NODE_ENV as 'production' | 'development'] as Config);
 
