@@ -1,9 +1,13 @@
+import DotEnv from 'dotenv-safe';
 import express from 'express';
 import Knex, { Config } from 'knex';
 import knexConfig from './knexfile';
 import { Model } from 'objection';
 import bodyParser from 'body-parser';
+import bearerToken from 'express-bearer-token';
 import routes from './routes';
+
+DotEnv.config();
 
 // This is temporary, just so we can get JSON output for errors.
 require('./errorToString');
@@ -16,6 +20,7 @@ Model.knex(knex);
 
 const app = express();
 app.use(bodyParser());
+app.use(bearerToken());
 
 app.use('/api', routes);
 

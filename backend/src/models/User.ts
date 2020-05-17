@@ -1,6 +1,8 @@
 import BaseModel from './BaseModel';
 import BcryptJS from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { OrderByDirection, Pojo } from 'objection';
+import { Request, Response, NextFunction } from 'express';
 
 export interface UserData {
   name: string;
@@ -47,6 +49,10 @@ export default class User extends BaseModel {
     };
   }
 
+  static hashPassword(plainTextPassword: string) {
+    return BcryptJS.hashSync(plainTextPassword, 10);
+  }
+
   static async newUser(userData: UserData) {
     const user = await User.transaction(async trx => {
       userData.password = User.hashPassword(userData.password);
@@ -54,10 +60,6 @@ export default class User extends BaseModel {
     });
     delete user.password;
     return user;
-  }
-
-  static hashPassword(plainTextPassword: string) {
-    return BcryptJS.hashSync(plainTextPassword, 10);
   }
 
   static async listUsers(parameters: UserQuery) {
@@ -72,6 +74,38 @@ export default class User extends BaseModel {
       return await query;
     } catch (error) {
       return error;
+    }
+  }
+
+  static async authenticate(email: string, password: string) {
+    const query = User.query();
+    query.select('id', 'email', 'name', 'password')
+      .where('email', '=', email)
+      .orderBy('id', 'desc')
+      .limit(1);
+    const results = await query;
+    console.log(results);
+    if (!results.length) {
+      throw new Error('No users found');
+    }
+    const user = results[0];
+    if (BcryptJS.compareSync(password, user.password)) {
+      const token = jwt.sign(user.toJSON(), process.env.SECRET as string, {
+        expiresIn: 60000
+      });
+      return token;
+    }
+    return false;
+  }
+
+  static async validateToken(req: Request, res: Response, next: NextFunction) {
+    const token = req.token || '';
+    try {
+      const decoded = await jwt.verify(token, process.env.SECRET as string);
+      req.body.decoded = decoded;
+      return next();
+    } catch (error) {
+      return res.status(401).send(error.toString());
     }
   }
 }
