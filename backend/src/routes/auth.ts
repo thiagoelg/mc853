@@ -19,7 +19,7 @@ router.post('/reauth', async (req: Request, res: Response) => {
 });
 
 router.post('/logout', async (req: Request, res: Response) => {
-  return res.json();
+  return res.status(200).send({ token: false });
 });
 
 export default router;

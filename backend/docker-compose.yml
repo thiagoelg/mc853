@@ -14,6 +14,7 @@ services:
       DB_NAME: responsive
       DB_HOST: db
       DB_PORT: 5432
+      WAIT_HOSTS: db:5432
     depends_on:
       - db
     links:

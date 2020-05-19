@@ -69,7 +69,7 @@ export default class User extends BaseModel {
         const [field, direction] = parameters.orderBy.split(' ');
         query.orderBy(field, direction as OrderByDirection);
       } else {
-        query.orderBy(parameters.orderBy || 'createdAt', 'desc');
+        query.orderBy(parameters.orderBy || 'created_at', 'desc');
       }
       return await query;
     } catch (error) {
@@ -84,7 +84,6 @@ export default class User extends BaseModel {
       .orderBy('id', 'desc')
       .limit(1);
     const results = await query;
-    console.log(results);
     if (!results.length) {
       throw new Error('No users found');
     }
