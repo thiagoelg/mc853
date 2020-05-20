@@ -1,0 +1,44 @@
+{
+	"id": "d370b02a-ae8b-4efb-882d-2fc40016e6c0",
+	"values": [
+		{
+			"key": "user_id",
+			"value": "1",
+			"enabled": true
+		},
+		{
+			"key": "solicitation_id",
+			"value": "1",
+			"enabled": true
+		},
+		{
+			"key": "admin_email",
+			"value": "admin",
+			"enabled": true
+		},
+		{
+			"key": "admin_password",
+			"value": "admin",
+			"enabled": true
+		},
+		{
+			"key": "login_email",
+			"value": "carlosadrianovieira@gmail.com",
+			"enabled": true
+		},
+		{
+			"key": "login_password",
+			"value": "teste123",
+			"enabled": true
+		},
+		{
+			"key": "register_name",
+			"value": "Carlos Vieira",
+			"enabled": true
+		}
+	],
+	"name": "Responsive Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2020-05-20T18:28:17.780Z",
+	"_postman_exported_using": "Postman/7.24.0"
+}
