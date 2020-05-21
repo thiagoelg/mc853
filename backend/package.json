@@ -7,7 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node -r ts-node/register ./src/index.ts",
     "start:watch": "nodemon -L --verbose",
-    "build": "tsc"
+    "build": "tsc",
+    "knex:migrate:make": "knex --cwd src migrate:make",
+    "knex:migrate:latest": "knex --cwd src migrate:latest",
+    "knex:migrate:rollback": "knex --cwd src migrate:rollback",
+    "knex:seed:make": "knex --cwd src seed:make",
+    "knex:seed:run": "knex --cwd src seed:run"
   },
   "nodemonConfig": {
     "ignore": [
