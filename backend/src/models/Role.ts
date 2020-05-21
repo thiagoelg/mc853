@@ -1,9 +1,9 @@
 import { Model, RelationMappings } from "objection";
 import Permission from "./Permission";
 import RolePermissions from "./RolePermissions";
+import BaseModel from "./BaseModel";
 
-export default class Role extends Model {
-  id!: string;
+export default class Role extends BaseModel {
   name!: string;
   short_name!: string;
 
@@ -46,6 +46,8 @@ export default class Role extends Model {
         id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 1024 },
         short_name: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "string", minLength: 1, maxLength: 255 },
+        updated_at: { type: "string", minLength: 1, maxLength: 255 }
       },
     };
   }

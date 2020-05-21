@@ -6,6 +6,10 @@ Na pasta **/backend**, faça:
 
 `docker-compose up -d`
 
+Caso queira deletar containers e volumes, execute:
+
+`docker-compose down -v`
+
 ## Banco de dados
 
 ### Acessar usando o pgAdmin

@@ -3,6 +3,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Model, OrderByDirection, Pojo } from "objection";
 import Role from "./Role";
+import BaseModel from "./BaseModel";
 
 export interface UserData {
   name: string;
@@ -14,8 +15,7 @@ export interface UserQuery {
   orderBy: string;
 }
 
-export default class User extends Model {
-  id!: number;
+export default class User extends BaseModel {
   name!: string;
   email!: string;
   password!: string;
@@ -46,6 +46,8 @@ export default class User extends Model {
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "string", minLength: 1, maxLength: 255 },
+        updated_at: { type: "string", minLength: 1, maxLength: 255 }
       },
     };
   }
