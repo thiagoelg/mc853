@@ -19,8 +19,8 @@ import { MenuComponent } from './menu/menu.component';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
   ],
-  exports: [MenuComponent]
+  exports: [MenuComponent],
 })
-export class SharedModule { }
+export class SharedModule {}
