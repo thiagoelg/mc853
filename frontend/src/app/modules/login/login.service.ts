@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Login } from 'src/app/models/login';
-import { AppService } from './../../app.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +16,7 @@ export class LoginService {
     return this.http.post(url, body).pipe(
       take(1),
       map((token: string) => {
-        AppService.token.next(token);
+        localStorage.setItem('token', token);
       })
     );
   }
