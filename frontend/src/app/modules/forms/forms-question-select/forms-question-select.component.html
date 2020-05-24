@@ -1,0 +1,50 @@
+<form [formGroup]="questionForm">
+    <h1 mat-dialog-title>Selecione uma pergunta</h1>
+    <div mat-dialog-content>
+
+        <!-- Search area -->
+        <p class="search" style="margin: 0;">
+            <mat-form-field appearance="outline">
+                <mat-label>Pesquisar pergunta</mat-label>
+                <input matInput formControlName="searchText" autocomplete="off" #search>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Tipo básico de resposta</mat-label>
+                <mat-select #typeInput formControlName='typeFilter'>
+                    <mat-option *ngFor="let type of basicTypes" [value]="type.value">
+                        {{type.viewValue}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </p>
+
+        <!-- List of Questions -->
+        <mat-selection-list multiple formControlName="questions">
+            <mat-list-option [checkboxPosition]="'before'" #myOption [value]="item"
+                *ngFor="let item of filteredQuestions$ | async" (click)="search.value=''"
+                [ngClass]="{'hide': (item.hide)}">
+                <div style="display:flex; justify-content:space-between;align-items:center">
+
+                    <div style="display:flex; flex-direction:column">
+                        {{item.text}}
+                    </div>
+                    <div>
+                        ({{item?.response_type?.name}})
+                    </div>
+                </div>
+            </mat-list-option>
+        </mat-selection-list>
+    </div>
+    <div mat-dialog-actions class="action-buttons">
+        <button class="bottom-left-area" mat-raised-button style="background-color: green;" color="primary"
+            type="button">
+            Criar pergunta
+        </button>
+        <button class="bottom-right-area1" mat-button (click)="onCloseClick()">Cancelar</button>
+        <button class="bottom-right-area2" mat-raised-button color="primary" cdkFocusInitial
+            [mat-dialog-close]="questionForm.value.questions">
+            Enviar
+        </button>
+    </div>
+</form>

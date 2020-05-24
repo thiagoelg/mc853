@@ -1,0 +1,54 @@
+<p>forms-create works!</p>
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <p>
+        <mat-form-field appearance="outline">
+            <mat-label>Título do formulário</mat-label>
+            <input matInput required placeholder="Ex.: Requisição de reparo em equipamento" formControlName='name'>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-checkbox formControlName='is_template'>
+            É um formulário padrão que será sugerido ao usuário ao criar alguma solicitação
+        </mat-checkbox>
+    </p>
+    <p>
+        <ng-container>
+            <div style="width: 100%;" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                <div *ngIf="getFormArrayControls().length == 0" class="listMessage">
+                    Clique no botão abaixo para adicionar algumas perguntas no seu formulário. :D
+                </div>
+                <div class="example-box" *ngFor="let item of getFormArrayControls(); index as i" cdkDrag>
+                    <ng-container *ngIf="item.value as listItem">
+                        <div class="example-custom-placeholder" *cdkDragPlaceholder> </div>
+                        <div *ngIf="isMobile" class="example-handle" cdkDragHandle>
+                            <svg width="32px" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                                </path>
+                                <path d="M0 0h24v24H0z" fill="none"></path>
+                            </svg>
+                        </div>
+                        <div style="margin-right: auto">{{i+1}}) {{listItem?._question?.text}} </div>
+                        <div style="margin-right: 10px">
+                            ({{listItem?._question.response_type?.name}})
+                        </div>
+                        <button mat-mini-fab type="button" color="warn" (click)="removeControl(i)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+            <button style="width: 100%; background-color: lightseagreen; color: black;" mat-raised-button
+                color="primary" type="button" (click)="openAddQuestionDialog()">
+                Adicionar perguntas
+            </button>
+        </ng-container>
+
+
+    </p>
+    <p>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            Submeter formulário
+        </button>
+    </p>
+</form>
