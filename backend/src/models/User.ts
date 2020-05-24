@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { Model, OrderByDirection, Pojo } from "objection";
 import Role from "./Role";
 import BaseModel from "./BaseModel";
+import RolePermissions from "./RolePermissions";
+import Permission from "./Permission";
 
 export interface UserData {
   name: string;
@@ -34,6 +36,32 @@ export default class User extends BaseModel {
 
   static get tableName() {
     return "user";
+  }
+
+  static get relationMappings() {
+    return {
+      role: {
+        relation: Model.HasOneRelation,
+        modelClass: Role,
+        join: {
+          from: "user.role_id",
+          to: "role.id",
+        },
+      },
+      permissions: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Permission,
+        join: {
+          from: "user.role_id",
+          through: {
+            modelClass: RolePermissions,
+            from: "role_permissions.role_id",
+            to: "role_permissions.permission_id",
+          },
+          to: "permission.id",
+        },
+      },
+    };
   }
 
   static get jsonSchema() {
@@ -67,7 +95,7 @@ export default class User extends BaseModel {
 
   static async listUsers(parameters: UserQuery) {
     try {
-      const query = User.query().withGraphFetched("role");
+      const query = User.query().withGraphFetched("role").withGraphFetched("permissions");
       if (parameters.orderBy) {
         const [field, direction] = parameters.orderBy.split(" ");
         query.orderBy(field, direction as OrderByDirection);
@@ -76,7 +104,6 @@ export default class User extends BaseModel {
       }
       return await query;
     } catch (error) {
-      console.log({ error });
       return error;
     }
   }
@@ -111,18 +138,5 @@ export default class User extends BaseModel {
     } catch (error) {
       return res.status(401).send(error.toString());
     }
-  }
-
-  static get relationMappings() {
-    return {
-      role: {
-        relation: Model.HasOneRelation,
-        modelClass: Role,
-        join: {
-          from: "user.role_id",
-          to: "role.id",
-        },
-      },
-    };
   }
 }

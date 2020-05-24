@@ -1,4 +1,5 @@
 import * as Knex from "knex";
+import Permission from "../models/Permission";
 
 export async function seed(knex: Knex): Promise<any> {
   // Deletes ALL existing entries
@@ -11,46 +12,9 @@ export async function seed(knex: Knex): Promise<any> {
           // Inserts seed entries
           return knex("permission")
             .insert(
-              [
-                {
-                  name: "Gerenciar perfis de acesso",
-                  short_name: "manage_roles",
-                },
-                {
-                  name: "Atribuir perfis de acesso",
-                  short_name: "assign_roles",
-                },
-                { name: "Gerenciar usuários", short_name: "manage_users" },
-                { name: "Gerenciar formulários", short_name: "manage_forms" },
-                {
-                  name: "Gerenciar campos de formulários",
-                  short_name: "manage_form_fields",
-                },
-                {
-                  name: "Gerenciar tipos de campo de formulários",
-                  short_name: "manage_form_field_types",
-                },
-                {
-                  name: "Gerenciar solicitações",
-                  short_name: "manage_solicitations",
-                },
-                {
-                  name: "Responder solicitações",
-                  short_name: "answer_solicitation",
-                },
-                {
-                  name: "Criar solicitações",
-                  short_name: "create_solicitation",
-                },
-                {
-                  name: "Solicitar reabertura de solicitações",
-                  short_name: "reopen_solicitation",
-                },
-                {
-                  name: "Avaliar atendimento",
-                  short_name: "answer_satisfaction_survey",
-                },
-              ],
+              Object.keys(Permission.shortNames).map(key => (
+                { "name": Permission.names[key], "short_name": Permission.shortNames[key] }
+              )),
               ["id", "short_name"]
             )
             .then((permissions: { id: number; short_name: string }[]) => {
@@ -69,10 +33,10 @@ export async function seed(knex: Knex): Promise<any> {
                   .then(([role_id]) => {
                     const my_permissions = permissions.filter((perm) =>
                       [
-                        "manage_forms",
-                        "manage_form_fields",
-                        "manage_solicitations",
-                        "answer_solicitation",
+                        Permission.shortNames.MANAGE_FORMS,
+                        Permission.shortNames.MANAGE_FORM_FIELDS,
+                        Permission.shortNames.MANAGE_SOLICITATIONS,
+                        Permission.shortNames.ANSWER_SOLICITATION,
                       ].includes(perm.short_name)
                     );
 
@@ -90,9 +54,10 @@ export async function seed(knex: Knex): Promise<any> {
                   .then(([role_id]) => {
                     const my_permissions = permissions.filter((perm) =>
                       [
-                        "create_solicitation",
-                        "reopen_solicitation",
-                        "answer_satisfaction_survey",
+                        Permission.shortNames.CREATE_SOLICITATION,
+                        Permission.shortNames.ANSWER_SOLICITATION,
+                        Permission.shortNames.REOPEN_SOLICITATION,
+                        Permission.shortNames.ANSWER_SATISFACTION_SURVEY,
                       ].includes(perm.short_name)
                     );
 
