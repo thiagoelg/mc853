@@ -1,8 +1,9 @@
+import { ResponseType } from 'src/app/models/responseType';
 import { BaseModel } from '.';
 
 export interface Question extends BaseModel {
   text: string;
-  responseType: ResponseType;
+  response_type: ResponseType;
 }
 
 export interface QuestionCreate extends BaseModel {

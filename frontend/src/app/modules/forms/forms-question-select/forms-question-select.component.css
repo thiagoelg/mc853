@@ -1,0 +1,51 @@
+.hide {
+  display: none !important;
+}
+.search {
+  display: grid;
+  grid-template: "text type" / minmax(55vw, 800px) min-content;
+}
+
+.search:first-child {
+  grid-area: text;
+}
+
+.search:last-child {
+  grid-area: type;
+}
+
+@media (max-width: 600px) {
+  .search {
+    grid-template:
+      "text"
+      "type" / 80vw;
+  }
+}
+
+.action-buttons {
+  display: grid;
+  grid-template: "left . right1 right2" / min-content 1fr min-content min-content;
+}
+
+@media (max-width: 350px) {
+  .action-buttons {
+    grid-template:
+      ". right1"
+      "left right2" / 1fr 1fr;
+  }
+}
+
+.bottom-left-area {
+  grid-area: left;
+}
+
+.bottom-right-area1 {
+  grid-area: right1;
+}
+.bottom-right-area2 {
+  grid-area: right2;
+}
+
+mat-form-field > * {
+  padding: 0;
+}

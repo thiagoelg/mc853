@@ -5,9 +5,9 @@ export interface ResponseType extends BaseModel {
   min: number;
   max: number;
   regex: string;
-  basicType: string;
+  basic_type: string;
 }
 
 export interface ResponseTypeCreate extends ResponseType {
-  basicType: 'text' | 'number' | 'file' | 'date';
+  basic_type: 'text' | 'number' | 'file' | 'date';
 }
