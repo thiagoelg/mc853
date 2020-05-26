@@ -7,6 +7,7 @@
 //
 
 import XCTest
+
 @testable import Responsive
 
 class ResponsiveTests: XCTestCase {
