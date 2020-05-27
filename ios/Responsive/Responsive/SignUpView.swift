@@ -11,8 +11,13 @@ struct SignUpView: View {
             Form {
                 Section {
                     TextField("Nome", text: $name)
+                        .textContentType(.name)
                     TextField("E-mail", text: $email)
+                        .textContentType(.emailAddress)
+                        .keyboardType(.emailAddress)
+                        .autocapitalization(.none)
                     SecureField("Senha", text: $password)
+                        .textContentType(.password)
                 }
 
                 Section {
@@ -23,11 +28,23 @@ struct SignUpView: View {
                             "password": self.password
                         ]
 
-                        let signUpRequestData = 
+                        var signUpRequest = URLRequest(url: URL(string: "http://localhost:9001/api/users/register")!)
+                        signUpRequest.httpMethod = "POST"
+                        signUpRequest.httpBody = try? JSONEncoder().encode(signUpRequestBody)
+                        signUpRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+                        signUpRequest.addValue("application/json", forHTTPHeaderField: "Accept")
 
-                        var signUpRequest = URLRequest(url: URL(string: "http://localhost:9000/users/register")!)
+                        let dataTask = URLSession.shared.dataTask(with: signUpRequest) { responseData, _, error in
+                            guard let responseData = responseData else {
+                                return
+                            }
 
-                        let dataTask = URLSession.shared.dataTask(with: <#T##URL#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+                            if let decodedResponseData = try? JSONDecoder().decode([String: String].self, from: responseData) {
+                                print(decodedResponseData)
+                            }
+                        }
+
+                        dataTask.resume()
                     }
                 }
             }
