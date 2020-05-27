@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from 'src/app/shared/shared.service';
+import { MenuService } from '../menu/menu.service';
 import { User } from './../../models/user';
 import { UsersService } from './users.service';
 
@@ -16,7 +16,7 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    SharedService.menu.title.next('Responsive -> Users');
+    MenuService.menu.title.next('Responsive -> Users');
   }
 
   fetchAllUsers() {
