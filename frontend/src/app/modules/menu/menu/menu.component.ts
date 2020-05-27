@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { SharedService } from 'src/app/shared/shared.service';
+import { MenuService } from '../menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +10,7 @@ import { SharedService } from 'src/app/shared/shared.service';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent {
-  title$ = SharedService.menu.title.asObservable();
+  title$ = MenuService.menu.title.asObservable();
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
