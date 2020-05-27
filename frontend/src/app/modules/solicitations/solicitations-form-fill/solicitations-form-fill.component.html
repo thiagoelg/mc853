@@ -1,0 +1,90 @@
+<p>solicitations-form-fill works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <ng-container *ngFor="let formQuestion of formType.questions; index as i">
+        <mat-divider style="margin-bottom: 10px ;" *ngIf="i!=0"></mat-divider>
+        <ng-container [ngSwitch]="elementTypes[i]">
+
+            <!-- Number -->
+            <ng-container *ngSwitchCase="'number'">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{formQuestion.question.text}}</mat-label>
+                    <input type="number" matInput required="formQuestion.required"
+                        formControlName='{{formQuestion.order}}'>
+
+                    <mat-hint *ngIf="hints[i] as hint">
+                        {{hint}}
+                    </mat-hint>
+
+                </mat-form-field>
+            </ng-container>
+
+
+            <!-- Email -->
+            <ng-container *ngSwitchCase="'email'">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{formQuestion.question.text}}</mat-label>
+                    <input type="email" matInput required="formQuestion.required"
+                        formControlName='{{formQuestion.order}}'>
+                </mat-form-field>
+                <mat-hint *ngIf="hints[i] as hint">
+                    {{hint}}
+                </mat-hint>
+            </ng-container>
+
+
+            <!-- Date -->
+            <ng-container *ngSwitchCase="'date'">
+                <mat-form-field appearance="outline" [floatLabel]="false">
+                    <mat-label>{{formQuestion.question.text}}</mat-label>
+                    <input matInput type="date" required="formQuestion.required"
+                        formControlName='{{formQuestion.order}}'>
+                </mat-form-field>
+                <mat-hint *ngIf="hints[i] as hint">
+                    {{hint}}
+                </mat-hint>
+            </ng-container>
+
+
+
+            <!-- Checkbox -->
+            <div *ngSwitchCase="'checkbox'" style="width: 100%; padding: 10px 0 15px;">
+                <mat-checkbox required="formQuestion.required" formControlName='{{formQuestion.order}}'>
+                    {{formQuestion.question.text}}</mat-checkbox>
+                <mat-hint *ngIf="hints[i] as hint">
+                    {{hint}}
+                </mat-hint>
+            </div>
+
+            <!-- Textarea -->
+            <ng-container *ngSwitchCase="'textarea'">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{formQuestion.question.text}}</mat-label>
+                    <textarea matInput required="formQuestion.required"
+                        formControlName='{{formQuestion.order}}'></textarea>
+                    <mat-hint *ngIf="hints[i] as hint">
+                        {{hint}}
+                    </mat-hint>
+                </mat-form-field>
+            </ng-container>
+
+
+            <!-- Small Text  (default) -->
+            <ng-container *ngSwitchDefault>
+                <mat-form-field appearance="outline">
+                    <mat-label>{{formQuestion.question.text}}</mat-label>
+                    <input matInput required="formQuestion.required" formControlName='{{formQuestion.order}}'>
+                    <mat-hint *ngIf="hints[i] as hint">
+                        {{hint}}
+                    </mat-hint>
+                </mat-form-field>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+
+
+    <!-- Submit Button -->
+    <button mat-raised-button color="primary" type=" submit" [disabled]="!form.valid">
+        Enviar requisição
+    </button>
+</form>
