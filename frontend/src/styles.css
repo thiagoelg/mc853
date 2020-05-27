@@ -11,12 +11,8 @@ body {
 
 /*********** Form overrides ***********/
 
-mat-form-field {
+mat-form-field:not(.basic) {
   width: 100%;
-}
-
-.mat-form-field-wrapper {
-  padding: 0;
 }
 
 label.mat-checkbox-layout {
