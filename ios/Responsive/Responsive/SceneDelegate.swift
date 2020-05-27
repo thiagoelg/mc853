@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -11,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
+        window?.rootViewController = UIHostingController(rootView: SignUpView())
         window?.makeKeyAndVisible()
     }
 }
