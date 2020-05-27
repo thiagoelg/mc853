@@ -2,13 +2,13 @@ import { Model } from 'objection';
 
 export default class BaseModel extends Model {
   id!: number;
-  createdAt!: string;
-  updatedAt: string = '';
+  created_at!: string;
+  updated_at: string = '';
   $beforeUpdate() {
-    this.updatedAt = new Date().toISOString();
+    this.updated_at = new Date().toISOString();
   }
 
   $beforeInsert() {
-    this.createdAt = new Date().toISOString();
+    this.created_at = new Date().toISOString();
   }
 }

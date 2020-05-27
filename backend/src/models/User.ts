@@ -1,8 +1,11 @@
-import BaseModel from './BaseModel';
-import BcryptJS from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { OrderByDirection, Pojo } from 'objection';
-import { Request, Response, NextFunction } from 'express';
+import BcryptJS from "bcryptjs";
+import { NextFunction, Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import { Model, OrderByDirection, Pojo } from "objection";
+import Role from "./Role";
+import BaseModel from "./BaseModel";
+import RolePermissions from "./RolePermissions";
+import Permission from "./Permission";
 
 export interface UserData {
   name: string;
@@ -11,7 +14,7 @@ export interface UserData {
 }
 
 export interface UserQuery {
-  orderBy: string
+  orderBy: string;
 }
 
 export default class User extends BaseModel {
@@ -20,32 +23,60 @@ export default class User extends BaseModel {
   password!: string;
 
   get $secureFields(): string[] {
-    return ['password']; 
+    return ["password", "role_id"];
   }
 
   $formatJson(json: Pojo) {
     const jsonRaw = super.$formatJson(json);
-    this.$secureFields.forEach(field => {
+    this.$secureFields.forEach((field) => {
       delete jsonRaw[field];
     });
     return jsonRaw;
   }
 
   static get tableName() {
-    return 'users';
+    return "user";
+  }
+
+  static get relationMappings() {
+    return {
+      role: {
+        relation: Model.HasOneRelation,
+        modelClass: Role,
+        join: {
+          from: "user.role_id",
+          to: "role.id",
+        },
+      },
+      permissions: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Permission,
+        join: {
+          from: "user.role_id",
+          through: {
+            modelClass: RolePermissions,
+            from: "role_permissions.role_id",
+            to: "role_permissions.permission_id",
+          },
+          to: "permission.id",
+        },
+      },
+    };
   }
 
   static get jsonSchema() {
     return {
-      type: 'object',
-      required: ['name', 'email', 'password'],
+      type: "object",
+      required: ["name", "email", "password"],
 
       properties: {
-        id: { type: 'integer' },
-        name: { type: 'string', minLength: 1, maxLength: 255 },
-        email: { type: 'string', minLength: 1, maxLength: 255 },
-        password: { type: 'string', minLength: 1, maxLength: 255 }
-      }
+        id: { type: "integer" },
+        name: { type: "string", minLength: 1, maxLength: 255 },
+        email: { type: "string", minLength: 1, maxLength: 255 },
+        password: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "string", minLength: 1, maxLength: 255 },
+        updated_at: { type: "string", minLength: 1, maxLength: 255 }
+      },
     };
   }
 
@@ -54,7 +85,7 @@ export default class User extends BaseModel {
   }
 
   static async newUser(userData: UserData) {
-    const user = await User.transaction(async trx => {
+    const user = await User.transaction(async (trx) => {
       userData.password = User.hashPassword(userData.password);
       return await User.query(trx).insert(userData);
     });
@@ -64,12 +95,12 @@ export default class User extends BaseModel {
 
   static async listUsers(parameters: UserQuery) {
     try {
-      const query = User.query();
+      const query = User.query().withGraphFetched("role").withGraphFetched("permissions");
       if (parameters.orderBy) {
-        const [field, direction] = parameters.orderBy.split(' ');
+        const [field, direction] = parameters.orderBy.split(" ");
         query.orderBy(field, direction as OrderByDirection);
       } else {
-        query.orderBy(parameters.orderBy || 'createdAt', 'desc');
+        query.orderBy(parameters.orderBy || "id", "asc");
       }
       return await query;
     } catch (error) {
@@ -79,19 +110,19 @@ export default class User extends BaseModel {
 
   static async authenticate(email: string, password: string) {
     const query = User.query();
-    query.select('id', 'email', 'name', 'password')
-      .where('email', '=', email)
-      .orderBy('id', 'desc')
+    query
+      .select("id", "email", "name", "password")
+      .where("email", "=", email)
+      .orderBy("id", "desc")
       .limit(1);
     const results = await query;
-    console.log(results);
     if (!results.length) {
-      throw new Error('No users found');
+      throw new Error("No users found");
     }
     const user = results[0];
     if (BcryptJS.compareSync(password, user.password)) {
       const token = jwt.sign(user.toJSON(), process.env.SECRET as string, {
-        expiresIn: 60000
+        expiresIn: 60000,
       });
       return token;
     }
@@ -99,7 +130,7 @@ export default class User extends BaseModel {
   }
 
   static async validateToken(req: Request, res: Response, next: NextFunction) {
-    const token = req.token || '';
+    const token = req.token || "";
     try {
       const decoded = await jwt.verify(token, process.env.SECRET as string);
       req.body.decoded = decoded;
