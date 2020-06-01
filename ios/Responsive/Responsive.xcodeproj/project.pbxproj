@@ -13,6 +13,9 @@
 		B3322DCF2479F0FD00796474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3322DCE2479F0FD00796474 /* Assets.xcassets */; };
 		B3322DD22479F0FD00796474 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3322DD02479F0FD00796474 /* LaunchScreen.storyboard */; };
 		B3322DDD2479F0FE00796474 /* ResponsiveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3322DDC2479F0FE00796474 /* ResponsiveTests.swift */; };
+		B333B47824849BB000E049F7 /* FormTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333B47724849BB000E049F7 /* FormTextFieldStyle.swift */; };
+		B333B47A24849DFD00E049F7 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333B47924849DFD00E049F7 /* ColorPalette.swift */; };
+		B333B47C2484A27100E049F7 /* FormStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333B47B2484A27100E049F7 /* FormStyles.swift */; };
 		B35AB676247E09090032A5AD /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35AB675247E09090032A5AD /* SignUpView.swift */; };
 		B36A38DD247DD057001335AD /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = B36A38DC247DD057001335AD /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
@@ -38,6 +41,9 @@
 		B3322DD82479F0FE00796474 /* ResponsiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResponsiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3322DDC2479F0FE00796474 /* ResponsiveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsiveTests.swift; sourceTree = "<group>"; };
 		B3322DDE2479F0FE00796474 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B333B47724849BB000E049F7 /* FormTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTextFieldStyle.swift; sourceTree = "<group>"; };
+		B333B47924849DFD00E049F7 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
+		B333B47B2484A27100E049F7 /* FormStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStyles.swift; sourceTree = "<group>"; };
 		B35AB675247E09090032A5AD /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,6 +94,9 @@
 				B3322DD02479F0FD00796474 /* LaunchScreen.storyboard */,
 				B3322DD32479F0FD00796474 /* Info.plist */,
 				B35AB675247E09090032A5AD /* SignUpView.swift */,
+				B333B47924849DFD00E049F7 /* ColorPalette.swift */,
+				B333B47724849BB000E049F7 /* FormTextFieldStyle.swift */,
+				B333B47B2484A27100E049F7 /* FormStyles.swift */,
 			);
 			path = Responsive;
 			sourceTree = "<group>";
@@ -208,9 +217,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B333B47A24849DFD00E049F7 /* ColorPalette.swift in Sources */,
+				B333B47C2484A27100E049F7 /* FormStyles.swift in Sources */,
 				B35AB676247E09090032A5AD /* SignUpView.swift in Sources */,
 				B3322DC62479F0F800796474 /* AppDelegate.swift in Sources */,
 				B3322DC82479F0F800796474 /* SceneDelegate.swift in Sources */,
+				B333B47824849BB000E049F7 /* FormTextFieldStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
