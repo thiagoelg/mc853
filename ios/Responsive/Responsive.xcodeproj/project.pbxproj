@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B310766024886DAE00BCF492 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B310765F24886DAE00BCF492 /* AppState.swift */; };
 		B3322DC62479F0F800796474 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3322DC52479F0F800796474 /* AppDelegate.swift */; };
 		B3322DC82479F0F800796474 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3322DC72479F0F800796474 /* SceneDelegate.swift */; };
 		B3322DCD2479F0F800796474 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3322DCB2479F0F800796474 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B310765F24886DAE00BCF492 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		B3322DC22479F0F800796474 /* Responsive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Responsive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3322DC52479F0F800796474 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3322DC72479F0F800796474 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				B333B47924849DFD00E049F7 /* ColorPalette.swift */,
 				B333B47724849BB000E049F7 /* FormTextFieldStyle.swift */,
 				B333B47B2484A27100E049F7 /* FormStyles.swift */,
+				B310765F24886DAE00BCF492 /* AppState.swift */,
 			);
 			path = Responsive;
 			sourceTree = "<group>";
@@ -219,6 +222,7 @@
 			files = (
 				B333B47A24849DFD00E049F7 /* ColorPalette.swift in Sources */,
 				B333B47C2484A27100E049F7 /* FormStyles.swift in Sources */,
+				B310766024886DAE00BCF492 /* AppState.swift in Sources */,
 				B35AB676247E09090032A5AD /* SignUpView.swift in Sources */,
 				B3322DC62479F0F800796474 /* AppDelegate.swift in Sources */,
 				B3322DC82479F0F800796474 /* SceneDelegate.swift in Sources */,

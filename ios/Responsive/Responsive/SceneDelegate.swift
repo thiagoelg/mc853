@@ -12,7 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = UIHostingController(rootView: SignUpView())
+        window?.rootViewController = UIHostingController(rootView: SignUpView(store: AppStore()))
         window?.makeKeyAndVisible()
     }
 }
