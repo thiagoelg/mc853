@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class BaseUrlInterceptor implements HttpInterceptor {
-  baseUrl = 'https://responsive-api.herokuapp.com/api/';
-  // baseUrl = 'http://localhost:9001/api/';
+  // baseUrl = 'https://responsive-api.herokuapp.com/api/';
+  baseUrl = 'http://localhost:9001/api/';
 
-  constructor() {}
+  constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const req = request.clone({

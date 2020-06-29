@@ -1,7 +1,7 @@
 <p>solicitations-form-fill works!</p>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <ng-container *ngFor="let formQuestion of formType.questions; index as i">
+    <ng-container *ngFor="let formQuestion of formType?.form_questions; index as i">
         <mat-divider style="margin-bottom: 10px ;" *ngIf="i!=0"></mat-divider>
         <ng-container [ngSwitch]="elementTypes[i]">
 

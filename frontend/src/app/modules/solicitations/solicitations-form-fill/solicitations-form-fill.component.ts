@@ -5,7 +5,7 @@ import {
   FormControl,
   FormGroup,
   ValidatorFn,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { FormQuestion } from 'src/app/models/formQuestion';
 import { FormFull } from './../../../models/form';
@@ -16,7 +16,7 @@ import { FormFull } from './../../../models/form';
   styleUrls: ['./solicitations-form-fill.component.css'],
 })
 export class SolicitationsFormFillComponent implements OnInit {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
   @Input() formType: FormFull;
   isTouch = window.matchMedia('(pointer: coarse)').matches;
   form: FormGroup;
@@ -36,7 +36,7 @@ export class SolicitationsFormFillComponent implements OnInit {
   private buildControls(): { [key: string]: AbstractControl } {
     const obj = {};
 
-    this.formType?.questions?.forEach((formQuestion) => {
+    this.formType?.form_questions?.forEach((formQuestion) => {
       obj[formQuestion?.question?.id] = this.toControl(formQuestion);
     });
 
@@ -44,7 +44,7 @@ export class SolicitationsFormFillComponent implements OnInit {
   }
 
   private toControl = (formQuestion: FormQuestion) =>
-    new FormControl(undefined, this.toValidators(formQuestion));
+    new FormControl(undefined, this.toValidators(formQuestion))
 
   private toValidators(formQuestion: FormQuestion): ValidatorFn[] {
     const validators = [];
@@ -81,7 +81,7 @@ export class SolicitationsFormFillComponent implements OnInit {
 
   // TODO: This should not exist! Add more basic_types to the backend
   setElementTypes() {
-    this.elementTypes = this.formType.questions.map((fq) => {
+    this.elementTypes = this.formType?.form_questions?.map((fq) => {
       const { min, max, basic_type } = fq.question.response_type;
 
       if (basic_type === 'text' && max > 300) {
@@ -97,7 +97,7 @@ export class SolicitationsFormFillComponent implements OnInit {
   }
 
   setHints() {
-    this.hints = this.formType.questions.map((fq) => {
+    this.hints = this.formType?.form_questions?.map((fq) => {
       const { min, max, basic_type } = fq.question.response_type;
       let hint = '';
 
