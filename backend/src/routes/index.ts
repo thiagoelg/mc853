@@ -1,6 +1,7 @@
 import { Router } from "express";
 import agreementsRoutes from "./agreements";
 import authRoutes from "./auth";
+import formQuestionsRoutes from "./formQuestions";
 import formsRoutes from "./forms";
 import questionsRoutes from "./questions";
 import responseTypesRoutes from "./responseTypes";
@@ -15,6 +16,7 @@ router.use("/roles", roleRoutes);
 router.use("/agreements", agreementsRoutes);
 router.use("/questions", questionsRoutes);
 router.use("/forms", formsRoutes);
+router.use("/forms/:form_id/questions", formQuestionsRoutes);
 router.use("/responseTypes", responseTypesRoutes);
 
 export default router;

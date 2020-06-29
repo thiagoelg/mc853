@@ -4,11 +4,14 @@ export async function up(knex: Knex): Promise<any> {
   return knex.schema.createTable(
     "form_question",
     (table: Knex.TableBuilder) => {
+      table.increments("id").primary();
       table.integer("form_id").references("id").inTable("form");
       table.integer("question_id").references("id").inTable("question");
-      table.primary(["form_id", "question_id"]);
       table.integer("order").notNullable();
       table.boolean("required").defaultTo(true);
+
+      table.string("created_at");
+      table.string("updated_at");
     }
   );
 }

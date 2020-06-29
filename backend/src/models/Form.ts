@@ -1,7 +1,11 @@
 import { Model, RelationMappings } from "objection";
 import BaseModel from "./BaseModel";
 import { default as FormQuestion } from "./FormQuestion";
-import Question from "./Question";
+
+export interface FormData {
+  name: string;
+  is_template?: boolean;
+}
 
 export default class Form extends BaseModel {
   name!: string;
@@ -20,20 +24,7 @@ export default class Form extends BaseModel {
           from: "form.id",
           to: "form_question.form_id",
         },
-      },
-      questions: {
-        relation: Model.ManyToManyRelation,
-        modelClass: Question,
-        join: {
-          from: "form.id",
-          through: {
-            modelClass: FormQuestion,
-            from: "form_question.form_id",
-            to: "form_question.question_id",
-          },
-          to: "question.id",
-        },
-      },
+      }
     };
   }
 
@@ -52,11 +43,24 @@ export default class Form extends BaseModel {
     };
   }
 
-  static async newForm(name: string, is_template: boolean = false) {
+  static async newForm(data: FormData) {
+    const { name, is_template = false } = data;
+
     const form = await Form.transaction(async (trx) => {
+
       return await Form.query(trx).insert({ name, is_template });
     });
     return form;
+  }
+
+  static async get(form_id: number) {
+    try {
+      const query = Form.query().findById(form_id).withGraphFetched("form_questions.question.response_type");
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
   }
 
   static async list() {

@@ -7,5 +7,5 @@ export interface Form extends BaseModel {
 }
 
 export interface FormFull extends Form {
-  questions: FormQuestion[];
+  form_questions: FormQuestion[];
 }
