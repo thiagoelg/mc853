@@ -1,0 +1,274 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Reponsive
+  contact: {}
+host: localhost:9001
+basePath: /api
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /users/register:
+    post:
+      summary: Register
+      tags:
+      - Register
+      produces:
+      - application/json
+      consumes:
+      - application/json; charset=utf-8
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/RegisterRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /auth/login:
+    post:
+      summary: Login
+      tags:
+      - Login
+      produces:
+      - application/json
+      consumes:
+      - application/json; charset=utf-8
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/LoginRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /auth/reauth:
+    post:
+      summary: Reauth
+      tags:
+      - Login
+      produces:
+      - application/json
+      consumes:
+      - application/json; charset=utf-8
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /auth/logout:
+    post:
+      summary: Logout
+      tags:
+      - Login
+      produces:
+      - application/json
+      consumes:
+      - application/json; charset=utf-8
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /users:
+    get:
+      summary: List Users
+      tags:
+      - User
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /roles:
+    get:
+      summary: List Roles
+      tags:
+      - Role
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /agreements:
+    get:
+      summary: List Agreements
+      tags:
+      - Agreement
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /agreements/templates:
+    get:
+      summary: List Templates
+      tags:
+      - Agreement
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /responseTypes:
+    get:
+      summary: List ResponseType
+      tags:
+      - ResponseType
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /responseTypes/{type}:
+    get:
+      summary: List ResponseType by type
+      tags:
+      - ResponseType
+      produces:
+      - application/json
+      parameters:
+        - name: type
+          in: path
+          type: string
+          required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /questions:
+    get:
+      summary: List Questions
+      tags:
+      - Question
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /forms:
+    get:
+      summary: List Forms
+      tags:
+      - Form
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /forms/{formId}/questions:
+    get:
+      summary: Get form questions
+      tags:
+      - Form
+      produces:
+      - application/json
+      parameters:
+        - name: formId
+          type: integer
+          required: true
+          in: path
+      responses:
+        200:
+          description: ''
+          headers: {}
+  /forms/{formId}/questions/{questionId}:
+    get:
+      summary: Get form question
+      tags:
+      - Form
+      produces:
+      - application/json
+      parameters:
+        - name: formId
+          type: integer
+          required: true
+          in: path
+        - name: questionId
+          type: integer
+          required: true
+          in: path
+      responses:
+        200:
+          description: ''
+          headers: {}
+definitions:
+  RegisterRequest:
+    title: RegisterRequest
+    example:
+      name: '{{register_name}}'
+      email: '{{login_email}}'
+      password: '{{login_password}}'
+    type: object
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - name
+    - email
+    - password
+  LoginRequest:
+    title: LoginRequest
+    example:
+      email: '{{login_email}}'
+      password: '{{login_password}}'
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+  LoginAdminRequest:
+    title: LoginAdminRequest
+    example:
+      email: '{{admin_email}}'
+      password: '{{admin_password}}'
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+security:
+- auth: []
+tags:
+- name: Register
+- name: Login
+- name: User
+- name: Role
+- name: Agreement
+- name: ResponseType
+- name: Question
+- name: Form
