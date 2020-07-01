@@ -214,6 +214,26 @@ paths:
         200:
           description: ''
           headers: {}
+  /forms/{formId}/submit:
+    post:
+      summary: Submit form answers
+      tags:
+      - Form
+      produces:
+      - application/json
+      consumes:
+      - application/json; charset=utf-8
+      parameters:
+      - name: Body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/FormSubmissionRequest'
+      responses:
+        200:
+          description: ''
+          headers: {}
 definitions:
   RegisterRequest:
     title: RegisterRequest
@@ -261,6 +281,36 @@ definitions:
     required:
     - email
     - password
+  FormSubmissionRequest:
+    title: FormSubmissionRequest
+    example:
+      questions: '[{
+        "questionId": 1,
+        "value": true
+      }, {
+        "questionId": 2
+        "value": "Text answer value"
+      }]'
+    type: object
+    properties:
+      questions:
+        type: array
+        items:
+          $ref: '#/definitions/QuestionAnswerPayload'
+    required:
+    - questions
+  QuestionAnswerPayload:
+    title: QuestionAnswerPayload
+    example:
+    type: object
+    properties:
+      questionId:
+        type: string
+      value:
+        type: string
+    required:
+    - questionId
+    - value
 security:
 - auth: []
 tags:
