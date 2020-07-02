@@ -110,7 +110,7 @@
 							"raw": "{\n\t\"email\": \"{{login_email}}\",\n\t\"password\": \"{{login_password}}\"\n}",
 							"options": {
 								"raw": {
-									"language": "javascript"
+									"language": "json"
 								}
 							}
 						},
@@ -299,6 +299,15 @@
 			"item": [
 				{
 					"name": "Get Users",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"host": true,
+							"user-agent": true
+						}
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -449,6 +458,66 @@
 			"name": "Form",
 			"item": [
 				{
+					"name": "FormQuestions",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/forms/{{form_id}}/questions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"forms",
+										"{{form_id}}",
+										"questions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json; charset=utf-8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "[\r\n    {\r\n        \"question_id\": 3,\r\n        \"order\": 1,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 1,\r\n        \"order\": 2,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 2,\r\n        \"order\": 3,\r\n        \"required\": false\r\n    }\r\n]",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/forms/{{form_id}}/questions",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"forms",
+										"{{form_id}}",
+										"questions"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
 					"name": "List",
 					"request": {
 						"method": "GET",
@@ -466,24 +535,141 @@
 					"response": []
 				},
 				{
-					"name": "Get form",
+					"name": "Get",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/forms/1/questions/1",
+							"raw": "{{base_url}}/forms/{{form_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"forms",
-								"1",
-								"questions",
-								"1"
+								"{{form_id}}"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Formulario testeee\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forms",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"forms"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Solicitation",
+			"item": [
+				{
+					"name": "Answers",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/answers",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"answers"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/answers/{{question_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"answers",
+										"{{question_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"type": "text",
+										"value": "application/json; charset=utf-8"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"value\": \"Nada!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/answers/{{form_question_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"answers",
+										"{{form_question_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
 				},
 				{
 					"name": "List",
@@ -491,19 +677,88 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/forms/1/questions/",
+							"raw": "{{base_url}}/solicitations",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"forms",
-								"1",
-								"questions",
-								""
+								"solicitations"
 							]
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/solicitations/{{solicitation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"solicitations",
+								"{{solicitation_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"form_id\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/solicitations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"solicitations"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6e9baacb-5b8e-48df-9c02-7e1ff699fe17",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "39f53708-6aa3-4099-8898-23d39ed74048",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			],
 			"protocolProfileBehavior": {}
