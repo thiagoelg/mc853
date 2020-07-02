@@ -6,7 +6,7 @@ export async function up(knex: Knex): Promise<any> {
         (table: Knex.TableBuilder) => {
             table.increments("id").primary();
             table.integer("solicitation_id").references("id").inTable("solicitation");
-            table.integer("form_question_id").references("id").inTable("question");
+            table.integer("form_question_id").references("id").inTable("form_question");
 
             table.string("value");
 
