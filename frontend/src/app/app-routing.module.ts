@@ -26,6 +26,8 @@ const routes: Routes = [
     path: 'overview',
     loadChildren: () => import('./modules/overview/overview.module').then(m => m.OverviewModule)
   },
+
+  { path: 'forms', loadChildren: () => import('./modules/forms/forms.module').then(m => m.FormsModule) },
 ];
 
 @NgModule({

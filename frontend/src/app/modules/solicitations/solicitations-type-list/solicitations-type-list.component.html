@@ -1,0 +1,6 @@
+<p>solicitations-type-list works!</p>
+<div class="grid-container">
+    <mat-card *ngFor="let item of forms$ | async" class="grid-item" (click)="selected.emit(item)">
+        {{item.name}}
+    </mat-card>
+</div>

@@ -1,0 +1,6 @@
+<mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let item of responseTypes$ | async">{{ item |json }}</mat-list-item>
+</mat-list>
+
+
+<app-forms-response-type-create></app-forms-response-type-create>

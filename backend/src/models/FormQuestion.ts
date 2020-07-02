@@ -3,6 +3,7 @@ import BaseModel from "./BaseModel";
 import Question from "./Question";
 
 export default class FormQuestion extends BaseModel {
+  form_id!: number;
   order!: number;
   required!: boolean;
 
@@ -33,6 +34,8 @@ export default class FormQuestion extends BaseModel {
         question_id: { type: "integer" },
         order: { type: "integer" },
         required: { type: "boolean" },
+        created_at: { type: "string", minLength: 1, maxLength: 255 },
+        updated_at: { type: "string", minLength: 1, maxLength: 255 }
       },
     };
   }
@@ -45,7 +48,7 @@ export default class FormQuestion extends BaseModel {
     }
   }
 
-  static async listQuestions(form_id: number) {
+  static async listQuestions(form_id: number): Promise<FormQuestion[]> {
     try {
       const query = FormQuestion.query()
         .where({ form_id })
@@ -69,5 +72,16 @@ export default class FormQuestion extends BaseModel {
       console.log({ error });
       return error;
     }
+  }
+
+  static async setFormQuestions(form_id: number, questions: FormQuestion[]) {
+    const created_at = new Date().toString();
+
+    const form = await FormQuestion.transaction(async (trx) => {
+      return await FormQuestion.query(trx).insert(questions.map(q => {
+        return { ...q, form_id, created_at };
+      }));
+    });
+    return form;
   }
 }
