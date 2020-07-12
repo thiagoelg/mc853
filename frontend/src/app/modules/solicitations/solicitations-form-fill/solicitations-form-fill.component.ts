@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  AbstractControl,
-  FormBuilder,
+  FormArray,
   FormControl,
   FormGroup,
   ValidatorFn,
@@ -9,6 +8,7 @@ import {
 } from '@angular/forms';
 import { FormQuestion } from 'src/app/models/formQuestion';
 import { FormFull } from './../../../models/form';
+import { SolicitationsService } from './../solicitations.service';
 
 @Component({
   selector: 'app-solicitations-form-fill',
@@ -16,35 +16,41 @@ import { FormFull } from './../../../models/form';
   styleUrls: ['./solicitations-form-fill.component.css'],
 })
 export class SolicitationsFormFillComponent implements OnInit {
-  constructor(private fb: FormBuilder) { }
   @Input() formType: FormFull;
   isTouch = window.matchMedia('(pointer: coarse)').matches;
   form: FormGroup;
+  answers: FormArray;
   hints: string[];
   elementTypes: string[];
+  sortedQuestions: FormQuestion[];
+
+  constructor(private solicitationsService: SolicitationsService) {
+  }
 
   ngOnInit(): void {
+    this.sortedQuestions = this.formType?.form_questions?.sort((a, b) => a.order - b.order);
     this.buildForm();
     this.setHints();
     this.setElementTypes();
   }
 
   private buildForm() {
-    this.form = new FormGroup(this.buildControls());
-  }
-
-  private buildControls(): { [key: string]: AbstractControl } {
-    const obj = {};
-
-    this.formType?.form_questions?.forEach((formQuestion) => {
-      obj[formQuestion?.question?.id] = this.toControl(formQuestion);
+    this.form = new FormGroup({
+      form_id: new FormControl(this.formType.id, Validators.required),
+      answers: new FormArray(this.sortedQuestions.map(fq => new FormGroup({
+        form_question_id: new FormControl(fq.id),
+        answer: new FormControl(undefined, this.toValidators(fq))
+      })))
     });
 
-    return obj;
-  }
+    this.answers = this.form.get('answers') as FormArray;
 
-  private toControl = (formQuestion: FormQuestion) =>
-    new FormControl(undefined, this.toValidators(formQuestion))
+
+    console.log({
+      form: this.form,
+      answers: this.answers
+    });
+  }
 
   private toValidators(formQuestion: FormQuestion): ValidatorFn[] {
     const validators = [];
@@ -76,12 +82,22 @@ export class SolicitationsFormFillComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('oi');
+    console.log({ form: this.form.value });
+    console.log('Enviando Solicitação');
+
+    this.solicitationsService.createSolicitation(this.form.value).subscribe({
+      next: (solicitation) => {
+        console.log(solicitation);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   // TODO: This should not exist! Add more basic_types to the backend
   setElementTypes() {
-    this.elementTypes = this.formType?.form_questions?.map((fq) => {
+    this.elementTypes = this.sortedQuestions?.map((fq) => {
       const { min, max, basic_type } = fq.question.response_type;
 
       if (basic_type === 'text' && max > 300) {
@@ -97,7 +113,7 @@ export class SolicitationsFormFillComponent implements OnInit {
   }
 
   setHints() {
-    this.hints = this.formType?.form_questions?.map((fq) => {
+    this.hints = this.sortedQuestions.map((fq) => {
       const { min, max, basic_type } = fq.question.response_type;
       let hint = '';
 
