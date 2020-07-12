@@ -1,5 +1,5 @@
+import { Request, Response, Router } from 'express';
 import User, { UserQuery } from '../models/User';
-import { Router, Request, Response } from 'express';
 const router = Router();
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -12,8 +12,34 @@ router.post('/register', async (req: Request, res: Response) => {
 
 router.get('/', User.validateToken, async (req: Request, res: Response) => {
   try {
-    const users = await User.listUsers(<UserQuery> <unknown> req.query);
+    const users = await User.listUsers(<UserQuery><unknown>req.query);
     return res.status(200).send(users);
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
+
+router.get('/:user_id', User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const user_id = Number(req.params["user_id"]);
+
+    const user = await User.get(user_id);
+
+    return res.status(200).send(user);
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
+router.put('/:user_id/role/:role_id', User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const user_id = Number(req.params["user_id"]);
+    const role_id = Number(req.params["role_id"]);
+
+    const user = await User.changeRoleId({ user_id, role_id });
+
+    return res.status(200).send(user);
   } catch (error) {
     return res.status(500).send(error.toString());
   }

@@ -2,6 +2,11 @@ import { Model, RelationMappings } from "objection";
 import BaseModel from "./BaseModel";
 import ResponseType from "./ResponseType";
 
+export interface QuestionData {
+  text: string;
+  response_type_id: number;
+}
+
 export default class Question extends BaseModel {
   text!: string;
   response_type_id!: number;
@@ -26,7 +31,7 @@ export default class Question extends BaseModel {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["name"],
+      required: ["text", "response_type_id"],
 
       properties: {
         id: { type: "integer" },
@@ -38,9 +43,9 @@ export default class Question extends BaseModel {
     };
   }
 
-  static async newQuestion(text: string, response_type_id: number) {
+  static async newQuestion(data: QuestionData) {
     const question = await Question.transaction(async (trx) => {
-      return await Question.query(trx).insert({ text, response_type_id });
+      return await Question.query(trx).insert(data);
     });
     return question;
   }
@@ -56,4 +61,26 @@ export default class Question extends BaseModel {
       return error;
     }
   }
+
+  static async get(question_id: number) {
+    try {
+      const query = Question.query().findById(question_id).withGraphFetched("response_type");
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async delete(question_id: number) {
+    try {
+      const query = Question.query().deleteById(question_id);
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+
 }

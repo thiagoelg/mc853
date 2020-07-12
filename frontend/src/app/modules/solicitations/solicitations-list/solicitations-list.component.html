@@ -1,0 +1,5 @@
+<p>solicitations-list works!</p>
+<a [routerLink]="['/solicitations', solicitation.id]" *ngFor="let solicitation of solicitations$ | async">
+    <br><br>
+    {{solicitation | json}}
+</a>

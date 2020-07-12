@@ -28,6 +28,8 @@ const routes: Routes = [
   },
 
   { path: 'forms', loadChildren: () => import('./modules/forms/forms.module').then(m => m.FormsModule) },
+
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

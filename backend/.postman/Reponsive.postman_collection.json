@@ -298,7 +298,7 @@
 			"name": "User",
 			"item": [
 				{
-					"name": "Get Users",
+					"name": "List Users",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {
 							"accept": true,
@@ -322,6 +322,33 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true,
+							"host": true,
+							"user-agent": true
+						}
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -329,6 +356,41 @@
 		{
 			"name": "Role",
 			"item": [
+				{
+					"name": "Change User Role",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json; charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"question_id\": 3,\r\n        \"order\": 1,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 1,\r\n        \"order\": 2,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 2,\r\n        \"order\": 3,\r\n        \"required\": false\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/{{user_id}}/role/{{role_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id}}",
+								"role",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "List Roles",
 					"request": {
@@ -345,6 +407,77 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json; charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"question_id\": 3,\r\n        \"order\": 1,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 1,\r\n        \"order\": 2,\r\n        \"required\": true\r\n    },\r\n        {\r\n        \"question_id\": 2,\r\n        \"order\": 3,\r\n        \"required\": false\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/forms/{{form_id}}/questions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"forms",
+								"{{form_id}}",
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Users By Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/roles/{{role_id}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"{{role_id}}",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Role",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/roles/{{role_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"{{role_id}}"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -352,6 +485,69 @@
 		{
 			"name": "Agreement",
 			"item": [
+				{
+					"name": "Templates",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agreements/templates",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agreements",
+										"templates"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Disable template",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agreements/templates/{{agreement_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agreements",
+										"templates",
+										"{{agreement_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Enable template",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/agreements/templates/{{agreement_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"agreements",
+										"templates",
+										"{{agreement_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "List",
 					"request": {
@@ -370,18 +566,68 @@
 					"response": []
 				},
 				{
-					"name": "List templates",
+					"name": "Get",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/agreements/templates",
+							"raw": "{{base_url}}/agreements/{{agreement_id}}",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"agreements",
-								"templates"
+								"{{agreement_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agreements/{{agreement_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agreements",
+								"{{agreement_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json; charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Prazo indeterminado\",\r\n    \"content\": \"Sei lá cara, se vc tiver sorte um dia eu respondo\",\r\n    \"isTemplate\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agreements",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agreements"
 							]
 						}
 					},
@@ -435,7 +681,7 @@
 			"name": "Question",
 			"item": [
 				{
-					"name": "List",
+					"name": "List Questions",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -446,6 +692,74 @@
 							],
 							"path": [
 								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Question",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json; charset=utf-8"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"response_type_id\": 1,\r\n    \"text\": \"Resposta do sistema\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/questions",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"questions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Question",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/questions/{{question_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"questions",
+								"{{question_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Question",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/questions/{{question_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"questions",
+								"{{question_id}}"
 							]
 						}
 					},
@@ -565,7 +879,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Formulario testeee\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Solução padrão\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -588,7 +902,7 @@
 			"protocolProfileBehavior": {}
 		},
 		{
-			"name": "Solicitation",
+			"name": "Solicitations",
 			"item": [
 				{
 					"name": "Answers",
@@ -618,7 +932,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/answers/{{question_id}}",
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/answers/{{form_question_id}}",
 									"host": [
 										"{{base_url}}"
 									],
@@ -626,7 +940,7 @@
 										"solicitations",
 										"{{solicitation_id}}",
 										"answers",
-										"{{question_id}}"
+										"{{form_question_id}}"
 									]
 								}
 							},
@@ -645,7 +959,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"value\": \"Nada!\"\r\n}",
+									"raw": "{\r\n    \"value\": \"4\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -672,10 +986,210 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "List",
+					"name": "Listing",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Submitted By User Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/submittedBy/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"submittedBy",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List without Manager",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/managedByNone",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"managedByNone"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Managed By User Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/managedBy/{{user_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"managedBy",
+										"{{user_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List Managed By Me",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/managedByMe",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"managedByMe"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Solution",
+					"item": [
+						{
+							"name": "Add Solution",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json; charset=utf-8",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"form_id\": 2,\r\n    \"answers\": [\r\n        {\r\n            \"form_question_id\": 6,\r\n            \"answer\": \"Sei lá caraaa 2\"\r\n        },\r\n        {\r\n            \"form_question_id\": 7,\r\n            \"answer\": \"2020-08-19\"\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/solution",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"solution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Solution",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json; charset=utf-8",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/solution",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"solution"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Set solution form",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/solicitations/{{solicitation_id}}/solution/form/{{form_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"solicitations",
+										"{{solicitation_id}}",
+										"solution",
+										"form",
+										"{{form_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Create",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=utf-8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"form_id\": 2,\r\n    \"answers\": [\r\n        {\r\n            \"form_question_id\": 6,\r\n            \"answer\": \"Sei lá caraaa 2\"\r\n        },\r\n        {\r\n            \"form_question_id\": 7,\r\n            \"answer\": \"2020-08-19\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{base_url}}/solicitations",
 							"host": [
@@ -707,32 +1221,79 @@
 					"response": []
 				},
 				{
-					"name": "Create",
+					"name": "Agree",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json; charset=utf-8",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"form_id\": 4\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
+						"header": [],
 						"url": {
-							"raw": "{{base_url}}/solicitations",
+							"raw": "{{base_url}}/solicitations/{{solicitation_id}}/agreement/{{agreement_id}}/agree",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"solicitations"
+								"solicitations",
+								"{{solicitation_id}}",
+								"agreement",
+								"{{agreement_id}}",
+								"agree"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set Agreement",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/solicitations/{{solicitation_id}}/agreement/{{agreement_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"solicitations",
+								"{{solicitation_id}}",
+								"agreement",
+								"{{agreement_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Set managedBy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/solicitations/{{solicitation_id}}/managedBy/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"solicitations",
+								"{{solicitation_id}}",
+								"managedBy",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/solicitations/{{solicitation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"solicitations",
+								"{{solicitation_id}}"
 							]
 						}
 					},

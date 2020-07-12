@@ -7,6 +7,9 @@ import { SolicitationsFormFillComponent } from './solicitations-form-fill/solici
 import { SolicitationsRoutingModule } from './solicitations-routing.module';
 import { SolicitationsComponent } from './solicitations.component';
 import { SolicitationsTypeListComponent } from './solicitations-type-list/solicitations-type-list.component';
+import { SolicitationsListComponent } from './solicitations-list/solicitations-list.component';
+import { SolicitationsDisplayComponent } from './solicitations-display/solicitations-display.component';
+import { SolicitationsFormPageComponent } from './solicitations-form-page/solicitations-form-page.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +17,9 @@ import { SolicitationsTypeListComponent } from './solicitations-type-list/solici
     SolicitationsCreateComponent,
     SolicitationsFormFillComponent,
     SolicitationsTypeListComponent,
+    SolicitationsListComponent,
+    SolicitationsDisplayComponent,
+    SolicitationsFormPageComponent,
   ],
   imports: [
     CommonModule,

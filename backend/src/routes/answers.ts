@@ -9,8 +9,8 @@ router.get(
     async (req: Request, res: Response) => {
         try {
             const solicitation_id = Number(req.params["solicitation_id"]);
-            const solicitations = await Answer.list(solicitation_id);
-            return res.status(200).send(solicitations);
+            const answers = await Answer.list(solicitation_id);
+            return res.status(200).send(answers);
         } catch (error) {
             return res.status(500).send(error.toString());
         }

@@ -1,19 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { User } from 'src/app/models/user';
+import { take } from 'rxjs/operators';
 import { UserWithRole } from './../../models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getAllUsers(): Observable<User[]> {
+  getAllUsers(): Observable<UserWithRole[]> {
     const url = 'users';
 
-    return this.http.get(url).pipe(map((data) => data as UserWithRole[]));
+    return this.http.get<UserWithRole[]>(url).pipe(take(1));
+  }
+
+  getUser(id: number): Observable<UserWithRole> {
+    const url = `users/${id}`;
+
+    return this.http.get<UserWithRole>(url).pipe(take(1));
   }
 }

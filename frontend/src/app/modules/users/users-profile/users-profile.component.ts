@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { UserWithRole } from 'src/app/models/user';
+import { UsersService } from './../users.service';
 
 @Component({
   templateUrl: './users-profile.component.html',
@@ -9,12 +10,14 @@ import { map } from 'rxjs/operators';
 })
 export class UsersProfileComponent implements OnInit {
 
-  id: Observable<string>;
+  id: number;
+  user$: Observable<UserWithRole>;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.id = this.route.paramMap.pipe(map(params => params.get('id')));
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.user$ = this.usersService.getUser(this.id);
   }
 
 }
