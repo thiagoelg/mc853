@@ -7,6 +7,7 @@ export interface AnswerData {
     value: string;
     solicitation_id: number;
     form_question_id: number;
+    answered_by_user_id: number;
 }
 
 export default class Answer extends BaseModel {
@@ -73,10 +74,10 @@ export default class Answer extends BaseModel {
     }
 
     static async newAnswers(data: AnswerData[]) {
-        const answer = await Answer.transaction(async (trx) => {
+        const answers = await Answer.transaction(async (trx) => {
             return await Answer.query(trx).insert(data);
         });
-        return answer;
+        return answers;
     }
 
     static async list(solicitation_id: number): Promise<Answer[]> {

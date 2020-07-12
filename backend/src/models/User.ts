@@ -2,10 +2,10 @@ import BcryptJS from "bcryptjs";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { Model, OrderByDirection, Pojo } from "objection";
-import Role from "./Role";
 import BaseModel from "./BaseModel";
-import RolePermissions from "./RolePermissions";
 import Permission from "./Permission";
+import Role from "./Role";
+import RolePermissions from "./RolePermissions";
 
 export interface UserData {
   name: string;
@@ -21,9 +21,10 @@ export default class User extends BaseModel {
   name!: string;
   email!: string;
   password!: string;
+  role_id!: number;
 
   get $secureFields(): string[] {
-    return ["password", "role_id"];
+    return ["password"];
   }
 
   $formatJson(json: Pojo) {
@@ -71,6 +72,7 @@ export default class User extends BaseModel {
 
       properties: {
         id: { type: "integer" },
+        role_id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
@@ -95,13 +97,47 @@ export default class User extends BaseModel {
 
   static async listUsers(parameters: UserQuery) {
     try {
-      const query = User.query().withGraphFetched("role").withGraphFetched("permissions");
+      const query = User.query().withGraphFetched("role");
       if (parameters.orderBy) {
         const [field, direction] = parameters.orderBy.split(" ");
         query.orderBy(field, direction as OrderByDirection);
       } else {
         query.orderBy(parameters.orderBy || "id", "asc");
       }
+      return await query;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async listUsersByRole(role_id: number) {
+    try {
+      const query = User.query().where("role_id", role_id)
+        .orderBy("id", "desc");
+
+      return await query;
+    } catch (error) {
+      return error;
+    }
+  }
+
+
+  static async get(id: number) {
+    try {
+      const query = User.query().findById(id).withGraphFetched("role");
+
+      return await query;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async changeRoleId(data: { user_id: number, role_id: number }) {
+    try {
+      const query = User.query().patchAndFetchById(data.user_id, {
+        role_id: data.role_id
+      }).withGraphFetched("role");
+
       return await query;
     } catch (error) {
       return error;
@@ -132,8 +168,15 @@ export default class User extends BaseModel {
   static async validateToken(req: Request, res: Response, next: NextFunction) {
     const token = req.token || "";
     try {
-      const decoded = await jwt.verify(token, process.env.SECRET as string);
-      req.body.decoded = decoded;
+      const decoded_token = jwt.verify(token, process.env.SECRET as string) as any;
+
+      const user = await User.query().findById(decoded_token?.id).withGraphFetched("role").withGraphFetched("permissions") as any;
+
+      req.body.decoded = {
+        user, token: decoded_token,
+        hasPermission: (permission: string) => (user?.permissions as Permission[]).some(p => p.short_name === permission)
+      } as const;
+
       return next();
     } catch (error) {
       return res.status(401).send(error.toString());

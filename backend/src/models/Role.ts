@@ -1,7 +1,7 @@
 import { Model, RelationMappings } from "objection";
+import BaseModel from "./BaseModel";
 import Permission from "./Permission";
 import RolePermissions from "./RolePermissions";
-import BaseModel from "./BaseModel";
 
 export default class Role extends BaseModel {
   name!: string;
@@ -64,6 +64,16 @@ export default class Role extends BaseModel {
       const query = Role.query()
         .withGraphFetched("permissions")
         .orderBy("id", "asc");
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async get(role_id: number) {
+    try {
+      const query = Role.query().findById(role_id).withGraphFetched("permissions")
       return await query;
     } catch (error) {
       console.log({ error });

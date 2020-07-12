@@ -8,6 +8,8 @@ import questionsRoutes from "./questions";
 import responseTypesRoutes from "./responseTypes";
 import roleRoutes from "./roles";
 import solicitationsRoutes from "./solicitations";
+import solicitationIdRoutes from "./solicitation_id";
+import solutionRoutes from "./solution";
 import usersRoutes from "./users";
 
 const router = Router();
@@ -21,6 +23,8 @@ router.use("/forms", formsRoutes);
 router.use("/forms/:form_id/questions", formQuestionsRoutes);
 router.use("/responseTypes", responseTypesRoutes);
 router.use("/solicitations", solicitationsRoutes);
+router.use("/solicitations/:solicitation_id", solicitationIdRoutes);
+router.use("/solicitations/:solicitation_id/solution", solutionRoutes);
 router.use("/solicitations/:solicitation_id/answers", answersRoutes);
 
 export default router;

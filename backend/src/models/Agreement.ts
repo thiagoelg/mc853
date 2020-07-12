@@ -1,5 +1,12 @@
 import BaseModel from "./BaseModel";
 
+export interface AgreementData {
+  name: string,
+  content: string,
+  isTemplate: boolean
+}
+
+
 export default class Agreement extends BaseModel {
   name!: string;
   content!: string;
@@ -24,13 +31,9 @@ export default class Agreement extends BaseModel {
     };
   }
 
-  static async newAgreement(
-    name: string,
-    content: string,
-    isTemplate: boolean = false
-  ) {
+  static async newAgreement(data: AgreementData) {
     const agreement = await Agreement.transaction(async (trx) => {
-      return await Agreement.query(trx).insert({ name, content, isTemplate });
+      return await Agreement.query(trx).insert(data);
     });
     return agreement;
   }
@@ -50,6 +53,50 @@ export default class Agreement extends BaseModel {
   static async list() {
     try {
       const query = Agreement.query().orderBy("id", "asc");
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async get(id: number) {
+    try {
+      const query = Agreement.query().findById(id)
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async delete(id: number) {
+    try {
+      const query = Agreement.query().deleteById(id)
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async disableTemplate(id: number) {
+    try {
+      const query = Agreement.query().patchAndFetchById(id, {
+        isTemplate: false
+      })
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async enableTemplate(id: number) {
+    try {
+      const query = Agreement.query().patchAndFetchById(id, {
+        isTemplate: true
+      })
       return await query;
     } catch (error) {
       console.log({ error });

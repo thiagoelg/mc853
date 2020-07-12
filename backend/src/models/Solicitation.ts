@@ -122,6 +122,30 @@ export default class Solicitation extends BaseModel {
         return solicitation;
     }
 
+    static async setSolved(data: { solicitation_id: number }) {
+        try {
+            const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
+                solved_at: new Date().toISOString()
+            });
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async setNotSolved(data: { solicitation_id: number }) {
+        try {
+            const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
+                solved_at: "Not solved"
+            });
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
     static async listAll() {
         try {
             const query = Solicitation.query().orderBy("id", "asc");
@@ -136,7 +160,7 @@ export default class Solicitation extends BaseModel {
         try {
             const query = Solicitation.query()
                 .where("submitted_by_user_id", user_id)
-                .withGraphFetched("[managed_by_user, answers]")
+                .withGraphFetched("[managed_by_user]")
                 .orderBy("id", "asc");
             return await query;
         } catch (error) {
@@ -149,8 +173,77 @@ export default class Solicitation extends BaseModel {
         try {
             const query = Solicitation.query()
                 .where("managed_by_user_id", user_id)
-                .withGraphFetched("[submitted_by_user, answers]")
+                .withGraphFetched("[submitted_by_user]")
                 .orderBy("id", "asc");
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async listNotManaged() {
+        try {
+            const query = Solicitation.query()
+                .where("managed_by_user_id", null)
+                .withGraphFetched("[submitted_by_user]")
+                .orderBy("id", "asc");
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async changeManaged(data: { solicitation_id: number, user_id: number }) {
+        try {
+            const query = Solicitation.query()
+                .patchAndFetchById(data.solicitation_id, {
+                    managed_by_user_id: data.user_id
+                })
+                .withGraphFetched("[submitted_by_user, managed_by_user]")
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async changeSolutionForm(data: { solicitation_id: number, form_id: number }) {
+        try {
+            const query = Solicitation.query()
+                .patchAndFetchById(data.solicitation_id, {
+                    solution_form_id: data.form_id
+                })
+                .withGraphFetched("[managed_by_user, solution_form]")
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async changeAgreement(data: { solicitation_id: number, agreement_id: number }) {
+        try {
+            const query = Solicitation.query()
+                .patchAndFetchById(data.solicitation_id, {
+                    agreement_id: data.agreement_id
+                })
+                .withGraphFetched("[agreement]")
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async agree(data: { solicitation_id: number }) {
+        try {
+            const query = Solicitation.query()
+                .patchAndFetchById(data.solicitation_id, {
+                    agreed_at: new Date().toISOString()
+                })
+                .withGraphFetched("[agreement]")
             return await query;
         } catch (error) {
             console.log({ error });
@@ -161,9 +254,24 @@ export default class Solicitation extends BaseModel {
     static async get(solicitation_id: number) {
         try {
             const query = Solicitation.query()
-                .where("id", solicitation_id)
-                .withGraphFetched("[submitted_by_user, managed_by_user, answers]")
+                .findById(solicitation_id)
+                .withGraphFetched("[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form]")
                 .orderBy("id", "asc");
+            return await query;
+        } catch (error) {
+            console.log({ error });
+            return error;
+        }
+    }
+
+    static async delete(solicitation_id: number) {
+        try {
+            const query = Solicitation.transaction(async (trx) => {
+                await Answer.query(trx).where("solicitation_id", solicitation_id).delete()
+
+                return await Solicitation.query(trx).deleteById(solicitation_id)
+            });
+
             return await query;
         } catch (error) {
             console.log({ error });
