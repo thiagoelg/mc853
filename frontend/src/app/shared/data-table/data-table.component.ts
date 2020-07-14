@@ -21,6 +21,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class DataTableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() columnNames: any = { id: 'Número', name: 'Nome' };
+  @Input() pageSizeOptions = [5, 10, 25, 100];
 
   displayedColumns: string[] = [];
 
