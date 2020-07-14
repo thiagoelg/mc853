@@ -21,8 +21,8 @@ import { FormsComponent } from './forms.component';
     FormsResponseTypeCreateComponent,
     FormsQuestionCreateComponent,
     FormsCreateComponent,
-    FormsQuestionSelectComponent,
+    FormsQuestionSelectComponent
   ],
   imports: [CommonModule, AppMaterialModule, FormsRoutingModule, ReactiveFormsModule],
 })
-export class FormsModule {}
+export class FormsModule { }

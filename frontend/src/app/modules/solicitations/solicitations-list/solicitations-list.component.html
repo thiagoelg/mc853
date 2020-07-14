@@ -1,5 +1,27 @@
-<p>solicitations-list works!</p>
-<a [routerLink]="['/solicitations', solicitation.id]" *ngFor="let solicitation of solicitations$ | async">
-    <br><br>
-    {{solicitation | json}}
-</a>
+<ng-container *ngIf="solicitations$ | async as solicitations">
+
+    <!-- View Solicitations as Requester -->
+    <ng-container *ngIf="false; else elseTemplate">
+
+        <a [routerLink]="['/solicitations', solicitation.id]" *ngFor="let solicitation of solicitations$ | async">
+            <br><br>
+            {{solicitation | json}}
+        </a>
+    </ng-container>
+
+
+    <!-- View Solicitations as Manager -->
+    <ng-template #elseTemplate>
+
+        <!-- solicitation list -->
+        <app-data-table [data]="solicitations" [columnNames]="columnNames">
+
+            <!-- Inner table component when a row is clicked -->
+            <ng-template let-item>
+                {{item | json}}
+            </ng-template>
+        </app-data-table>
+    </ng-template>
+
+
+</ng-container>

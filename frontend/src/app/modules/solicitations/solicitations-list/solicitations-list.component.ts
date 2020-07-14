@@ -11,8 +11,17 @@ import { SolicitationsService } from './../solicitations.service';
 export class SolicitationsListComponent implements OnInit {
 
   solicitations$: Observable<Solicitation[]>;
+  columnNames: any;
 
   constructor(private solicitationsService: SolicitationsService) {
+    this.columnNames = {
+      id: 'Número',
+      submitted_by_user_id: 'Submetido por:',
+      managed_by_user_id: 'Administrado por:',
+      created_at: 'Criado em:',
+      updated_at: 'Atualizado em:',
+      solved_at: 'Solucionado em:'
+    };
     this.solicitations$ = this.solicitationsService.fetchSolicitations();
   }
 

@@ -9,17 +9,31 @@ import { SolicitationsService } from './../solicitations.service';
   styleUrls: ['./solicitations-create.component.css'],
 })
 export class SolicitationsCreateComponent implements OnInit {
-  form$: Observable<FormFull>;
+  forms$: Observable<Form[]>;
   formId$ = new BehaviorSubject<number>(null);
+  form$: Observable<FormFull>;
 
-  constructor(private solicitationsService: SolicitationsService) { }
+  constructor(private solicitationsService: SolicitationsService) {
+    this.forms$ = this.solicitationsService.fetchForms();
+  }
 
   ngOnInit(): void {
     this.form$ = this.formId$.pipe(concatMap(id => id > 0 ? this.solicitationsService.fetchFullForm(id) : of(undefined)));
   }
 
-  selectForm(form: Form) {
-    this.formId$.next(form?.id ?? null);
-    console.log(`Form ${form?.name} Selected`);
+  selectForm(id: number) {
+    this.formId$.next(null);
+    this.formId$.next(id);
+  }
+
+  onSubmit(formValue: any) {
+    this.solicitationsService.createSolicitation(formValue).subscribe({
+      next: (data) => {
+        console.log(data);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

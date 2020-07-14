@@ -1,0 +1,49 @@
+<!-- Search bar -->
+<mat-form-field id="data-table-search" appearance="outline">
+    <mat-label>Digite aqui para pesquisar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input cdkFocusInitial>
+</mat-form-field>
+
+<!-- Table -->
+<div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows>
+        <!-- Column Config -->
+        <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ columnNames[column] }} </th>
+            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                <div class="example-element-detail"
+                    [@detailExpand]="(element == expandedElement) ? 'expanded' : 'collapsed'">
+
+                    <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{$implicit: (element)}">
+                    </ng-template>
+
+                </div>
+            </td>
+        </ng-container>
+
+
+        <!-- Row config -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row"
+            [class.example-expanded-row]="expandedElement === element"
+            (click)="expandedElement = expandedElement === element ? null : !templateRef ? null : element">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">
+                Nenhum item correspondente à pesquisa "{{input.value}}" foi encontrado.
+            </td>
+        </tr>
+    </table>
+
+    <!-- Paginator -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
