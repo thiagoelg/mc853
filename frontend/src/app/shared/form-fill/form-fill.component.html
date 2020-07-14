@@ -84,8 +84,10 @@
 
 
     <!-- Submit Button -->
-    <button mat-raised-button color="primary" type=" submit" [disabled]="!form.valid">
-        Enviar requisição
-    </button>
+    <ng-container *ngIf="formCreated && !displayOnly">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            {{submitText}}
+        </button>
+    </ng-container>
 </form>
 <!-- {{form.valueChanges | async | json}} -->

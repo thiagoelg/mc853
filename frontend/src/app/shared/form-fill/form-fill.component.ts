@@ -14,6 +14,9 @@ export class FormFillComponent implements OnInit {
   @Input() formType: FormFull;
   @Output() formData = new EventEmitter<any>();
 
+  @Input() displayOnly = false;
+  @Input() submitText = 'Enviar requisição';
+
   isTouch = window.matchMedia('(pointer: coarse)').matches;
 
   form: FormGroup;
@@ -23,6 +26,8 @@ export class FormFillComponent implements OnInit {
   elementTypes: string[];
   hints: string[];
 
+  formCreated = false;
+
   constructor() {
   }
 
@@ -31,6 +36,8 @@ export class FormFillComponent implements OnInit {
     this.buildForm();
     this.setHints();
     this.setElementTypes();
+
+    this.formCreated = true;
   }
 
   private buildForm() {
