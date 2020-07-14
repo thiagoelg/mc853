@@ -2,8 +2,10 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { FormData } from 'src/app/models/form';
 import { FormQuestion } from 'src/app/models/formQuestion';
 import { Question } from 'src/app/models/question';
 import { ResponseType } from 'src/app/models/responseType';
@@ -18,52 +20,51 @@ import { FormsQuestionSelectComponent } from './../forms-question-select/forms-q
 export class FormsCreateComponent implements OnInit {
   isMobile = navigator.maxTouchPoints > 0;
 
-  form: FormGroup;
-
   responseTypes$: Observable<ResponseType[]>;
-
   questions$: Observable<Question[]>;
-
   types$: Observable<{ groupName: string; types: ResponseType[] }[]>;
 
+  form: FormGroup;
   formQuestions: FormQuestion[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private formService: FormsService,
+    private formsService: FormsService,
+    private router: Router,
     public dialog: MatDialog
   ) {
     this.buildForm();
     this.setTypeObservables();
   }
 
-  // Don't do this =D
-  getFormArrayControls = () => (this.form?.controls.form_questions as FormArray)?.controls;
+  ngOnInit(): void { }
+
+  get formArr(): FormArray {
+    return this.form?.controls.form_questions as FormArray;
+  }
 
   drop(event: CdkDragDrop<string[]>) {
-    const formArrayValue = [...((this.form.controls.form_questions as FormArray).value as any[])];
+    const formArrayValue = [...(this.formArr.value as any[])];
 
     moveItemInArray(formArrayValue, event.previousIndex, event.currentIndex);
 
-    (this.form.controls.form_questions as FormArray).patchValue(formArrayValue);
+    this.formArr.patchValue(formArrayValue);
   }
 
-  ngOnInit(): void {}
 
   removeControl(index: number) {
-    (this.form.controls.form_questions as FormArray).removeAt(index);
+    this.formArr.removeAt(index);
   }
 
   addControls(values: Question[]) {
-    const controls = (this.form.controls.form_questions as FormArray).controls ?? [];
+    const controls = this.formArr.controls ?? [];
 
     const formArray = new FormArray([
       ...controls,
       ...(values ?? []).map((question: Question) => {
-        return new FormControl({
-          question_id: [question.id, [Validators.required]],
-          required: false,
-          _question: question,
+        return new FormGroup({
+          question: new FormControl(question),
+          required: new FormControl(false)
         });
       }),
     ]);
@@ -82,18 +83,41 @@ export class FormsCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('onSubmit() called');
-    console.log({ form: this.form.value });
 
-    // this.formService.createQuestion(this.form.value).subscribe({
-    //   next: () => this.formed(),
-    // });
+    this.formsService.createForm(this.formattedForm).subscribe({
+      next: (data) => {
+        console.log({ data });
+        this.router.navigate(['/forms', data.id]);
+      },
+      error: (error) => {
+        console.log({ error });
+      }
+    });
+  }
+
+  get formattedForm(): FormData {
+    const fv: {
+      is_template: boolean,
+      name: string,
+      form_questions: { question: Question, required: boolean }[]
+    } = this.form.value;
+
+    return {
+      ...fv,
+      form_questions: fv.form_questions.map((item, i) => {
+        return {
+          question_id: item.question.id,
+          order: i,
+          required: item.required
+        };
+      })
+    } as FormData;
   }
 
   setTypeObservables() {
-    this.responseTypes$ = this.formService.fetchResponseTypes();
+    this.responseTypes$ = this.formsService.fetchResponseTypes();
 
-    this.types$ = this.formService.fetchResponseTypes().pipe(
+    this.types$ = this.formsService.fetchResponseTypes().pipe(
       tap((value) => console.log(value)),
       map((items) => {
         return [

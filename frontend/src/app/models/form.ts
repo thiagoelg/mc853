@@ -9,3 +9,13 @@ export interface Form extends BaseModel {
 export interface FormFull extends Form {
   form_questions: FormQuestion[];
 }
+
+export interface FormData {
+  name: string;
+  is_template: boolean;
+  form_questions: {
+    question_id: number;
+    required: boolean;
+    order: number;
+  }[];
+}

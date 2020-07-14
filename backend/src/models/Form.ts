@@ -1,10 +1,11 @@
 import { Model, RelationMappings } from "objection";
 import BaseModel from "./BaseModel";
-import { default as FormQuestion } from "./FormQuestion";
+import { default as FormQuestion, FormQuestionData } from "./FormQuestion";
 
 export interface FormData {
   name: string;
   is_template?: boolean;
+  form_questions?: Omit<FormQuestionData, 'form_id'>[];
 }
 
 export default class Form extends BaseModel {
@@ -47,8 +48,18 @@ export default class Form extends BaseModel {
     const { name, is_template = false } = data;
 
     const form = await Form.transaction(async (trx) => {
+      const created_form = await Form.query(trx).insert({ name, is_template });
 
-      return await Form.query(trx).insert({ name, is_template });
+      const form_questions = data.form_questions?.map(fq => {
+        return {
+          ...fq,
+          form_id: created_form.id
+        } as FormQuestionData;
+      })
+
+      await FormQuestion.query(trx).insert(form_questions ?? []);
+
+      return await Form.query(trx).findById(created_form.id).withGraphFetched("form_questions.question.response_type");
     });
     return form;
   }
