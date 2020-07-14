@@ -76,7 +76,7 @@ export default class Form extends BaseModel {
 
   static async list() {
     try {
-      const query = Form.query().orderBy("id", "asc");
+      const query = Form.query().withGraphFetched("form_questions.question.response_type").orderBy("id", "asc");
       return await query;
     } catch (error) {
       console.log({ error });

@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from 'src/app/app-material/app-material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsCreateComponent } from './forms-create/forms-create.component';
+import { FormsDisplayComponent } from './forms-display/forms-display.component';
 import { FormsFormQuestionComponent } from './forms-form-question/forms-form-question.component';
 import { FormsQuestionCreateComponent } from './forms-question-create/forms-question-create.component';
 import { FormsQuestionSelectComponent } from './forms-question-select/forms-question-select.component';
@@ -21,8 +23,9 @@ import { FormsComponent } from './forms.component';
     FormsResponseTypeCreateComponent,
     FormsQuestionCreateComponent,
     FormsCreateComponent,
-    FormsQuestionSelectComponent
+    FormsQuestionSelectComponent,
+    FormsDisplayComponent
   ],
-  imports: [CommonModule, AppMaterialModule, FormsRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, AppMaterialModule, FormsRoutingModule, ReactiveFormsModule, SharedModule],
 })
 export class FormsModule { }

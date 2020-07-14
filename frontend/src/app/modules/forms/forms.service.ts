@@ -19,6 +19,11 @@ export class FormsService {
     return this.http.post<FormFull>(url, body).pipe(take(1));
   }
 
+  fetchForm(id: number): Observable<FormFull> {
+    const url = `forms/${id}`;
+
+    return this.http.get<FormFull>(url).pipe(take(1));
+  }
 
   fetchForms(): Observable<Form[]> {
     const url = 'forms';
