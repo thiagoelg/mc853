@@ -10,11 +10,19 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './interceptors';
 import { MenuModule } from './modules/menu/menu.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthGuard } from './auth/auth.guard';
+import { AuthService } from './auth/auth.service';
+import { HomeLayoutComponent } from './layouts/home-layout.component';
+import { LoginLayoutComponent } from './layouts/login-layout.component';
 
 registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    HomeLayoutComponent,
+    LoginLayoutComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -24,7 +32,7 @@ registerLocaleData(localePt, 'pt-BR');
     HttpClientModule,
     MenuModule,
   ],
-  providers: [httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [httpInterceptorProviders, { provide: LOCALE_ID, useValue: 'pt-BR' }, AuthService, AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

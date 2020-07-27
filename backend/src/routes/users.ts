@@ -10,6 +10,19 @@ router.post('/register', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/me', User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const { user } = req.body.decoded;
+    if (user) {
+      return res.status(200).send(user);
+    } else {
+      return res.status(401);
+    }
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
 router.get('/', User.validateToken, async (req: Request, res: Response) => {
   try {
     const users = await User.listUsers(<UserQuery><unknown>req.query);
@@ -18,7 +31,6 @@ router.get('/', User.validateToken, async (req: Request, res: Response) => {
     return res.status(500).send(error.toString());
   }
 });
-
 
 router.get('/:user_id', User.validateToken, async (req: Request, res: Response) => {
   try {
