@@ -5,8 +5,8 @@ export async function up(knex: Knex): Promise<any> {
     "form_question",
     (table: Knex.TableBuilder) => {
       table.increments("id").primary();
-      table.integer("form_id").references("id").inTable("form");
-      table.integer("question_id").references("id").inTable("question");
+      table.integer("form_id").references("id").inTable("form").onUpdate('CASCADE').onDelete('CASCADE');
+      table.integer("question_id").references("id").inTable("question").onUpdate('CASCADE').onDelete('CASCADE');
       table.integer("order").notNullable();
       table.boolean("required").defaultTo(true);
 

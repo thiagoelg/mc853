@@ -5,12 +5,12 @@ export async function up(knex: Knex): Promise<any> {
         "answer",
         (table: Knex.TableBuilder) => {
             table.increments("id").primary();
-            table.integer("solicitation_id").references("id").inTable("solicitation");
-            table.integer("form_question_id").references("id").inTable("form_question");
+            table.integer("solicitation_id").references("id").inTable("solicitation").onUpdate('CASCADE').onDelete('CASCADE');
+            table.integer("form_question_id").references("id").inTable("form_question").onUpdate('CASCADE').onDelete('CASCADE');
 
             table.string("value");
 
-            table.integer("answered_by_user_id").references("id").inTable("user");
+            table.integer("answered_by_user_id").references("id").inTable("user").onUpdate('CASCADE').onDelete('CASCADE');
             table.string("created_at");
             table.string("updated_at");
         }

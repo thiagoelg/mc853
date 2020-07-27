@@ -9,7 +9,7 @@ export async function up(knex: Knex): Promise<any> {
     table.string("created_at");
     table.string("updated_at");
     table.integer("role_id").unsigned().nullable();
-    table.foreign("role_id").references("id").inTable("role");
+    table.foreign("role_id").references("id").inTable("role").onUpdate('CASCADE').onDelete('CASCADE');
   });
 }
 
