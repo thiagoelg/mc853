@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { map, take, catchError } from 'rxjs/operators';
 import { Login } from '../models/login';
 import { UserWithRole } from '../models/user';
 import { Router } from '@angular/router';
+import { Permission } from '../models/permission';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   public token: string;
   public user: UserWithRole;
+  public userPermissions: { [key: string]: boolean; } = {};
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
     private http: HttpClient,
@@ -24,7 +26,7 @@ export class AuthService {
     this.user = JSON.parse(savedUser) as UserWithRole || null;
 
     if (this.token && this.user) {
-      this.loggedIn = new BehaviorSubject<boolean>(true);
+      this.setUserPermissions(this.user);
     }
   }
 
@@ -55,16 +57,36 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  reauth(): Promise<any> {
+    const url = 'auth/reauth';
+    if (!this.token || !this.user) {
+      return Promise.resolve();
+    }
+    return this.http.post(url, null).toPromise()
+      .then(() => {
+        this.loggedIn.next(true);
+      })
+      .catch(() => {
+        this.logout();
+      });
+  }
+
   getSelf(): Observable<void> {
     const url = 'users/me';
     return this.http.get<UserWithRole>(url).pipe(
       take(1),
       map((user: UserWithRole) => {
-        console.log(user);
         localStorage.setItem('user', JSON.stringify(user));
         this.user = user;
+        this.setUserPermissions(this.user);
       })
     );
+  }
+
+  setUserPermissions(user) {
+    user.permissions.forEach((permission: Permission) => {
+      this.userPermissions[permission.short_name] = true;
+    });
   }
 
   get isLoggedIn() {

@@ -3,7 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth/auth.guard';
 import { HomeLayoutComponent } from './layouts/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout.component';
-
+import { PermissionGuard } from './guards/permission.guard';
+import { OverviewModule } from './modules/overview/overview.module';
+import { UsersModule } from './modules/users/users.module';
+import { AdminModule } from './modules/admin/admin.module';
+import { RegisterModule } from './modules/register/register.module';
+import { SolicitationsModule } from './modules/solicitations/solicitations.module';
+import { FormsModule } from './modules/forms/forms.module';
+import { LogoutModule } from './modules/logout/logout.module';
+import { LoginModule } from './modules/login/login.module';
 
 const routes: Routes = [
   {
@@ -13,31 +21,35 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./modules/overview/overview.module').then(m => m.OverviewModule)
+        loadChildren: () => OverviewModule
       },
       {
         path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+        loadChildren: () => AdminModule,
+        canActivate: [PermissionGuard],
+        data: { permissions: AdminModule.requiredPermissions }
       },
       {
         path: 'register',
-        loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule)
+        loadChildren: () => RegisterModule
       },
       {
         path: 'users',
-        loadChildren: () => import('./modules/users/users.module').then(m => m.UsersModule)
+        loadChildren: () => UsersModule,
+        canActivate: [PermissionGuard],
+        data: { permissions: UsersModule.requiredPermissions }
       },
       {
         path: 'solicitations',
-        loadChildren: () => import('./modules/solicitations/solicitations.module').then(m => m.SolicitationsModule)
+        loadChildren: () => SolicitationsModule
       },
       { 
         path: 'forms',
-        loadChildren: () => import('./modules/forms/forms.module').then(m => m.FormsModule)
+        loadChildren: () => FormsModule
       },
       {
         path: 'logout',
-        loadChildren: () => import('./modules/logout/logout.module').then(m => m.LogoutModule)
+        loadChildren: () => LogoutModule
       }
     ]
   },
@@ -47,7 +59,7 @@ const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadChildren: () => import('./modules/login/login.module').then(m => m.LoginModule)
+        loadChildren: () => LoginModule
       }
     ]
   },
