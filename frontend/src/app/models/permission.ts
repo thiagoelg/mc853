@@ -4,6 +4,6 @@ export interface Permission {
   short_name: string;
 }
 
-export abstract class RequiredPermissionsModule {
+export abstract class RequiredPermissions {
   static requiredPermissions: Array<string> = [];
 }

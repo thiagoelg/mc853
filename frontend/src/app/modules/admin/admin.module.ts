@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import { PermissionGuard } from 'src/app/guards/permission.guard';
-import { RequiredPermissionsModule } from 'src/app/models/permission';
+import { RequiredPermissions } from 'src/app/models/permission';
 
 
 @NgModule({
@@ -14,7 +14,7 @@ import { RequiredPermissionsModule } from 'src/app/models/permission';
     AdminRoutingModule
   ]
 })
-export class AdminModule extends RequiredPermissionsModule {
+export class AdminModule extends RequiredPermissions {
   static requiredPermissions = [
     PermissionGuard.PERMISSIONS.MANAGE_ROLES
   ]
