@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-import { PermissionGuard } from 'src/app/guards/permission.guard';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 import { RequiredPermissions } from 'src/app/models/permission';
 
 

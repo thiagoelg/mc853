@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/security/auth.service';
 import { take, map } from 'rxjs/operators';
 
 @Component({
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.form.value).subscribe({
       next: () => {},
-      error: (error: HttpErrorResponse) => console.log(error),
+      error: (error: HttpErrorResponse) => console.error(error),
     });
   }
 }

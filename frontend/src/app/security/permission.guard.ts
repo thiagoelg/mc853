@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../security/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+
   static PERMISSIONS: { [key: string]: string } = {
     MANAGE_ROLES: 'manage_roles',
     ASSIGN_ROLES: 'assign_roles',
@@ -28,17 +29,21 @@ export class PermissionGuard implements CanActivate, CanActivateChild, CanLoad {
     const requiredPermissions = next?.data?.permissions;
     if (!requiredPermissions.length) return true;
 
-    
-    const userPermissions = this.authService.userPermissions;
-    if (!userPermissions) return false;
+    if (this.authService.hasPermissions(requiredPermissions)) {
+      return true;
+    }
 
-    return requiredPermissions.every(permission => userPermissions[permission]);
+    this.router.navigate(['/']);
+
+    return false;
   }
+
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return true;
   }
+
   canLoad(
     route: Route,
     segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {

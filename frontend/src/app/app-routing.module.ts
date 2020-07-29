@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './auth/auth.guard';
+import { AuthGuard } from './security/auth.guard';
 import { HomeLayoutComponent } from './layouts/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout.component';
-import { PermissionGuard } from './guards/permission.guard';
+import { PermissionGuard } from './security/permission.guard';
 import { OverviewModule } from './modules/overview/overview.module';
 import { UsersModule } from './modules/users/users.module';
 import { AdminModule } from './modules/admin/admin.module';
@@ -35,9 +35,7 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        loadChildren: () => UsersModule,
-        canActivate: [PermissionGuard],
-        data: { permissions: UsersModule.requiredPermissions }
+        loadChildren: () => UsersModule
       },
       {
         path: 'solicitations',

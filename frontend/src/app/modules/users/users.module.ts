@@ -6,7 +6,7 @@ import { UsersCardComponent } from './users-card/users-card.component';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
-import { PermissionGuard } from 'src/app/guards/permission.guard';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 import { RequiredPermissions } from 'src/app/models/permission';
 
 @NgModule({
@@ -14,8 +14,4 @@ import { RequiredPermissions } from 'src/app/models/permission';
   imports: [CommonModule, AppMaterialModule, UsersRoutingModule, SharedModule],
 })
 
-export class UsersModule extends RequiredPermissions {
-  static requiredPermissions = [
-    PermissionGuard.PERMISSIONS.MANAGE_USERS
-  ]
-}
+export class UsersModule extends RequiredPermissions { }

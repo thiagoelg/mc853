@@ -83,10 +83,15 @@ export class AuthService {
     );
   }
 
-  setUserPermissions(user) {
+  setUserPermissions(user: UserWithRole) {
     user.permissions.forEach((permission: Permission) => {
       this.userPermissions[permission.short_name] = true;
     });
+  }
+
+  hasPermissions(permissions: Array<string>) {
+    if (!this.userPermissions) return false;
+    return permissions.every(permission => this.userPermissions[permission]);
   }
 
   get isLoggedIn() {
