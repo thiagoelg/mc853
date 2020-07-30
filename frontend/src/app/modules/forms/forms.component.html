@@ -1,6 +1,19 @@
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let item of forms$ | async">{{ item |json }}</mat-list-item>
-</mat-list>
+<h2>Ações</h2>
 
 
-<app-forms-create></app-forms-create>
+<a mat-raised-button color="primary" routerLink="/forms/create">Criar um novo formulário</a>
+
+<br><br>
+<h2>Listagem de todos os formulários</h2>
+
+<ng-container *ngIf="forms$ | async as forms">
+
+    <!-- User list -->
+    <app-data-table [data]="forms" [columnNames]="columnNames" [pageSizeOptions]="[10, 50, 100]">
+
+        <!-- Inner table component when a row is clicked -->
+        <ng-template let-item>
+            <app-form-fill style="width: 100%;" [formType]="item" [displayOnly]="true"></app-form-fill>
+        </ng-template>
+    </app-data-table>
+</ng-container>

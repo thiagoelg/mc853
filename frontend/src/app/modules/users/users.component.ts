@@ -1,29 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { MenuService } from '../menu/menu.service';
 import { User } from './../../models/user';
 import { UsersService } from './users.service';
+import { PermissionGuard } from 'src/app/security/permission.guard';
+import { RequiredPermissions } from 'src/app/models/permission';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
 })
-export class UsersComponent implements OnInit {
-  users: User[] = [];
+export class UsersComponent extends RequiredPermissions implements OnInit {
+  static requiredPermissions = [
+    PermissionGuard.PERMISSIONS.MANAGE_USERS
+  ];
+  users$: Observable<User[]>;
+  columnNames: any;
 
   constructor(private usersService: UsersService) {
-    this.fetchAllUsers();
+    super();
+    this.columnNames = { name: 'Nome', email: 'E-mail', role_name: 'Papel' };
+
+    this.users$ = this.usersService.getAllUsers().pipe(
+      map(users => users.map(user => ({ ...user, role_name: user.role.name }))));
   }
 
   ngOnInit(): void {
     MenuService.menu.title.next('Responsive -> Users');
-  }
-
-  fetchAllUsers() {
-    this.usersService.getAllUsers().subscribe({
-      next: (users) => {
-        this.users = users;
-      },
-    });
   }
 }

@@ -148,7 +148,9 @@ export default class Solicitation extends BaseModel {
 
     static async listAll() {
         try {
-            const query = Solicitation.query().orderBy("id", "asc");
+            const query = Solicitation.query()
+                .withGraphFetched("[submitted_by_user, managed_by_user, agreement, form, solution_form, evaluation_form]")
+                .orderBy("id", "asc");
             return await query;
         } catch (error) {
             console.log({ error });
@@ -160,7 +162,7 @@ export default class Solicitation extends BaseModel {
         try {
             const query = Solicitation.query()
                 .where("submitted_by_user_id", user_id)
-                .withGraphFetched("[managed_by_user]")
+                .withGraphFetched("[managed_by_user, agreement, form, solution_form, evaluation_form]")
                 .orderBy("id", "asc");
             return await query;
         } catch (error) {
@@ -173,7 +175,7 @@ export default class Solicitation extends BaseModel {
         try {
             const query = Solicitation.query()
                 .where("managed_by_user_id", user_id)
-                .withGraphFetched("[submitted_by_user]")
+                .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form]")
                 .orderBy("id", "asc");
             return await query;
         } catch (error) {
@@ -186,7 +188,7 @@ export default class Solicitation extends BaseModel {
         try {
             const query = Solicitation.query()
                 .where("managed_by_user_id", null)
-                .withGraphFetched("[submitted_by_user]")
+                .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form]")
                 .orderBy("id", "asc");
             return await query;
         } catch (error) {

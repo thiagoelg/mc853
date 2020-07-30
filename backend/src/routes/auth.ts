@@ -14,8 +14,8 @@ router.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-router.post('/reauth', async (req: Request, res: Response) => {
-  return res.json();
+router.post('/reauth', User.validateToken, async (req: Request, res: Response) => {
+  return res.status(200).send({ status: 'OK' });
 });
 
 router.post('/logout', async (req: Request, res: Response) => {

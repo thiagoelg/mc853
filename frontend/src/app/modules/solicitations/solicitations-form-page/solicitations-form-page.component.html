@@ -1,5 +1,6 @@
-<p>solicitations-form-page works!</p>
-
 <div style="max-width: 700px;" *ngIf="form$ | async as form">
-    <app-solicitations-form-fill *ngIf="form" [formType]="form"></app-solicitations-form-fill>
+    <br>
+    <p>Criar solicitação: {{form.name}}</p>
+    <br>
+    <app-form-fill [formType]="form" (formData)="onSubmit($event)"></app-form-fill>
 </div>

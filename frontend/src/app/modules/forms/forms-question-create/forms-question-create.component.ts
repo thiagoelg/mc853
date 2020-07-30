@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { Question } from 'src/app/models/question';
 import { ResponseType } from 'src/app/models/responseType';
 import { FormsService } from '../forms.service';
 
@@ -11,10 +12,10 @@ import { FormsService } from '../forms.service';
   styleUrls: ['./forms-question-create.component.css'],
 })
 export class FormsQuestionCreateComponent implements OnInit {
+  @Output() created = new EventEmitter<Question>();
   form: FormGroup;
 
   responseTypes$: Observable<ResponseType[]>;
-
   types$: Observable<{ groupName: string; types: ResponseType[] }[]>;
 
   constructor(private fb: FormBuilder, private formService: FormsService) {
@@ -22,7 +23,7 @@ export class FormsQuestionCreateComponent implements OnInit {
     this.setTypeObservables();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   buildForm() {
     this.form = this.fb.group({
@@ -32,8 +33,18 @@ export class FormsQuestionCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('onSubmit() called');
-    console.log({ form: this.form.value });
+    const form = this.form.value;
+    console.log({ form });
+
+    this.formService.createQuestion(form).subscribe({
+      next: (data) => {
+        console.log({ data });
+        this.created.emit(data);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   setTypeObservables() {

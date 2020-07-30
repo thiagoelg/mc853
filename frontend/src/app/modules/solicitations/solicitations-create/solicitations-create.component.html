@@ -1,11 +1,14 @@
-<p>solicitations-create works!</p>
+<p *ngIf="!(formId$|async)">Selecione um formulário para criar a sua solicitação:</p>
 
-<p>O que você deseja solicitar? </p>
-<app-solicitations-type-list (selected)="selectForm($event)">
+<!-- List of submission forms -->
+<div class="card-grid-container">
+    <mat-card *ngFor="let item of forms$ | async" (click)="selectForm(item.id)">
+        {{item.name}}
+    </mat-card>
+</div>
 
-</app-solicitations-type-list>
-
-
+<!-- Fill submission form -->
 <div style="max-width: 700px;" *ngIf="form$ | async as form">
-    <app-solicitations-form-fill *ngIf="form" [formType]="form"></app-solicitations-form-fill>
+    <p>Formulário selecionado: {{form.name}}</p>
+    <app-form-fill [formType]="form" (formData)="onSubmit($event)"></app-form-fill>
 </div>

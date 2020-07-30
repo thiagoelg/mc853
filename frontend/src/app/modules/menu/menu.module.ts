@@ -8,6 +8,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
+import { SecurityModule } from 'src/app/security/security.module';
 
 @NgModule({
   declarations: [MenuComponent],
@@ -20,6 +21,7 @@ import { MenuComponent } from './menu/menu.component';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    SecurityModule
   ],
   exports: [MenuComponent],
 })

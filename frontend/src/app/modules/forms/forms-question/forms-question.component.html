@@ -1,5 +1,19 @@
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let item of questions$ | async">{{ item |json }}</mat-list-item>
-</mat-list>
+<h2>Ações</h2>
 
-<app-forms-question-create></app-forms-question-create>
+
+<a mat-raised-button color="primary" routerLink="/forms/questions/create">Criar uma nova pergunta</a>
+
+<br><br>
+<h2>Listagem de todos as perguntas</h2>
+
+<ng-container *ngIf="questions$ | async as questions">
+
+    <!-- User list -->
+    <app-data-table [data]="questions" [columnNames]="columnNames" [pageSizeOptions]="[10, 50, 100]">
+
+        <!-- Inner table component when a row is clicked -->
+        <ng-template let-item>
+            {{item| json}}
+        </ng-template>
+    </app-data-table>
+</ng-container>

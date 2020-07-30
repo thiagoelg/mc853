@@ -2,10 +2,18 @@ import { Model } from "objection";
 import BaseModel from "./BaseModel";
 import Question from "./Question";
 
+export interface FormQuestionData {
+  form_id: number;
+  question_id: number;
+  required: boolean;
+  order: number;
+}
+
 export default class FormQuestion extends BaseModel {
   form_id!: number;
-  order!: number;
+  question_id!: number;
   required!: boolean;
+  order!: number;
 
   static get tableName() {
     return "form_question";

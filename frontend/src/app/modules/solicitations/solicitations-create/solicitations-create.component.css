@@ -1,0 +1,12 @@
+.card-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+.card-grid-container > mat-card {
+  justify-self: center;
+  overflow: hidden;
+  width: 80%;
+  min-height: 50px;
+}

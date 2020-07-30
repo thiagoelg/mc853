@@ -1,5 +1,11 @@
-<div class="grid-container">
-    <div *ngFor="let user of users" class="grid-item">
-        <app-users-card [user]="user"></app-users-card>
-    </div>
-</div>
+<ng-container *ngIf="users$ | async as users">
+
+    <!-- User list -->
+    <app-data-table [data]="users" [columnNames]="columnNames">
+
+        <!-- Inner table component when a row is clicked -->
+        <ng-template let-item>
+            {{item | json}}
+        </ng-template>
+    </app-data-table>
+</ng-container>

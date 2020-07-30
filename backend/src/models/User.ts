@@ -121,7 +121,6 @@ export default class User extends BaseModel {
     }
   }
 
-
   static async get(id: number) {
     try {
       const query = User.query().findById(id).withGraphFetched("role");
@@ -173,7 +172,8 @@ export default class User extends BaseModel {
       const user = await User.query().findById(decoded_token?.id).withGraphFetched("role").withGraphFetched("permissions") as any;
 
       req.body.decoded = {
-        user, token: decoded_token,
+        user,
+        token: decoded_token,
         hasPermission: (permission: string) => (user?.permissions as Permission[]).some(p => p.short_name === permission)
       } as const;
 
