@@ -7,7 +7,7 @@ export interface Question extends BaseModel {
   response_type_id?: number;
 }
 
-export interface QuestionCreate extends BaseModel {
+export interface QuestionData extends BaseModel {
   text: string;
-  responseTypeId: number;
+  response_type_id: number;
 }

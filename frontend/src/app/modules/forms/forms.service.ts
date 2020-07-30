@@ -5,7 +5,7 @@ import { take } from 'rxjs/operators';
 import { FormData, FormFull } from 'src/app/models/form';
 import { ResponseType } from 'src/app/models/responseType';
 import { Form } from './../../models/form';
-import { Question } from './../../models/question';
+import { Question, QuestionData } from './../../models/question';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,12 @@ export class FormsService {
     const url = 'forms';
 
     return this.http.post<FormFull>(url, body).pipe(take(1));
+  }
+
+  createQuestion(body: QuestionData): Observable<Question> {
+    const url = 'questions';
+
+    return this.http.post<Question>(url, body).pipe(take(1));
   }
 
   fetchForm(id: number): Observable<FormFull> {
