@@ -31,6 +31,26 @@ export async function seed(knex: Knex): Promise<any> {
                       return knex("role_permissions").insert(role_permissions);
                     }),
                   knex("role")
+                    .insert({ name: "Gerente", short_name: "manager" }, "id")
+                    .then(([role_id]) => {
+                      const my_permissions = permissions.filter((perm) =>
+                        [
+                          Permission.shortNames.ASSIGN_ROLES,
+                          Permission.shortNames.MANAGE_USERS,
+                          Permission.shortNames.MANAGE_FORMS,
+                          Permission.shortNames.MANAGE_FORM_FIELDS,
+                          Permission.shortNames.MANAGE_SOLICITATIONS,
+                          Permission.shortNames.ANSWER_SOLICITATION,
+                        ].includes(perm.short_name)
+                      );
+
+                      const role_permissions = my_permissions.map((perm) => {
+                        return { role_id, permission_id: perm.id };
+                      });
+
+                      return knex("role_permissions").insert(role_permissions);
+                    }),
+                  knex("role")
                     .insert({ name: "Atendente", short_name: "worker" }, "id")
                     .then(([role_id]) => {
                       const my_permissions = permissions.filter((perm) =>
