@@ -1,5 +1,6 @@
 import { BaseModel } from './index';
 import { Role } from './role';
+import { Permission } from './permission';
 
 export interface User extends BaseModel {
   id: number;
@@ -15,4 +16,5 @@ export interface UserCreate {
 
 export interface UserWithRole extends User {
   role: Role;
+  permissions: Array<Permission>;
 }

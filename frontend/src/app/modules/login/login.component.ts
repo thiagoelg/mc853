@@ -1,7 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/security/auth.service';
+import { take, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +12,21 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-
   hidePassword = true;
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.buildForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.isLoggedIn.subscribe({
+      next: (isLoggedIn) => {
+        if (isLoggedIn) {
+          this.router.navigate(['/']);
+        }
+      }
+    });
+  }
 
   buildForm() {
     this.form = this.fb.group({
@@ -29,14 +38,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginService.login(this.form.value).subscribe({
-      next: () => this.logged(),
-      error: (error: HttpErrorResponse) => console.log(error),
+    this.authService.login(this.form.value).subscribe({
+      next: () => {},
+      error: (error: HttpErrorResponse) => console.error(error),
     });
-  }
-
-  logged() {
-    console.log('logged');
-    console.log('logged');
   }
 }
