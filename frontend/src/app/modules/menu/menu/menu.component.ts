@@ -20,8 +20,8 @@ export class MenuComponent {
     { name: 'Forms', path: ['/forms'], permissions: [] },
     { name: 'Questions', path: ['/forms/questions'], permissions: [] },
     { name: 'ResponseTypes', path: ['/forms/response-types'], permissions: [] },
-    { name: 'Users', path: ['/users'], permissions: UsersComponent.requiredPermissions },
-    { name: 'User 1', path: ['/users', 1], permissions: [] },
+    { name: 'Users', path: ['/users/list'], permissions: UsersComponent.requiredPermissions },
+    { name: 'Me', path: ['/users/profile'], permissions: [] },
     { name: 'Register', path: ['/register'], permissions: [] }
   ]
 

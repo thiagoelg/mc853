@@ -60,8 +60,8 @@ export default class Answer extends BaseModel {
                 form_question_id: { type: "number" },
                 value: { type: "string" },
                 answered_by_user_id: { type: "number" },
-                created_at: { type: "string", minLength: 1, maxLength: 255 },
-                updated_at: { type: "string", minLength: 1, maxLength: 255 },
+                created_at: { type: "timestamp" },
+                updated_at: { type: "timestamp" },
             },
         };
     }

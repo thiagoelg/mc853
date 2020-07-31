@@ -6,8 +6,7 @@ export async function up(knex: Knex): Promise<any> {
     table.string("name");
     table.string("email");
     table.string("password");
-    table.string("created_at");
-    table.string("updated_at");
+    table.timestamps(true, true);
     table.integer("role_id").unsigned().nullable();
     table.foreign("role_id").references("id").inTable("role").onUpdate('CASCADE').onDelete('CASCADE');
   });

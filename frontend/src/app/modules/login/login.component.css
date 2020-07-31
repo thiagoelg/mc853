@@ -2,21 +2,6 @@ mat-form-field {
   width: 100%;
 }
 
-mat-form-field > mat-button-toggle > mat-icon {
-  margin: 0 -12px;
-}
-
-.background {
-  width: 100%;
-  height: 100%;
-  background-color: #1e254d;
-}
-
-.login {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
 .logo {
   padding: 60px;
   text-align: center;
@@ -24,4 +9,19 @@ mat-form-field > mat-button-toggle > mat-icon {
   font-size: 60px;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.action-area {
+  display: flex;
+  align-items: flex-end;
+}
+
+.login-error {
+  color: red;
+  text-align: left;
+}
+
+.login-button {
+  text-align: right;
+  flex-grow: 1;
 }

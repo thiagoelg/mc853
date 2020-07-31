@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from './register.service';
+import { AuthService } from 'src/app/security/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,10 +11,15 @@ import { RegisterService } from './register.service';
 })
 export class RegisterComponent implements OnInit {
   form: FormGroup;
-
+  errorMsg: string = null;
   hidePassword = true;
 
-  constructor(private fb: FormBuilder, private registerService: RegisterService) {
+  constructor(
+    private fb: FormBuilder,
+    private registerService: RegisterService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.buildForm();
   }
 
@@ -20,21 +27,28 @@ export class RegisterComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(6)]],
-      email: ['', [Validators.required /*, Validators.email */]],
-      password: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
-
-    // this.form.valueChanges.subscribe({ next: (formValues) => console.log({ formValues }) });
   }
 
   onSubmit() {
     this.registerService.register(this.form.value).subscribe({
       next: () => this.registered(),
+      error: (error) => {
+        this.errorMsg = error.error.message;
+      }
     });
   }
 
   registered() {
-    console.log('registered');
+    const email = this.form.controls.email.value;
+    const password = this.form.controls.password.value;
+    this.authService.login({ email, password }).subscribe({
+      next: () => {
+        this.router.navigate(['/']);
+      }
+    })
   }
 }

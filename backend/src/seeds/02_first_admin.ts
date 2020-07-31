@@ -17,9 +17,7 @@ export async function seed(knex: Knex): Promise<any> {
               email: "admin",
               password:
                 "$2y$10$.mADKr979TNBWOrdhOHODuceBTe9A8frbgeg8l1iVSvDtWCLn0gUi",
-              role_id: role.id,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString(),
+              role_id: role.id
             },
           ]);
         });

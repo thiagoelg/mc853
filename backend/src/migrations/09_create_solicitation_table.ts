@@ -21,8 +21,8 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("evaluation_form_id").references("id").inTable("form").onUpdate('CASCADE').onDelete('CASCADE');
       table.string("evaluated_at");
 
-      table.string("created_at");
-      table.string("updated_at");
+      table.timestamp("created_at").defaultTo(knex.fn.now());
+      table.timestamp("updated_at").defaultTo(knex.fn.now());
     }
   );
 }

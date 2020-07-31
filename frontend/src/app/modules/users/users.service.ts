@@ -21,4 +21,9 @@ export class UsersService {
 
     return this.http.get<UserWithRole>(url).pipe(take(1));
   }
+
+  updateRole(userId: number, roleId: number): Observable<UserWithRole> {
+    const url = `users/${userId}/assign_role`;
+    return this.http.put<UserWithRole>(url, { role_id: roleId }).pipe(take(1));
+  }
 }

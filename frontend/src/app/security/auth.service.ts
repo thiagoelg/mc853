@@ -71,7 +71,7 @@ export class AuthService {
       });
   }
 
-  getSelf(): Observable<void> {
+  getSelf(): Observable<UserWithRole> {
     const url = 'users/me';
     return this.http.get<UserWithRole>(url).pipe(
       take(1),
@@ -79,6 +79,7 @@ export class AuthService {
         localStorage.setItem('user', JSON.stringify(user));
         this.user = user;
         this.setUserPermissions(this.user);
+        return user;
       })
     );
   }

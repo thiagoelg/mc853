@@ -9,9 +9,21 @@
     <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows style="overflow-x:auto;">
         <!-- Column Config -->
         <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                {{ columnNames[column] }} </th>
-            <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+            <ng-container *ngIf="column === 'actions'; else normalColumn">
+                <th mat-header-cell *matHeaderCellDef>Ações</th>
+                <td mat-cell *matCellDef="let element">
+                    <button color="primary" mat-button *ngFor="let action of actions" (click)="onAction.emit({ action: action.name, element: element })" [matTooltip]="action.label">
+                        <mat-icon *ngIf="action.icon">{{action.icon}}</mat-icon>
+                        <ng-container *ngIf="!action.icon">{{action.label}}</ng-container>
+                    </button>
+                </td>
+            </ng-container>
+            <ng-template #normalColumn>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ columnNames[column] }}
+                </th>
+                <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+            </ng-template>
         </ng-container>
 
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->

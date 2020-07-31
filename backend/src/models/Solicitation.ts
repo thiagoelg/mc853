@@ -109,8 +109,8 @@ export default class Solicitation extends BaseModel {
                 solved_at: { type: "string", minLength: 1, maxLength: 255 },
                 evaluation_form_id: { type: "integer" },
                 evaluated_at: { type: "string", minLength: 1, maxLength: 255 },
-                created_at: { type: "string", minLength: 1, maxLength: 255 },
-                updated_at: { type: "string", minLength: 1, maxLength: 255 }
+                created_at: { type: "timestamp" },
+                updated_at: { type: "timestamp" }
             },
         };
     }

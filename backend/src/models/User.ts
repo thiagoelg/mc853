@@ -11,6 +11,7 @@ export interface UserData {
   name: string;
   email: string;
   password: string;
+  role_id?: number;
 }
 
 export interface UserQuery {
@@ -76,8 +77,8 @@ export default class User extends BaseModel {
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 }
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" }
       },
     };
   }
@@ -87,6 +88,8 @@ export default class User extends BaseModel {
   }
 
   static async newUser(userData: UserData) {
+    const defaultRole = await Role.getDefaultRole();
+    userData.role_id = defaultRole.id;
     const user = await User.transaction(async (trx) => {
       userData.password = User.hashPassword(userData.password);
       return await User.query(trx).insert(userData);
@@ -152,7 +155,7 @@ export default class User extends BaseModel {
       .limit(1);
     const results = await query;
     if (!results.length) {
-      throw new Error("No users found");
+      throw new Error("Não foram econtrados usuários com esse email.");
     }
     const user = results[0];
     if (BcryptJS.compareSync(password, user.password)) {
@@ -161,7 +164,7 @@ export default class User extends BaseModel {
       });
       return token;
     }
-    return false;
+    throw new Error("Senha incorreta.");
   }
 
   static async validateToken(req: Request, res: Response, next: NextFunction) {
