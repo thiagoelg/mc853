@@ -23,6 +23,7 @@ export default class User extends BaseModel {
   email!: string;
   password!: string;
   role_id!: number;
+  role!: Role;
 
   get $secureFields(): string[] {
     return ["password"];
@@ -134,8 +135,19 @@ export default class User extends BaseModel {
     }
   }
 
-  static async changeRoleId(data: { user_id: number, role_id: number }) {
+  static async changeRoleId(data: { requester: User, user_id: number, role_id: number }) {
     try {
+
+      const target_role = await Role.get(data.role_id);
+
+      if (!target_role) throw new Error('Papel não encontrado.');
+
+      console.log(data.requester);
+
+      if (target_role.level < data.requester.role.level) {
+        throw new Error('Não tem permissão para associar este papel.');
+      }
+
       const query = User.query().patchAndFetchById(data.user_id, {
         role_id: data.role_id
       }).withGraphFetched("role");

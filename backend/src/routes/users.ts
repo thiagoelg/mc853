@@ -48,8 +48,9 @@ router.put('/:user_id/assign_role', User.validateToken, async (req: Request, res
   try {
     const user_id = Number(req.params["user_id"]);
     const role_id = Number(req.body["role_id"]);
+    const requester = req.body.decoded.user;
 
-    const user = await User.changeRoleId({ user_id, role_id });
+    const user = await User.changeRoleId({ requester, user_id, role_id });
 
     return res.status(200).send(user);
   } catch (error) {

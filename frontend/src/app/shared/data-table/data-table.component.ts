@@ -58,8 +58,6 @@ export class DataTableComponent implements OnInit {
     this.dataSource.data = this.data;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
-    console.log(this.actions);
   }
 
   applyFilter(event: Event) {

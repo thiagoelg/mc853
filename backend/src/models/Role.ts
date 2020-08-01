@@ -7,6 +7,7 @@ export default class Role extends BaseModel {
   name!: string;
   short_name!: string;
   is_default!: boolean;
+  level!: number;
 
   static get tableName() {
     return "role";
@@ -47,6 +48,7 @@ export default class Role extends BaseModel {
         id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 1024 },
         short_name: { type: "string", minLength: 1, maxLength: 255 },
+        level: { type: "integer" },
         is_default: { type: "boolean" },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" }
