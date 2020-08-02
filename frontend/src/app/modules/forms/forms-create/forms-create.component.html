@@ -1,80 +1,80 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <p>
-        <!-- Título do formulário -->
-        <mat-form-field appearance="outline">
-            <mat-label>Título do formulário</mat-label>
-            <input matInput required placeholder="Ex.: Requisição de reparo em equipamento" formControlName='name'>
-        </mat-form-field>
-    </p>
-    <p>
-        <!-- "Is template?" checkbox -->
-        <mat-checkbox formControlName='is_template'>
-            É um formulário padrão que será sugerido ao usuário ao criar alguma solicitação
-        </mat-checkbox>
-    </p>
-    <p>
-        <ng-container formArrayName="form_questions">
-            <!-- Questions list -->
-            <div style="width: 100%;" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+  <p>
+    <!-- Título do formulário -->
+    <mat-form-field appearance="outline">
+      <mat-label>Título do formulário</mat-label>
+      <input matInput required placeholder="Ex.: Requisição de reparo em equipamento" formControlName='name'>
+    </mat-form-field>
+  </p>
+  <p>
+    <!-- "Is template?" checkbox -->
+    <mat-checkbox formControlName='is_template'>
+      É um formulário padrão que será sugerido ao usuário ao criar alguma solicitação
+    </mat-checkbox>
+  </p>
+  <p>
+    <ng-container formArrayName="form_questions">
+      <!-- Questions list -->
+      <div style="width: 100%;" cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
 
-                <!-- Question Item -->
-                <div class="example-box" *ngFor="let item of formArr.controls; index as i" cdkDrag>
-                    <ng-container *ngIf="item.value?.question as question" [formGroupName]="i">
+        <!-- Question Item -->
+        <div class="example-box" *ngFor="let item of formArr.controls; index as i" cdkDrag>
+          <ng-container *ngIf="item.value?.question as question" [formGroupName]="i">
 
-                        <!-- Drag/drop handle -->
-                        <div class="example-custom-placeholder" *cdkDragPlaceholder> </div>
-                        <div *ngIf="isMobile" class="example-handle" cdkDragHandle>
-                            <svg width="32px" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
-                                </path>
-                                <path d="M0 0h24v24H0z" fill="none"></path>
-                            </svg>
-                        </div>
-
-
-                        <!-- "Is required?" checkbox -->
-                        <mat-checkbox style="margin-right: auto;" formControlName='required' [labelPosition]="'before'">
-                            É obrigatório?
-                        </mat-checkbox>
-
-
-
-                        <!-- Question -->
-                        <div style="margin-right: auto">{{i+1}}) {{question?.text}} </div>
-
-
-
-                        <!-- Response type -->
-                        <div style="margin-right: 10px">
-                            ({{question?.response_type?.name}})
-                        </div>
-
-                        <!-- Button to remove question -->
-                        <button mat-mini-fab type="button" color="warn" (click)="removeControl(i)">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                    </ng-container>
-                </div>
-
-                <!-- Show this message when no question is selected -->
-                <div *ngIf="formArr.length == 0" class="listMessage">
-                    Clique no botão abaixo para adicionar algumas perguntas no seu formulário. :D
-                </div>
+            <!-- Drag/drop handle -->
+            <div class="example-custom-placeholder" *cdkDragPlaceholder> </div>
+            <div *ngIf="isMobile" class="example-handle" cdkDragHandle>
+              <svg width="32px" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                  d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+                </path>
+                <path d="M0 0h24v24H0z" fill="none"></path>
+              </svg>
             </div>
 
 
-            <!-- Add Questions to the form -->
-            <button style="width: 100%; background-color: lightseagreen; color: black;" mat-raised-button
-                color="primary" type="button" (click)="openAddQuestionDialog()">
-                Adicionar perguntas
+            <!-- "Is required?" checkbox -->
+            <mat-checkbox style="margin-right: auto;" formControlName='required' [labelPosition]="'before'">
+              É obrigatório?
+            </mat-checkbox>
+
+
+
+            <!-- Question -->
+            <div style="margin-right: auto">{{i+1}}) {{question?.text}} </div>
+
+
+
+            <!-- Response type -->
+            <div style="margin-right: 10px">
+              ({{question?.response_type?.name}})
+            </div>
+
+            <!-- Button to remove question -->
+            <button mat-mini-fab type="button" color="warn" (click)="removeControl(i)">
+              <mat-icon>delete</mat-icon>
             </button>
-        </ng-container>
-    </p>
-    <p>
-        <!-- Submit button -->
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-            Submeter formulário
-        </button>
-    </p>
+          </ng-container>
+        </div>
+
+        <!-- Show this message when no question is selected -->
+        <div *ngIf="formArr.length == 0" class="listMessage">
+          Clique no botão abaixo para adicionar algumas perguntas no seu formulário. :D
+        </div>
+      </div>
+
+
+      <!-- Add Questions to the form -->
+      <button style="width: 100%; background-color: lightseagreen; color: black;" mat-raised-button
+        color="primary" type="button" (click)="openAddQuestionDialog()">
+        Adicionar perguntas
+      </button>
+    </ng-container>
+  </p>
+  <p>
+    <!-- Submit button -->
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+      Submeter formulário
+    </button>
+  </p>
 </form>
