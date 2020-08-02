@@ -1,0 +1,13 @@
+.user-main-info, .user-permissions {
+  margin: 0 0 16px;
+}
+
+.user-profile-image {
+  margin-right: 16px;
+}
+
+.permissions-title {
+  font-size: 24px;
+  font-weight: 500;
+  padding-top: 16px;
+}

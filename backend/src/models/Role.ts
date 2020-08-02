@@ -68,7 +68,7 @@ export default class Role extends BaseModel {
     try {
       const query = Role.query()
         .withGraphFetched("permissions")
-        .orderBy("id", "asc");
+        .orderBy("level", "asc");
       return await query;
     } catch (error) {
       console.log({ error });

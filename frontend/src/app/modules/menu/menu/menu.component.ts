@@ -5,6 +5,8 @@ import { map, shareReplay } from 'rxjs/operators';
 import { MenuService } from '../menu.service';
 import { AdminModule } from '../../admin/admin.module';
 import { UsersComponent } from '../../users/users.component';
+import { AuthService } from '../../../security/auth.service';
+import { UserWithRole } from '../../../models/user';
 
 @Component({
   selector: 'app-menu',
@@ -12,6 +14,10 @@ import { UsersComponent } from '../../users/users.component';
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent {
+  constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) { }
+
+  user: UserWithRole = this.authService.user;
+
   title$ = MenuService.menu.title.asObservable();
   items = [
     { name: 'Solicitations', path: ['/solicitations'], permissions: [] },
@@ -21,7 +27,6 @@ export class MenuComponent {
     { name: 'Questions', path: ['/forms/questions'], permissions: [] },
     { name: 'ResponseTypes', path: ['/forms/response-types'], permissions: [] },
     { name: 'Users', path: ['/users/list'], permissions: UsersComponent.requiredPermissions },
-    { name: 'Me', path: ['/users/profile'], permissions: [] },
     { name: 'Register', path: ['/register'], permissions: [] }
   ]
 
@@ -29,6 +34,4 @@ export class MenuComponent {
     map((result) => result.matches),
     shareReplay()
   );
-
-  constructor(private breakpointObserver: BreakpointObserver) {}
 }

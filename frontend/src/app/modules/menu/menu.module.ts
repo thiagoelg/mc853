@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { MenuComponent } from './menu/menu.component';
 import { SecurityModule } from 'src/app/security/security.module';
@@ -21,6 +22,7 @@ import { SecurityModule } from 'src/app/security/security.module';
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule,
     SecurityModule
   ],
   exports: [MenuComponent],

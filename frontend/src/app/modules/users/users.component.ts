@@ -43,7 +43,7 @@ export class UsersComponent extends RequiredPermissions implements OnInit {
   onAction(event: TableEmittedAction) {
     const { action, element } = event;
     if (action === 'edit') {
-      this.router.navigate(['/users', element.id, '/edit']);
+      this.router.navigate(['/users', element.id]);
     }
   }
 }

@@ -9,7 +9,7 @@ export async function seed(knex: Knex): Promise<any> {
       // Inserts seed entries
       return knex("user").insert([
         {
-          name: "requester",
+          name: "Solicitante",
           email: "requester",
           password:
             "$2a$10$p0zq7fC382tDIIUBVNNkse55KtO5SD60xY.rTWYDviWwUWkbm3xBi",

@@ -13,7 +13,7 @@ export async function seed(knex: Knex): Promise<any> {
           // Inserts seed entries
           return knex("user").insert([
             {
-              name: "admin",
+              name: "Admin",
               email: "admin",
               password:
                 "$2y$10$.mADKr979TNBWOrdhOHODuceBTe9A8frbgeg8l1iVSvDtWCLn0gUi",
