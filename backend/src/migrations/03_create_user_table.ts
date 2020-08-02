@@ -9,6 +9,7 @@ export async function up(knex: Knex): Promise<any> {
     table.timestamps(true, true);
     table.integer("role_id").unsigned().nullable();
     table.foreign("role_id").references("id").inTable("role").onUpdate('CASCADE').onDelete('CASCADE');
+    table.boolean("status").defaultTo(true);
   });
 }
 

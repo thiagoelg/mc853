@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<any> {
     table.string("content");
     table.boolean("isTemplate").index().defaultTo(false);
     table.timestamps(true, true);
+    table.boolean("status").defaultTo(true);
   });
 }
 

@@ -24,6 +24,7 @@ export default class User extends BaseModel {
   password!: string;
   role_id!: number;
   role!: Role;
+  permissions!: Array<Permission>;
 
   get $secureFields(): string[] {
     return ["password"];
@@ -78,6 +79,7 @@ export default class User extends BaseModel {
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
+        status: { type: 'boolean' },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" }
       },
@@ -101,7 +103,7 @@ export default class User extends BaseModel {
 
   static async listUsers(parameters: UserQuery) {
     try {
-      const query = User.query().withGraphFetched("role");
+      const query = User.query().withGraphFetched("role").where("status", true);
       if (parameters.orderBy) {
         const [field, direction] = parameters.orderBy.split(" ");
         query.orderBy(field, direction as OrderByDirection);
@@ -116,7 +118,7 @@ export default class User extends BaseModel {
 
   static async listUsersByRole(role_id: number) {
     try {
-      const query = User.query().where("role_id", role_id)
+      const query = User.query().where("status", true).where("role_id", role_id)
         .orderBy("id", "desc");
 
       return await query;
@@ -140,17 +142,17 @@ export default class User extends BaseModel {
 
       const target_role = await Role.get(data.role_id);
 
-      if (!target_role) throw new Error('Papel não encontrado.');
+      if (!target_role) throw new Error('Perfil não encontrado.');
 
       console.log(data.requester);
 
       if (target_role.level < data.requester.role.level) {
-        throw new Error('Não tem permissão para associar este papel.');
+        throw new Error('Não tem permissão para associar este perfil.');
       }
 
       const query = User.query().patchAndFetchById(data.user_id, {
         role_id: data.role_id
-      }).withGraphFetched("role");
+      }).withGraphFetched("role").where("status", true);
 
       return await query;
     } catch (error) {
@@ -163,6 +165,7 @@ export default class User extends BaseModel {
     query
       .select("id", "email", "name", "password")
       .where("email", "=", email)
+      .where("status", true)
       .orderBy("id", "desc")
       .limit(1);
     const results = await query;
@@ -184,7 +187,10 @@ export default class User extends BaseModel {
     try {
       const decoded_token = jwt.verify(token, process.env.SECRET as string) as any;
 
-      const user = await User.query().findById(decoded_token?.id).withGraphFetched("role").withGraphFetched("permissions") as any;
+      const user = await User.query()
+        .where("status", true)
+        .findById(decoded_token?.id).withGraphFetched("role")
+        .withGraphFetched("permissions") as User;
 
       req.body.decoded = {
         user,

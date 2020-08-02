@@ -6,6 +6,7 @@ export async function up(knex: Knex): Promise<any> {
     table.string("name");
     table.boolean("is_template");
     table.timestamps(true, true);
+    table.boolean("status").defaultTo(true);
   });
 }
 

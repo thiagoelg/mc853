@@ -8,6 +8,7 @@ export async function up(knex: Knex): Promise<any> {
     table.integer("level");
     table.timestamps(true, true);
     table.boolean("is_default");
+    table.boolean("status").defaultTo(true);
   });
 }
 

@@ -50,6 +50,7 @@ export default class Role extends BaseModel {
         short_name: { type: "string", minLength: 1, maxLength: 255 },
         level: { type: "integer" },
         is_default: { type: "boolean" },
+        status: { type: 'boolean' },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" }
       },

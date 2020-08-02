@@ -30,7 +30,7 @@ export class UsersComponent extends RequiredPermissions implements OnInit {
 
   constructor(private usersService: UsersService, private router: Router) {
     super();
-    this.columnNames = { name: 'Nome', email: 'E-mail', role_name: 'Papel' };
+    this.columnNames = { name: 'Nome', email: 'E-mail', role_name: 'Perfil' };
 
     this.users$ = this.usersService.getAllUsers().pipe(
       map(users => users.map(user => ({ ...user, role_name: user.role.name }))));

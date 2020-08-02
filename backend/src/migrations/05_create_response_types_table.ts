@@ -12,6 +12,7 @@ export async function up(knex: Knex): Promise<any> {
       table.string("basic_type").defaultTo("text");
       table.timestamp("created_at").defaultTo(knex.fn.now());
       table.timestamp("updated_at").defaultTo(knex.fn.now());
+      table.boolean("status").defaultTo(true);
     }
   );
 }
