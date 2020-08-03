@@ -10,8 +10,7 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("order").notNullable();
       table.boolean("required").defaultTo(true);
       table.boolean("status").defaultTo(true);
-      table.timestamp("created_at").defaultTo(knex.fn.now());
-      table.timestamp("updated_at").defaultTo(knex.fn.now());
+      table.timestamps(true, true);
     }
   );
 }

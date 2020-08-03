@@ -10,8 +10,7 @@ export async function up(knex: Knex): Promise<any> {
       table.string("value");
       table.boolean("status").defaultTo(true);
       table.integer("answered_by_user_id").references("id").inTable("user").onUpdate('CASCADE').onDelete('CASCADE');
-      table.timestamp("created_at").defaultTo(knex.fn.now());
-      table.timestamp("updated_at").defaultTo(knex.fn.now());
+      table.timestamps(true, true);
     }
   );
 }

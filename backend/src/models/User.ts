@@ -6,12 +6,14 @@ import BaseModel from "./BaseModel";
 import Permission from "./Permission";
 import Role from "./Role";
 import RolePermissions from "./RolePermissions";
+import File from "./File";
 
 export interface UserData {
   name: string;
   email: string;
   password: string;
   role_id?: number;
+  profile_image_id?: number;
 }
 
 export interface UserQuery {
@@ -25,6 +27,8 @@ export default class User extends BaseModel {
   role_id!: number;
   role!: Role;
   permissions!: Array<Permission>;
+  profile_image_id!: number;
+  profile_image!: File;
 
   get $secureFields(): string[] {
     return ["password"];
@@ -65,6 +69,14 @@ export default class User extends BaseModel {
           to: "permission.id",
         },
       },
+      profile_image: {
+        relation: Model.HasOneRelation,
+        modelClass: File,
+        join: {
+          from: "user.profile_image_id",
+          to: "file.id",
+        },
+      },
     };
   }
 
@@ -80,6 +92,7 @@ export default class User extends BaseModel {
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
         status: { type: 'boolean' },
+        profile_image_id: { type: "integer" },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" }
       },
