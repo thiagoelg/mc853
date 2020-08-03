@@ -1,0 +1,15 @@
+.image-container {
+  height: 300px;
+  width: 300px; 
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.file-input {
+  width: 300px;
+}

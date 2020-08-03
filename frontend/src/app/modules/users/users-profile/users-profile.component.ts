@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserWithRole } from 'src/app/models/user';
 import { UsersService } from './../users.service';
 import { AuthService } from 'src/app/security/auth.service';
 import { RoleWithPermissions } from 'src/app/models/role';
 import { PermissionGuard } from 'src/app/security/permission.guard';
-import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/template';
+import { FileUploadService } from 'src/app/shared/file-upload/file-upload.service';
 
 @Component({
   templateUrl: './users-profile.component.html',
@@ -18,11 +18,13 @@ export class UsersProfileComponent implements OnInit {
   roles: Array<RoleWithPermissions> = [];
   selectedRoleId: number;
   selectedRole: RoleWithPermissions;
+  newUserImage: File;
 
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
-    private authService: AuthService
+    private authService: AuthService,
+    private fileUploadSerivce: FileUploadService
   ) {
     this.canEdit = this.authService.hasPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]);
   }
@@ -67,4 +69,10 @@ export class UsersProfileComponent implements OnInit {
     }
   }
 
+  onUploadImage() {
+    console.log(this.newUserImage);
+    if (this.newUserImage) {
+      this.fileUploadSerivce.uploadFile(this.newUserImage);
+    }
+  }
 }

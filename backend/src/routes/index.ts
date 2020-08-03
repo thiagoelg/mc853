@@ -11,9 +11,11 @@ import solicitationsRoutes from "./solicitations";
 import solicitationIdRoutes from "./solicitation_id";
 import solutionRoutes from "./solution";
 import usersRoutes from "./users";
+import filesRoutes from "./files";
 
 const router = Router();
 
+router.use('/files', filesRoutes);
 router.use("/users", usersRoutes);
 router.use("/auth", authRoutes);
 router.use("/roles", roleRoutes);

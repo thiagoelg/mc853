@@ -11,9 +11,15 @@ export class ContentTypeInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const req = request.clone({
-      setHeaders: { 'Content-Type': 'application/json; charset=utf-8' },
-    });
+    let req = request;
+    
+    if (request.headers.has('ignore-content-type')) {
+      req = request.clone({ headers: request.headers.delete('ignore-content-type') });
+    } else {
+      req = request.clone({
+        setHeaders: { 'Content-Type': 'application/json; charset=utf-8' },
+      });
+    }
 
     return next.handle(req);
   }

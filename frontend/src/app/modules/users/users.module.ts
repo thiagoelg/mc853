@@ -8,7 +8,15 @@ import { UsersComponent } from './users.component';
 import { RequiredPermissions } from 'src/app/models/permission';
 
 @NgModule({
-  declarations: [UsersComponent, UsersProfileComponent],
-  imports: [CommonModule, AppMaterialModule, UsersRoutingModule, SharedModule],
+  declarations: [
+    UsersComponent,
+    UsersProfileComponent
+  ],
+  imports: [
+    CommonModule,
+    AppMaterialModule,
+    UsersRoutingModule,
+    SharedModule
+  ],
 })
 export class UsersModule extends RequiredPermissions { }

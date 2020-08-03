@@ -24,3 +24,8 @@
     </ul>
   </div>
 </mat-card>
+
+<app-file-upload (onSelectImage)="newUserImage = $event"></app-file-upload>
+<button mat-button (click)="onUploadImage()">Upload</button>
+
+<img src="http://localhost:9001/api/files/3/pexels-photo-771742.jpeg" >
