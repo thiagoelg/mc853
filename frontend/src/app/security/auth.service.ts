@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { map, take, catchError } from 'rxjs/operators';
 import { Login } from '../models/login';
-import { UserWithRole } from '../models/user';
+import { User } from '../models/user';
 import { Router } from '@angular/router';
 import { Permission } from '../models/permission';
 
@@ -12,7 +12,7 @@ import { Permission } from '../models/permission';
 })
 export class AuthService {
   public token: string;
-  public user: UserWithRole;
+  public user: User;
   public userPermissions: { [key: string]: boolean; } = {};
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   constructor(
@@ -23,7 +23,7 @@ export class AuthService {
     this.token = savedToken || null;
 
     const savedUser = localStorage.getItem('user');
-    this.user = JSON.parse(savedUser) as UserWithRole || null;
+    this.user = JSON.parse(savedUser) as User || null;
 
     if (this.token && this.user) {
       this.setUserPermissions(this.user);
@@ -71,11 +71,11 @@ export class AuthService {
       });
   }
 
-  getSelf(): Observable<UserWithRole> {
+  getSelf(): Observable<User> {
     const url = 'users/me';
-    return this.http.get<UserWithRole>(url).pipe(
+    return this.http.get<User>(url).pipe(
       take(1),
-      map((user: UserWithRole) => {
+      map((user: User) => {
         localStorage.setItem('user', JSON.stringify(user));
         this.user = user;
         this.setUserPermissions(this.user);
@@ -84,7 +84,7 @@ export class AuthService {
     );
   }
 
-  setUserPermissions(user: UserWithRole) {
+  setUserPermissions(user: User) {
     user.permissions.forEach((permission: Permission) => {
       this.userPermissions[permission.short_name] = true;
     });

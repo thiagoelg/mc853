@@ -17,7 +17,7 @@ router.post('/upload', [User.validateToken, upload.single('file')], async (req: 
 router.get('/:file_id/:file_name', async (req: Request, res: Response) => {
   try {
     const file_id = Number(req.params["file_id"]);
-    const file = await File.getFile(file_id); 
+    const file = await File.get(file_id); 
     return res.status(200).contentType(file.mime).send(file.value);
   } catch (error) {
     return res.status(400).send(error.toString());

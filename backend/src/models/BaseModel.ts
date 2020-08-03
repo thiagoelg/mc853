@@ -6,14 +6,6 @@ export default class BaseModel extends Model {
   updated_at!: string;
   status!: boolean;
 
-  enable() {
-
-  }
-
-  disable() {
-
-  }
-
   $beforeUpdate() {
     this.updated_at = new Date().toISOString();
   }

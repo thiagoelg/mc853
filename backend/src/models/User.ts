@@ -132,7 +132,10 @@ export default class User extends BaseModel {
   static async listUsersByRole(role_id: number) {
     try {
       const query = User.query().where("status", true).where("role_id", role_id)
-        .orderBy("id", "desc");
+        .orderBy("id", "desc")
+        .withGraphFetched("role")
+        .withGraphFetched("permissions")
+        .withGraphFetched("profile_image");
 
       return await query;
     } catch (error) {
@@ -142,7 +145,10 @@ export default class User extends BaseModel {
 
   static async get(id: number) {
     try {
-      const query = User.query().findById(id).withGraphFetched("role");
+      const query = User.query().findById(id)
+        .withGraphFetched("role")
+        .withGraphFetched("profile_image")
+        .withGraphFetched("permissions");
 
       return await query;
     } catch (error) {
@@ -165,7 +171,10 @@ export default class User extends BaseModel {
 
       const query = User.query().patchAndFetchById(data.user_id, {
         role_id: data.role_id
-      }).withGraphFetched("role").where("status", true);
+      }).withGraphFetched("role")
+        .withGraphFetched("permissions")
+        .withGraphFetched("profile_image")
+        .where("status", true);
 
       return await query;
     } catch (error) {

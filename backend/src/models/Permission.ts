@@ -68,4 +68,14 @@ export default class Permission extends Model {
       return error;
     }
   }
+
+  static async get(permission_id: number) {
+    try {
+      const query = Permission.query().findById(permission_id);
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
 }

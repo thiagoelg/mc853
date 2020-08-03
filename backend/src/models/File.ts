@@ -1,10 +1,15 @@
 import BaseModel from "./BaseModel";
 import fs from "fs";
+import { Pojo } from "objection";
 
 export default class File extends BaseModel {
   name!: string;
-  value!: any;
+  value: any;
   mime!: string;
+
+  get $secureFields(): string[] {
+    return ["value"];
+  }
 
   static get tableName() {
     return "file";
@@ -26,6 +31,14 @@ export default class File extends BaseModel {
         updated_at: { type: "timestamp" }
       },
     };
+  }
+
+  $formatJson(json: Pojo) {
+    const jsonRaw = super.$formatJson(json);
+    this.$secureFields.forEach((field) => {
+      delete jsonRaw[field];
+    });
+    return jsonRaw;
   }
 
   static async newFile(file: Express.Multer.File) {
@@ -51,7 +64,18 @@ export default class File extends BaseModel {
     return newFile;
   }
 
+  static async get(file_id: number) {
+    return await File.getFile(file_id);
+  }
+
   static async getFile(file_id: number) {
-    return await File.query().where('id', file_id).first();
+    const files = await File.query().select("id", "name", "mime", "value", "size")
+      .where("id", "=", file_id)
+      .where("status", true)
+      .limit(1);
+    if (!files.length) {
+      throw new Error("Não foram econtrados usuários com esse email.");
+    }
+    return files[0] as File;
   }
 }

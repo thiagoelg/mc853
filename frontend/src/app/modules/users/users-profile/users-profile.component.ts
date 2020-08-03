@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserWithRole } from 'src/app/models/user';
+import { User } from 'src/app/models/user';
 import { UsersService } from './../users.service';
 import { AuthService } from 'src/app/security/auth.service';
 import { RoleWithPermissions } from 'src/app/models/role';
 import { PermissionGuard } from 'src/app/security/permission.guard';
 import { FileUploadService } from 'src/app/shared/file-upload/file-upload.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './users-profile.component.html',
@@ -13,12 +14,14 @@ import { FileUploadService } from 'src/app/shared/file-upload/file-upload.servic
 })
 export class UsersProfileComponent implements OnInit {
   id: number;
-  user: UserWithRole = null;
+  user: User = null;
   canEdit: boolean = false;
   roles: Array<RoleWithPermissions> = [];
   selectedRoleId: number;
   selectedRole: RoleWithPermissions;
   newUserImage: File;
+  baseUrl: string = environment.backend;
+  userImageUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,6 +65,7 @@ export class UsersProfileComponent implements OnInit {
       this.usersService.getUser(this.id).subscribe({
         next: (user) => {
           this.user = user;
+          this.userImageUrl = `${this.baseUrl}/files/${user.profile_image.id}/${user.profile_image.name}`;
           this.selectedRoleId = this.user.role.id;
           this.loadRole();
         }

@@ -14,7 +14,7 @@ router.get('/me', User.validateToken, async (req: Request, res: Response) => {
   try {
     const { user } = req.body.decoded;
     if (user) {
-      return res.status(200).send(user);
+      return res.status(200).send(await User.get(user.id));
     } else {
       return res.status(401);
     }

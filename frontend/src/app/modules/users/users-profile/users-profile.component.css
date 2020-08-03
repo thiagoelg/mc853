@@ -4,6 +4,13 @@
 
 .user-profile-image {
   margin-right: 16px;
+  max-width: 300px;
+  height: 300px;
+}
+
+.user-profile-image img {
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .permissions-title {

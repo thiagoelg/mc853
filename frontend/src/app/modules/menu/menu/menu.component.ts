@@ -6,7 +6,7 @@ import { MenuService } from '../menu.service';
 import { AdminModule } from '../../admin/admin.module';
 import { UsersComponent } from '../../users/users.component';
 import { AuthService } from '../../../security/auth.service';
-import { UserWithRole } from '../../../models/user';
+import { User } from '../../../models/user';
 
 @Component({
   selector: 'app-menu',
@@ -16,7 +16,7 @@ import { UserWithRole } from '../../../models/user';
 export class MenuComponent {
   constructor(private breakpointObserver: BreakpointObserver, private authService: AuthService) { }
 
-  user: UserWithRole = this.authService.user;
+  user: User = this.authService.user;
 
   title$ = MenuService.menu.title.asObservable();
   items = [

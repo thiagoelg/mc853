@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { UserWithRole } from './../../models/user';
+import { User } from './../../models/user';
 import { RoleWithPermissions } from 'src/app/models/role';
 
 @Injectable({
@@ -11,21 +11,21 @@ import { RoleWithPermissions } from 'src/app/models/role';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<UserWithRole[]> {
+  getAllUsers(): Observable<User[]> {
     const url = 'users';
 
-    return this.http.get<UserWithRole[]>(url).pipe(take(1));
+    return this.http.get<User[]>(url).pipe(take(1));
   }
 
-  getUser(id: number): Observable<UserWithRole> {
+  getUser(id: number): Observable<User> {
     const url = `users/${id}`;
 
-    return this.http.get<UserWithRole>(url).pipe(take(1));
+    return this.http.get<User>(url).pipe(take(1));
   }
 
-  updateRole(userId: number, roleId: number): Observable<UserWithRole> {
+  updateRole(userId: number, roleId: number): Observable<User> {
     const url = `users/${userId}/assign_role`;
-    return this.http.put<UserWithRole>(url, { role_id: roleId }).pipe(take(1));
+    return this.http.put<User>(url, { role_id: roleId }).pipe(take(1));
   }
 
   listRoles(): Observable<Array<RoleWithPermissions>> {
