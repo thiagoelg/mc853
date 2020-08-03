@@ -6,8 +6,8 @@ export async function up(knex: Knex): Promise<any> {
     table.string("name").unique();
     table.string("content");
     table.boolean("isTemplate").index().defaultTo(false);
-    table.string("created_at");
-    table.string("updated_at");
+    table.timestamps(true, true);
+    table.boolean("status").defaultTo(true);
   });
 }
 

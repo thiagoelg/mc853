@@ -9,13 +9,11 @@ export async function seed(knex: Knex): Promise<any> {
       // Inserts seed entries
       return knex("user").insert([
         {
-          name: "worker",
+          name: "Atendente",
           email: "worker",
           password:
             "$2a$10$Ai.IijhHOwgr5vcK7KoXMevC0S6vRX5auKicVJz9nO3FxNEj0v1ry",
-          role_id: role.id,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
+          role_id: role.id
         },
       ]);
     });

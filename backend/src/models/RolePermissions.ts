@@ -1,7 +1,8 @@
-import { Model } from "objection";
+import { Model } from 'objection';
 import Permission from "./Permission";
+import BaseModel from "./BaseModel";
 
-export default class RolePermissions extends Model {
+export default class RolePermissions extends BaseModel {
   static get tableName() {
     return "role_permissions";
   }
@@ -26,6 +27,7 @@ export default class RolePermissions extends Model {
 
       properties: {
         role_id: { type: "integer" },
+        status: { type: 'boolean' },
         permission_id: { type: "integer" },
       },
     };

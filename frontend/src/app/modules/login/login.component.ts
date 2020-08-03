@@ -13,6 +13,7 @@ import { take, map } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   form: FormGroup;
   hidePassword = true;
+  errorMsg: string = null;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.buildForm();
@@ -40,7 +41,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.form.value).subscribe({
       next: () => {},
-      error: (error: HttpErrorResponse) => console.error(error),
+      error: (error: HttpErrorResponse) => {
+        this.errorMsg = error.error.message;
+      },
     });
   }
 }

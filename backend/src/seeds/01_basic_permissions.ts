@@ -22,7 +22,7 @@ export async function seed(knex: Knex): Promise<any> {
                 .del()
                 .then(() => Promise.all([
                   knex("role")
-                    .insert({ name: "Administrador", short_name: "admin" }, "id")
+                    .insert({ name: "Administrador", short_name: "admin", is_default: false, level: 0 }, "id")
                     .then(([role_id]) => {
                       const role_permissions = permissions.map((perm) => {
                         return { role_id, permission_id: perm.id };
@@ -31,7 +31,7 @@ export async function seed(knex: Knex): Promise<any> {
                       return knex("role_permissions").insert(role_permissions);
                     }),
                   knex("role")
-                    .insert({ name: "Gerente", short_name: "manager" }, "id")
+                    .insert({ name: "Gerente", short_name: "manager", is_default: false, level: 1 }, "id")
                     .then(([role_id]) => {
                       const my_permissions = permissions.filter((perm) =>
                         [
@@ -51,7 +51,7 @@ export async function seed(knex: Knex): Promise<any> {
                       return knex("role_permissions").insert(role_permissions);
                     }),
                   knex("role")
-                    .insert({ name: "Atendente", short_name: "worker" }, "id")
+                    .insert({ name: "Atendente", short_name: "worker", is_default: false, level: 2 }, "id")
                     .then(([role_id]) => {
                       const my_permissions = permissions.filter((perm) =>
                         [
@@ -70,7 +70,7 @@ export async function seed(knex: Knex): Promise<any> {
                     }),
                   knex("role")
                     .insert(
-                      { name: "Solicitante", short_name: "requester" },
+                      { name: "Solicitante", short_name: "requester", is_default: true, level: 3 },
                       "id"
                     )
                     .then(([role_id]) => {

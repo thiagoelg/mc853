@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-home-layout',
   template: `
     <app-menu>
-      <div style="padding: 10px">
+      <div style="padding: 10px" class="content">
         <router-outlet></router-outlet>
       </div>
     </app-menu>

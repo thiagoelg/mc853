@@ -18,3 +18,16 @@ mat-form-field:not(.basic) {
 label.mat-checkbox-layout {
   white-space: normal;
 }
+
+.flex-container {
+  display: flex;
+}
+
+.flex-left {
+  flex: left;
+}
+
+.flex-right {
+  flex: right;
+}
+

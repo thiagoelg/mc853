@@ -25,8 +25,8 @@ export default class Agreement extends BaseModel {
         id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 255 },
         content: { type: "string", minLength: 1, maxLength: 1024 },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" },
       },
     };
   }

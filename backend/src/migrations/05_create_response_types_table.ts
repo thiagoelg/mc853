@@ -10,8 +10,8 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("max");
       table.string("regex").defaultTo("");
       table.string("basic_type").defaultTo("text");
-      table.string("created_at");
-      table.string("updated_at");
+      table.timestamps(true, true);
+      table.boolean("status").defaultTo(true);
     }
   );
 }

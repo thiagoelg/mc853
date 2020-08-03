@@ -3,7 +3,17 @@ import { Model } from 'objection';
 export default class BaseModel extends Model {
   id!: number;
   created_at!: string;
-  updated_at: string = '';
+  updated_at!: string;
+  status!: boolean;
+
+  enable() {
+
+  }
+
+  disable() {
+
+  }
+
   $beforeUpdate() {
     this.updated_at = new Date().toISOString();
   }

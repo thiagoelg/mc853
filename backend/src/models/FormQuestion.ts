@@ -42,8 +42,8 @@ export default class FormQuestion extends BaseModel {
         question_id: { type: "integer" },
         order: { type: "integer" },
         required: { type: "boolean" },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 }
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" }
       },
     };
   }

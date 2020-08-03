@@ -1,11 +1,6 @@
 <ng-container *ngIf="users$ | async as users">
 
     <!-- User list -->
-    <app-data-table [data]="users" [columnNames]="columnNames">
-
-        <!-- Inner table component when a row is clicked -->
-        <ng-template let-item>
-            {{item | json}}
-        </ng-template>
+    <app-data-table [data]="users" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)">
     </app-data-table>
 </ng-container>

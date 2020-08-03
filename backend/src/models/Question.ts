@@ -37,8 +37,8 @@ export default class Question extends BaseModel {
         id: { type: "integer" },
         text: { type: "string", minLength: 1, maxLength: 1024 },
         response_type_id: { type: "number" },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" },
       },
     };
   }

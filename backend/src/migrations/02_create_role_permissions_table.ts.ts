@@ -7,6 +7,7 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("role_id").references("id").inTable("role").onUpdate('CASCADE').onDelete('CASCADE');
       table.integer("permission_id").references("id").inTable("permission").onUpdate('CASCADE').onDelete('CASCADE');
       table.primary(["role_id", "permission_id"]);
+      table.boolean("status").defaultTo(true);
     }
   );
 }

@@ -1,3 +1,26 @@
-<p>users-profile works!</p>
+<mat-card *ngIf="user">
+  <mat-card-title>Perfil</mat-card-title>
+  <div class="user-main-info flex-container">
+    <div class="flex-left">
+      <div class="user-profile-image">
+        <img src="https://via.placeholder.com/300">
+      </div>
+    </div>
+    <div class="user-profile-info flex-right">
+      <h1>{{ user.name }}</h1>
+      <h3><strong>Email: </strong>{{ user.email }}</h3>
+      <h3><strong>Perfil de acesso: </strong>{{ user.role.name }}</h3>
+    </div>
+  </div>
 
-{{ user$ | async | json}}
+  <mat-divider></mat-divider>
+
+  <div class="permissions-title">Permissões</div>
+  <div class="user-permissions flex-container" *ngIf="selectedRole">
+    <ul>
+      <li *ngFor="let permission of selectedRole.permissions">
+        {{ permission.name }}
+      </li>
+    </ul>
+  </div>
+</mat-card>

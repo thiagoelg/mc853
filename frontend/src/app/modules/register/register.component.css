@@ -5,3 +5,18 @@ mat-form-field {
 mat-form-field > mat-button-toggle > mat-icon {
   margin: 0 -12px;
 }
+
+.action-area {
+  display: flex;
+  align-items: flex-end;
+}
+
+.register-error {
+  color: red;
+  text-align: left;
+}
+
+.register-button {
+  text-align: right;
+  flex-grow: 1;
+}

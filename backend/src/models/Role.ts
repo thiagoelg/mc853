@@ -6,6 +6,8 @@ import RolePermissions from "./RolePermissions";
 export default class Role extends BaseModel {
   name!: string;
   short_name!: string;
+  is_default!: boolean;
+  level!: number;
 
   static get tableName() {
     return "role";
@@ -46,15 +48,18 @@ export default class Role extends BaseModel {
         id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 1024 },
         short_name: { type: "string", minLength: 1, maxLength: 255 },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 }
+        level: { type: "integer" },
+        is_default: { type: "boolean" },
+        status: { type: 'boolean' },
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" }
       },
     };
   }
 
-  static async newRole(name: string) {
+  static async newRole(name: string, short_name: string) {
     const role = await Role.transaction(async (trx) => {
-      return await Role.query(trx).insert({ name });
+      return await Role.query(trx).insert({ name, short_name });
     });
     return role;
   }
@@ -63,7 +68,7 @@ export default class Role extends BaseModel {
     try {
       const query = Role.query()
         .withGraphFetched("permissions")
-        .orderBy("id", "asc");
+        .orderBy("level", "asc");
       return await query;
     } catch (error) {
       console.log({ error });
@@ -74,6 +79,32 @@ export default class Role extends BaseModel {
   static async get(role_id: number) {
     try {
       const query = Role.query().findById(role_id).withGraphFetched("permissions")
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async getByShortName(short_name: string) {
+    try {
+      const query = Role.query()
+        .where('short_name', short_name)
+        .first()
+        .withGraphFetched("permissions");
+      return await query;
+    } catch (error) {
+      console.log({ error });
+      return error;
+    }
+  }
+
+  static async getDefaultRole() {
+    try {
+      const query = Role.query()
+        .where('is_default', true)
+        .first()
+        .withGraphFetched("permissions");
       return await query;
     } catch (error) {
       console.log({ error });

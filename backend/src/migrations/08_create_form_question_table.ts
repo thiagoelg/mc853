@@ -9,9 +9,8 @@ export async function up(knex: Knex): Promise<any> {
       table.integer("question_id").references("id").inTable("question").onUpdate('CASCADE').onDelete('CASCADE');
       table.integer("order").notNullable();
       table.boolean("required").defaultTo(true);
-
-      table.string("created_at");
-      table.string("updated_at");
+      table.boolean("status").defaultTo(true);
+      table.timestamps(true, true);
     }
   );
 }

@@ -6,11 +6,14 @@ import BaseModel from "./BaseModel";
 import Permission from "./Permission";
 import Role from "./Role";
 import RolePermissions from "./RolePermissions";
+import File from "./File";
 
 export interface UserData {
   name: string;
   email: string;
   password: string;
+  role_id?: number;
+  profile_image_id?: number;
 }
 
 export interface UserQuery {
@@ -22,6 +25,10 @@ export default class User extends BaseModel {
   email!: string;
   password!: string;
   role_id!: number;
+  role!: Role;
+  permissions!: Array<Permission>;
+  profile_image_id!: number;
+  profile_image!: File;
 
   get $secureFields(): string[] {
     return ["password"];
@@ -62,6 +69,14 @@ export default class User extends BaseModel {
           to: "permission.id",
         },
       },
+      profile_image: {
+        relation: Model.HasOneRelation,
+        modelClass: File,
+        join: {
+          from: "user.profile_image_id",
+          to: "file.id",
+        },
+      },
     };
   }
 
@@ -76,8 +91,10 @@ export default class User extends BaseModel {
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 }
+        status: { type: 'boolean' },
+        profile_image_id: { type: "integer" },
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" }
       },
     };
   }
@@ -87,6 +104,8 @@ export default class User extends BaseModel {
   }
 
   static async newUser(userData: UserData) {
+    const defaultRole = await Role.getDefaultRole();
+    userData.role_id = defaultRole.id;
     const user = await User.transaction(async (trx) => {
       userData.password = User.hashPassword(userData.password);
       return await User.query(trx).insert(userData);
@@ -97,7 +116,7 @@ export default class User extends BaseModel {
 
   static async listUsers(parameters: UserQuery) {
     try {
-      const query = User.query().withGraphFetched("role");
+      const query = User.query().withGraphFetched("role").where("status", true);
       if (parameters.orderBy) {
         const [field, direction] = parameters.orderBy.split(" ");
         query.orderBy(field, direction as OrderByDirection);
@@ -112,7 +131,7 @@ export default class User extends BaseModel {
 
   static async listUsersByRole(role_id: number) {
     try {
-      const query = User.query().where("role_id", role_id)
+      const query = User.query().where("status", true).where("role_id", role_id)
         .orderBy("id", "desc");
 
       return await query;
@@ -131,11 +150,22 @@ export default class User extends BaseModel {
     }
   }
 
-  static async changeRoleId(data: { user_id: number, role_id: number }) {
+  static async changeRoleId(data: { requester: User, user_id: number, role_id: number }) {
     try {
+
+      const target_role = await Role.get(data.role_id);
+
+      if (!target_role) throw new Error('Perfil não encontrado.');
+
+      console.log(data.requester);
+
+      if (target_role.level < data.requester.role.level) {
+        throw new Error('Não tem permissão para associar este perfil.');
+      }
+
       const query = User.query().patchAndFetchById(data.user_id, {
         role_id: data.role_id
-      }).withGraphFetched("role");
+      }).withGraphFetched("role").where("status", true);
 
       return await query;
     } catch (error) {
@@ -148,11 +178,12 @@ export default class User extends BaseModel {
     query
       .select("id", "email", "name", "password")
       .where("email", "=", email)
+      .where("status", true)
       .orderBy("id", "desc")
       .limit(1);
     const results = await query;
     if (!results.length) {
-      throw new Error("No users found");
+      throw new Error("Não foram econtrados usuários com esse email.");
     }
     const user = results[0];
     if (BcryptJS.compareSync(password, user.password)) {
@@ -161,7 +192,7 @@ export default class User extends BaseModel {
       });
       return token;
     }
-    return false;
+    throw new Error("Senha incorreta.");
   }
 
   static async validateToken(req: Request, res: Response, next: NextFunction) {
@@ -169,7 +200,10 @@ export default class User extends BaseModel {
     try {
       const decoded_token = jwt.verify(token, process.env.SECRET as string) as any;
 
-      const user = await User.query().findById(decoded_token?.id).withGraphFetched("role").withGraphFetched("permissions") as any;
+      const user = await User.query()
+        .where("status", true)
+        .findById(decoded_token?.id).withGraphFetched("role")
+        .withGraphFetched("permissions") as User;
 
       req.body.decoded = {
         user,

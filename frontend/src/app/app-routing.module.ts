@@ -12,6 +12,7 @@ import { SolicitationsModule } from './modules/solicitations/solicitations.modul
 import { FormsModule } from './modules/forms/forms.module';
 import { LogoutModule } from './modules/logout/logout.module';
 import { LoginModule } from './modules/login/login.module';
+import { UsersRoutingModule } from './modules/users/users-routing.module';
 
 const routes: Routes = [
   {
@@ -28,10 +29,6 @@ const routes: Routes = [
         loadChildren: () => AdminModule,
         canActivate: [PermissionGuard],
         data: { permissions: AdminModule.requiredPermissions }
-      },
-      {
-        path: 'register',
-        loadChildren: () => RegisterModule
       },
       {
         path: 'users',
@@ -58,6 +55,10 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => LoginModule
+      },
+      {
+        path: 'register',
+        loadChildren: () => RegisterModule
       }
     ]
   },

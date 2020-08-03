@@ -23,8 +23,8 @@ export default class ResponseType extends BaseModel {
         max: { type: "number" },
         basic_type: { type: "string", minLength: 4, maxLength: 6 },
         regex: { type: "string", minLength: 0, maxLength: 1024 },
-        created_at: { type: "string", minLength: 1, maxLength: 255 },
-        updated_at: { type: "string", minLength: 1, maxLength: 255 },
+        created_at: { type: "timestamp" },
+        updated_at: { type: "timestamp" },
       },
     };
   }

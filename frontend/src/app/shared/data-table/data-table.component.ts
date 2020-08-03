@@ -1,10 +1,20 @@
 
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ContentChild, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ContentChild, Input, OnInit, TemplateRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+export interface TableAction {
+  name: string,
+  label: string,
+  icon?: string
+}
+
+export interface TableEmittedAction {
+  action: string,
+  element: any
+}
 
 @Component({
   selector: 'app-data-table',
@@ -22,6 +32,9 @@ export class DataTableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() columnNames: any = { id: 'Número', name: 'Nome' };
   @Input() pageSizeOptions = [5, 10, 25, 100];
+  @Input() actions: Array<TableAction> = [];
+  
+  @Output() onAction: EventEmitter<TableEmittedAction> = new EventEmitter();
 
   displayedColumns: string[] = [];
 
@@ -39,6 +52,9 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit() {
     this.displayedColumns = Object.keys(this.columnNames);
+    if (this.actions.length) {
+      this.displayedColumns.push('actions');
+    }
     this.dataSource.data = this.data;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

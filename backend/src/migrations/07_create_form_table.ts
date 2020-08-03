@@ -5,8 +5,8 @@ export async function up(knex: Knex): Promise<any> {
     table.increments("id").primary();
     table.string("name");
     table.boolean("is_template");
-    table.string("created_at");
-    table.string("updated_at");
+    table.timestamps(true, true);
+    table.boolean("status").defaultTo(true);
   });
 }
 
