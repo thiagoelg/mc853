@@ -3,8 +3,8 @@
     <a mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
 </div>
 
-<ng-container *ngIf="solicitations$ | async as solicitations">
-    <app-data-table [data]="solicitations" [columnNames]="columnNames">
+<ng-container *ngIf="userSolicitations$ | async as userSolicitations">
+    <app-data-table [data]="userSolicitations" [columnNames]="columnNames">
         <!-- Inner table component when a row is clicked -->
         <ng-template let-item>
             {{item | json}}

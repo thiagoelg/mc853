@@ -10,23 +10,19 @@ import { SolicitationsService } from './../solicitations.service';
   styleUrls: ['./solicitations-list.component.css']
 })
 export class SolicitationsListComponent implements OnInit {
-
-  solicitations$: Observable<Solicitation[]>;
+  userSolicitations$: Observable<Solicitation[]>;
   columnNames: any;
 
   constructor(private solicitationsService: SolicitationsService) {
     this.columnNames = {
       id: 'Número',
-      submitted_by_user_name: 'Submetido por:',
-      form_name: 'Formulário da solicitação:',
-      managed_by_user_name: 'Administrado por:',
-      solution_form_name: 'Formulário da resposta:',
-      solved_at: 'Solucionado em:',
-      evaluation_form_name: 'Formulário da avaliação:',
-      created_at: 'Criado em:',
-      updated_at: 'Atualizado em:',
+      submitted_by_user_name: 'Solicitante',
+      managed_by_user_name: 'Atendente',
+      created_at: 'Data de criação',
+      updated_at: 'Última atualização',
+      solved_at: 'Data de resolução'
     };
-    this.solicitations$ = this.solicitationsService.fetchSolicitations().pipe(
+    this.userSolicitations$ = this.solicitationsService.fetchSolicitations().pipe(
       map(solicitations => solicitations.map(s => {
         return {
           ...s,
