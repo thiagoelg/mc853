@@ -1,0 +1,61 @@
+version: '3'
+
+services:
+  server_prod:
+    container_name: RESPONSIVE_BACKEND_PROD
+    build: '.'
+    volumes:
+      - ../build:/node-app/build
+      - ../node_modules/:/node-app/node_modules
+      - ../.env:/node-app/build/.env
+      - ../.env.example:/node-app/build/.env.example
+    environment:
+      NODE_ENV: development
+      DB_PASSWORD: pgadmin
+      DB_USER: pgadmin
+      DB_NAME: responsive
+      DB_HOST: db_prod
+      DB_PORT: 5432
+      WAIT_HOSTS: db_prod:5432
+    depends_on:
+      - db_prod
+    links:
+      - db_prod
+    networks:
+      - pg-network-prod
+    ports:
+      - '9001:9001'
+
+  db_prod:
+    image: postgres
+    container_name: RESPONSIVE_DB_PROD
+    environment:
+      POSTGRES_USER: pgadmin
+      POSTGRES_PASSWORD: pgadmin
+      POSTGRES_DB: responsive
+    ports:
+      - "15432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - pg-network-prod
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: RESPONSIVE_PGADMIN_PROD
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+    ports:
+      - "16543:80"
+    depends_on:
+      - db_prod
+    networks:
+      - pg-network-prod
+
+volumes:
+  pgdata:
+
+networks: 
+  pg-network-prod:
+    driver: bridge

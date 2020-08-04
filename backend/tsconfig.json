@@ -17,9 +17,6 @@
     "noUnusedLocals": true
   },
   "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "src/migrations"
+    "src/**/*",
   ]
 }
