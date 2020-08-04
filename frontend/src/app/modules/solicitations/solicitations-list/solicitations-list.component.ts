@@ -23,7 +23,7 @@ export class SolicitationsListComponent implements OnInit {
       solved_at: 'Data de resolução',
     };
 
-    this.userSolicitations$ = this.solicitationsService.fetchAllSolicitations().pipe(
+    this.userSolicitations$ = this.solicitationsService.fetchSolicitations().pipe(
       map((solicitations) =>
         solicitations.map((s) => {
           return {

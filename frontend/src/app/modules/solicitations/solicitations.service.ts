@@ -6,12 +6,13 @@ import { FormQuestion } from 'src/app/models/formQuestion';
 import { Form, FormFull } from './../../models/form';
 import { ResponseType } from './../../models/responseType';
 import { Solicitation, SolicitationForm } from './../../models/solicitation';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SolicitationsService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   fetchForms(): Observable<Form[]> {
     const url = 'forms';
@@ -19,10 +20,31 @@ export class SolicitationsService {
     return this.http.get<Form[]>(url).pipe(take(1));
   }
 
-  fetchAllSolicitations(): Observable<Solicitation[]> {
+  fetchSolicitations(): Observable<Solicitation[]> {
     const url = 'solicitations';
 
-    return this.http.get<Solicitation[]>(url).pipe(take(1));
+    return this.http
+      .get<Solicitation[]>(url)
+      .pipe(take(1))
+      .pipe(
+        map((solicitations) =>
+          solicitations.map((solicitation) => {
+            solicitation.submitted_by_user = (() => {
+              if (solicitation.submitted_by_user) {
+                return solicitation.submitted_by_user;
+              }
+
+              if (solicitation.submitted_by_user_id === this.authService.user.id) {
+                return this.authService.user;
+              }
+
+              return undefined;
+            })();
+
+            return solicitation;
+          })
+        )
+      );
   }
 
   fetchSolicitation(id: number): Observable<Solicitation> {
