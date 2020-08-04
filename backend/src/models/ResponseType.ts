@@ -1,5 +1,13 @@
 import BaseModel from "./BaseModel";
 
+export interface ResponseTypeData {
+  name: string,
+  max: number,
+  min: number,
+  regex: string,
+  basic_type: "text" | "number" | "date" | "file"
+}
+
 export default class ResponseType extends BaseModel {
   name!: string;
   min!: number;
@@ -29,21 +37,9 @@ export default class ResponseType extends BaseModel {
     };
   }
 
-  static async newResponseType(
-    name: string,
-    max: number,
-    min: number = 0,
-    regex: string = "",
-    basic_type: "text" | "number" | "date" | "file" = "text"
-  ) {
+  static async newResponseType(data: ResponseTypeData) {
     const response_type = await ResponseType.transaction(async (trx) => {
-      return await ResponseType.query(trx).insert({
-        name,
-        min,
-        max,
-        regex,
-        basic_type,
-      });
+      return await ResponseType.query(trx).insert(data);
     });
     return response_type;
   }

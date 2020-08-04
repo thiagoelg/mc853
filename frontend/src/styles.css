@@ -38,3 +38,33 @@ label.mat-checkbox-layout {
 .card-header .mat-card-title {
   flex: 1 1 auto;
 }
+
+.form-footer {
+  display: flex;
+}
+
+.form-footer .action-area {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.form-footer .error-area {
+  color: red;
+  text-align: left;
+  flex-grow: 1;
+}
+
+.form-footer .submit-button {
+  text-align: right;
+  padding: 8px;
+}
+
+.form-footer .cancel-button {
+  text-align: right;
+  padding: 8px;
+}
+
+.card-header {
+  margin-bottom: 8px;
+}

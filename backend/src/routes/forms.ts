@@ -22,7 +22,7 @@ router.get("/:form_id", User.validateToken, async (req: Request, res: Response) 
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', User.validateToken, async (req: Request, res: Response) => {
   try {
     return res.status(200).send(await Form.newForm(req.body));
   } catch (error) {

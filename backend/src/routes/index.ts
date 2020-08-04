@@ -23,7 +23,7 @@ router.use("/agreements", agreementsRoutes);
 router.use("/questions", questionsRoutes);
 router.use("/forms", formsRoutes);
 router.use("/forms/:form_id/questions", formQuestionsRoutes);
-router.use("/responseTypes", responseTypesRoutes);
+router.use("/response_types", responseTypesRoutes);
 router.use("/solicitations", solicitationsRoutes);
 router.use("/solicitations/:solicitation_id", solicitationIdRoutes);
 router.use("/solicitations/:solicitation_id/solution", solutionRoutes);

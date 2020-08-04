@@ -26,4 +26,18 @@ router.get(
   }
 );
 
+router.post('/', User.validateToken, async (req: Request, res: Response) => {
+  try {
+    return res.status(200).send(await ResponseType.newResponseType({
+      name: req.body.name,
+      max: req.body.max || 0,
+      min: req.body.min,
+      basic_type: req.body.basic_type,
+      regex: req.body.regex || ""
+    }));
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
 export default router;
