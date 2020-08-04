@@ -48,9 +48,18 @@
     </mat-form-field>
   </p>
 
-  <p>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-      Criar
-    </button>
-  </p>
+  <div class="form-footer">
+    <div class="action-area">
+      <div class="cancel-button">
+        <button mat-raised-button type="button" [routerLink]="['../list']">
+          Cancelar
+        </button>
+      </div>
+      <div class="submit-button">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          Criar
+        </button>
+      </div>
+    </div>
+  </div>
 </form>

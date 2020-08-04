@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormsService } from '../forms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forms-response-type-create',
@@ -24,7 +25,7 @@ export class FormsResponseTypeCreateComponent implements OnInit {
 
   hidePassword = true;
 
-  constructor(private fb: FormBuilder, private formService: FormsService) {
+  constructor(private fb: FormBuilder, private formService: FormsService, private router: Router) {
     this.buildForm();
   }
 
@@ -44,15 +45,14 @@ export class FormsResponseTypeCreateComponent implements OnInit {
         this.setLabels(type);
       },
     });
-    // this.form.valueChanges.subscribe({ next: (formValues) => console.log({ formValues }) });
   }
 
   onSubmit() {
-    console.log('onSubmit() called');
-
-    // this.formService.createResponseType(this.form.value).subscribe({
-    //   next: () => this.formed(),
-    // });
+    this.formService.createResponseType(this.form.value).subscribe({
+      next: () => {
+        this.router.navigate(['/forms/response-types/list'])
+      },
+    });
   }
 
   regexValidator(control: AbstractControl): { [key: string]: boolean } | null {

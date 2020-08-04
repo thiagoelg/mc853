@@ -1,6 +1,6 @@
 
 <div class="card-header">
-  <mat-card-title>Registrar</mat-card-title>
+  <mat-card-title>{{ authService.user ? 'Cadastrar usuário' : 'Registrar' }}</mat-card-title>
 </div>
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
   <p>
@@ -28,14 +28,21 @@
       <mat-error *ngIf="form.controls.password.invalid">A senha deve ter pelo menos 6 caracteres</mat-error>
     </mat-form-field>
   </p>
-  <div class="action-area">
-    <div class="register-error">
-
+  <div class="form-footer">
+    <div class="error-area">
+      {{ errorMsg }}
     </div>
-    <div class="register-button">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-        Registrar
-      </button>
+    <div class="action-area">
+      <div class="cancel-button" *ngIf="authService.user">
+        <button mat-raised-button type="button" [routerLink]="['../list']">
+          Cancelar
+        </button>
+      </div>
+      <div class="submit-button">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          Registrar
+        </button>
+      </div>
     </div>
   </div>
 </form>

@@ -51,15 +51,15 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-app-data-table ::ng-deep .mat-paginator-page-size-select {
-  width: 56px !important;
+::ng-deep .mat-paginator-page-size-label {
+  white-space: nowrap;
 }
 
-app-data-table  ::ng-deep .mat-form-field-wrapper {
+.app-data-table ::ng-deep .mat-form-field-wrapper {
   padding-bottom: 1em;
 }
 
-app-data-table  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+.app-data-table  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: #1e254d;
 }
 

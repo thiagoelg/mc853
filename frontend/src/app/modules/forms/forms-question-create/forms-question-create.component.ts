@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { Question } from 'src/app/models/question';
 import { ResponseType } from 'src/app/models/responseType';
 import { FormsService } from '../forms.service';
+import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-forms-question-create',
@@ -17,10 +18,20 @@ export class FormsQuestionCreateComponent implements OnInit {
 
   responseTypes$: Observable<ResponseType[]>;
   types$: Observable<{ groupName: string; types: ResponseType[] }[]>;
+  currentPath: string;
 
-  constructor(private fb: FormBuilder, private formService: FormsService) {
+  constructor(
+    private fb: FormBuilder,
+    private formService: FormsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.buildForm();
     this.setTypeObservables();
+    this.route.parent.url.subscribe(url => {
+      this.currentPath = url[0].path;
+      console.log(url);
+    });
   }
 
   ngOnInit(): void { }
@@ -36,15 +47,16 @@ export class FormsQuestionCreateComponent implements OnInit {
     const form = this.form.value;
     console.log({ form });
 
-    this.formService.createQuestion(form).subscribe({
-      next: (data) => {
-        console.log({ data });
-        this.created.emit(data);
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    });
+    // this.formService.createQuestion(form).subscribe({
+    //   next: (data) => {
+    //     console.log({ data });
+    //     this.created.emit(data);
+    //     this.router.navigate(['/forms/questions/list']);
+    //   },
+    //   error: (error) => {
+    //     console.error(error);
+    //   }
+    // });
   }
 
   setTypeObservables() {
