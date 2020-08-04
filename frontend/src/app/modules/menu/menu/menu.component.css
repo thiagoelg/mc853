@@ -49,3 +49,13 @@
 .user-name {
   padding-left: 8px;
 }
+
+.menu-item-icon {
+  margin-right: 8px;
+}
+
+.nav-list-horizontal {
+  display: flex;
+  flex-direction: row;
+  color: white;
+}

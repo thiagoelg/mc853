@@ -9,13 +9,13 @@ import { FormsComponent } from './forms.component';
 
 const routes: Routes = [
   { path: 'list', component: FormsComponent },
-  { path: 'create', component: FormsCreateComponent },
+  { path: 'new', component: FormsCreateComponent },
   { path: 'response-types', component: FormsResponseTypeComponent },
   {
     path: 'questions',
     children: [
       { path: 'list', component: FormsQuestionComponent },
-      { path: 'create', component: FormsQuestionCreateComponent },
+      { path: 'new', component: FormsQuestionCreateComponent },
     ]
   },
   { path: ':form_id', component: FormsDisplayComponent },

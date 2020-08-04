@@ -31,3 +31,10 @@ label.mat-checkbox-layout {
   flex: right;
 }
 
+.card-header {
+  display: flex;
+}
+
+.card-header .mat-card-title {
+  flex: 1 1 auto;
+}

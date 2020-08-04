@@ -75,7 +75,7 @@ tr.example-element-row:not(.example-expanded-row):active {
 
 .search-bar-container {
   width: 100%;
-  text-align: right;
+  text-align: left;
 }
 
 .search-bar {

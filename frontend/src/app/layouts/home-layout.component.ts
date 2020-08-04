@@ -5,7 +5,9 @@ import { Component } from '@angular/core';
   template: `
     <app-menu>
       <div style="padding: 10px" class="content">
-        <router-outlet></router-outlet>
+        <mat-card>
+          <router-outlet></router-outlet>
+        </mat-card>
       </div>
     </app-menu>
   `,

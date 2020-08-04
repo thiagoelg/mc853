@@ -1,29 +1,29 @@
-<mat-card *ngIf="user">
+<div class="card-header">
   <mat-card-title>Perfil</mat-card-title>
-  <div class="user-main-info flex-container">
-    <div class="flex-left">
-      <div class="user-profile-image" >
-        <img [src]="userImageUrl">
-        <button class="user-profile-edit" type="button" (click)="onEditUserImage()">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div class="user-profile-info flex-right">
-      <h1>{{ user.name }}</h1>
-      <h3><strong>Email: </strong>{{ user.email }}</h3>
-      <h3><strong>Perfil de acesso: </strong>{{ user.role.name }}</h3>
+</div>
+<div class="user-main-info flex-container" *ngIf="user">
+  <div class="flex-left">
+    <div class="user-profile-image" >
+      <img [src]="userImageUrl">
+      <button class="user-profile-edit" type="button" (click)="onEditUserImage()">
+        <mat-icon>edit</mat-icon>
+      </button>
     </div>
   </div>
-
-  <mat-divider></mat-divider>
-
-  <div class="permissions-title">Permissões</div>
-  <div class="user-permissions flex-container" *ngIf="selectedRole">
-    <ul>
-      <li *ngFor="let permission of selectedRole.permissions">
-        {{ permission.name }}
-      </li>
-    </ul>
+  <div class="user-profile-info flex-right">
+    <h1>{{ user.name }}</h1>
+    <h3><strong>Email: </strong>{{ user.email }}</h3>
+    <h3><strong>Perfil de acesso: </strong>{{ user.role.name }}</h3>
   </div>
-</mat-card>
+</div>
+
+<mat-divider></mat-divider>
+
+<div class="permissions-title">Permissões</div>
+<div class="user-permissions flex-container" *ngIf="selectedRole">
+  <ul>
+    <li *ngFor="let permission of selectedRole.permissions">
+      {{ permission.name }}
+    </li>
+  </ul>
+</div>

@@ -1,45 +1,41 @@
 
-<mat-card>
-  <mat-card-title>Registar</mat-card-title>
-  <ng-container *ngTemplateOutlet="registerForm"></ng-container>
-</mat-card>
+<div class="card-header">
+  <mat-card-title>Registrar</mat-card-title>
+</div>
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput placeholder="Escreva seu nome completo" formControlName='name'>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input matInput placeholder="exemplo@exemplo.com" formControlName='email'>
+      <mat-error *ngIf="form.controls.email.invalid">Email inválido</mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Senha</mat-label>
+      <input [type]="hidePassword? 'password': 'text'" matInput placeholder="******" formControlName='password'>
+      <mat-button-toggle matSuffix>
+        <mat-icon (click)="hidePassword = !hidePassword" style="margin: 0 -12px;">
+          {{hidePassword ? 'visibility_off' : 'visibility'}}
+        </mat-icon>
+      </mat-button-toggle>
+      <mat-error *ngIf="form.controls.password.invalid">A senha deve ter pelo menos 6 caracteres</mat-error>
+    </mat-form-field>
+  </p>
+  <div class="action-area">
+    <div class="register-error">
 
-<ng-template #registerForm>
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Nome</mat-label>
-        <input matInput placeholder="Escreva seu nome completo" formControlName='name'>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="exemplo@exemplo.com" formControlName='email'>
-        <mat-error *ngIf="form.controls.email.invalid">Email inválido</mat-error>
-      </mat-form-field>
-    </p>
-    <p>
-      <mat-form-field appearance="outline">
-        <mat-label>Senha</mat-label>
-        <input [type]="hidePassword? 'password': 'text'" matInput placeholder="******" formControlName='password'>
-        <mat-button-toggle matSuffix>
-          <mat-icon (click)="hidePassword = !hidePassword" style="margin: 0 -12px;">
-            {{hidePassword ? 'visibility_off' : 'visibility'}}
-          </mat-icon>
-        </mat-button-toggle>
-        <mat-error *ngIf="form.controls.password.invalid">A senha deve ter pelo menos 6 caracteres</mat-error>
-      </mat-form-field>
-    </p>
-    <div class="action-area">
-      <div class="register-error">
-
-      </div>
-      <div class="register-button">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-          Registrar
-        </button>
-      </div>
     </div>
-  </form>
-</ng-template>
+    <div class="register-button">
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+        Registrar
+      </button>
+    </div>
+  </div>
+</form>

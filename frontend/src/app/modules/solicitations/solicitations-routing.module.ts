@@ -12,7 +12,7 @@ const routes: Routes = [
     component: SolicitationsComponent
   },
   {
-    path: 'create',
+    path: 'new',
     children: [
       {
         path: '',

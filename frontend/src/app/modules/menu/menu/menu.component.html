@@ -14,7 +14,8 @@
         [routerLink]="(item.path)"
         [appHideIfUnauthorized]="(item.permissions)"
       >
-        {{item.name}}
+        <mat-icon class="menu-item-icon" color="primary">{{ item.icon }}</mat-icon>
+        {{ item.name }}
       </a>
     </mat-nav-list>
     <button mat-button class="user-info" routerLink="/users/profile">
@@ -34,10 +35,10 @@
       </button>
 
       <!-- Title -->
-      <span>{{ title$ | async }}</span>
+      <span>RESPONSIVE</span>
       <span class="example-spacer"></span>
 
-      <!-- Top Left Actions -->
+      <!-- Top Right Actions -->
       <button mat-button routerLink="/logout" class="logout-button">
         <mat-icon>exit_to_app</mat-icon>
         <span>Sair</span>

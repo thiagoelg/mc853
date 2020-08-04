@@ -21,27 +21,27 @@ export class MenuComponent {
   items = [
     { 
       name: 'Solicitações',
-      icon: '',
+      icon: 'article',
       path: ['/solicitations/list'], permissions: []
     },
     { 
       name: 'Formulários',
-      icon: '',
+      icon: 'dynamic_form',
       path: ['/forms/list'], permissions: []
     },
     { 
       name: 'Questões',
-      icon: '',
+      icon: 'short_text',
       path: ['/forms/questions/list'], permissions: []
     },
     { 
       name: 'Tipos de resposta',
-      icon: '',
+      icon: 'grading',
       path: ['/forms/response-types'], permissions: []
     },
     { 
       name: 'Usuários',
-      icon: '',
+      icon: 'people',
       path: ['/users/list'], permissions: UsersComponent.requiredPermissions
     },
   ]
