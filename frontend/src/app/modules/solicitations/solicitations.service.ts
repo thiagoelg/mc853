@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { FormQuestion } from 'src/app/models/formQuestion';
 import { Form, FormFull } from './../../models/form';
 import { ResponseType } from './../../models/responseType';
@@ -11,7 +11,7 @@ import { Solicitation, SolicitationForm } from './../../models/solicitation';
   providedIn: 'root',
 })
 export class SolicitationsService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   fetchForms(): Observable<Form[]> {
     const url = 'forms';
@@ -19,10 +19,18 @@ export class SolicitationsService {
     return this.http.get<Form[]>(url).pipe(take(1));
   }
 
-  fetchSolicitations(): Observable<Solicitation[]> {
+  fetchAllSolicitations(): Observable<Solicitation[]> {
     const url = 'solicitations';
 
     return this.http.get<Solicitation[]>(url).pipe(take(1));
+  }
+
+  fetchSolicitationsSubmittedBy(userId: number): Observable<Solicitation[]> {
+    return this.fetchAllSolicitations().pipe(
+      map((solicitations) =>
+        solicitations.filter((solicitation) => solicitation.submitted_by_user_id == userId)
+      )
+    );
   }
 
   fetchSolicitation(id: number): Observable<Solicitation> {

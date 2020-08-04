@@ -22,7 +22,8 @@ export class SolicitationsListComponent implements OnInit {
       updated_at: 'Última atualização',
       solved_at: 'Data de resolução'
     };
-    this.userSolicitations$ = this.solicitationsService.fetchSolicitations().pipe(
+  
+    this.userSolicitations$ = this.solicitationsService.fetchAllSolicitations().pipe(
       map(solicitations => solicitations.map(s => {
         return {
           ...s,
