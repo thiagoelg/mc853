@@ -31,7 +31,7 @@ export interface TableEmittedAction {
 export class DataTableComponent implements OnInit {
   @Input() data: any[] = [];
   @Input() columnNames: any = { id: 'Número', name: 'Nome' };
-  @Input() pageSizeOptions = [5, 10, 25, 100];
+  @Input() pageSizeOptions = [15, 30, 100];
   @Input() actions: Array<TableAction> = [];
   
   @Output() onAction: EventEmitter<TableEmittedAction> = new EventEmitter();

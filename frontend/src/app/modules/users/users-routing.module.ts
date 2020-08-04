@@ -3,12 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersComponent } from './users.component';
 import { PermissionGuard } from 'src/app/security/permission.guard';
+import { UserNewComponent } from './user-new/user-new.component';
 
 
 const routes: Routes = [
   {
     path: 'profile',
     component: UsersProfileComponent
+  },
+  {
+    path: 'new',
+    component: UserNewComponent,
+    canActivate: [PermissionGuard],
+    data: { permissions: UsersComponent.requiredPermissions }
   },
   {
     path: 'list',

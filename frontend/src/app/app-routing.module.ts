@@ -12,7 +12,6 @@ import { SolicitationsModule } from './modules/solicitations/solicitations.modul
 import { FormsModule } from './modules/forms/forms.module';
 import { LogoutModule } from './modules/logout/logout.module';
 import { LoginModule } from './modules/login/login.module';
-import { UsersRoutingModule } from './modules/users/users-routing.module';
 
 const routes: Routes = [
   {

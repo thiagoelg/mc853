@@ -8,7 +8,7 @@ import { SolicitationsComponent } from './solicitations.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'list',
     component: SolicitationsComponent
   },
   {

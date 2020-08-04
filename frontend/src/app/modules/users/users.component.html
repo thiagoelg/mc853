@@ -1,6 +1,8 @@
-<ng-container *ngIf="users$ | async as users">
-
+<mat-card>
+  <mat-card-title>Usuários</mat-card-title>
+  <ng-container *ngIf="users$ | async as users">
     <!-- User list -->
     <app-data-table [data]="users" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)">
     </app-data-table>
-</ng-container>
+  </ng-container>
+</mat-card>

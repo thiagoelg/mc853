@@ -1,8 +1,12 @@
-Users:
-- List
-- Profile
-- Editable profile
+## Administrador | admin
+ - Solicitações (No overview, todas)
+ - CRUD de formulários (Lista -> Novo formulários)
+ - CRUD de questões (Lista -> Nova questão)
+ - CRUD de tipos de resposta (Lista -> Novo tipo de resposta)
+ - CRUD de usuários (Lista -> Editar usuário)
 
-Roles:
-- List with permissions
-- Editable role (adding/removing permissions)
+## Gerente | manager
+
+## Atendente | worker
+
+## Solicitante | requester

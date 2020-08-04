@@ -1,4 +1,10 @@
+
 <mat-card>
+  <mat-card-title>Registar</mat-card-title>
+  <ng-container *ngTemplateOutlet="registerForm"></ng-container>
+</mat-card>
+
+<ng-template #registerForm>
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     <p>
       <mat-form-field appearance="outline">
@@ -36,4 +42,4 @@
       </div>
     </div>
   </form>
-</mat-card>
+</ng-template>

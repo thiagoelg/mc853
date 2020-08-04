@@ -18,6 +18,7 @@ export interface UserData {
 
 export interface UserQuery {
   orderBy: string;
+  page: number;
 }
 
 export default class User extends BaseModel {

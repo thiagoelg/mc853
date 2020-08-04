@@ -38,7 +38,6 @@
   border: none;
   background-color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  border-top: 1px solid #cccccc;
 }
 
 .user-profile-edit mat-icon {

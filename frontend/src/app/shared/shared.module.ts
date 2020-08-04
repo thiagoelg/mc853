@@ -7,6 +7,7 @@ import { DataTableComponent } from './data-table/data-table.component';
 import { FormFillComponent } from './form-fill/form-fill.component';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { FileUploadService } from './file-upload/file-upload.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -19,14 +20,16 @@ import { FileUploadService } from './file-upload/file-upload.service';
     AppMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxMatFileInputModule
+    NgxMatFileInputModule,
+    MatPaginatorModule
   ],
   exports: [
     FormFillComponent,
     DataTableComponent,
     FileUploadComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatPaginatorModule
   ],
   providers: [
     FileUploadService

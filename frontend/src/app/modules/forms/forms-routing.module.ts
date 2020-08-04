@@ -8,13 +8,13 @@ import { FormsResponseTypeComponent } from './forms-response-type/forms-response
 import { FormsComponent } from './forms.component';
 
 const routes: Routes = [
-  { path: '', component: FormsComponent },
+  { path: 'list', component: FormsComponent },
   { path: 'create', component: FormsCreateComponent },
   { path: 'response-types', component: FormsResponseTypeComponent },
   {
     path: 'questions',
     children: [
-      { path: '', component: FormsQuestionComponent },
+      { path: 'list', component: FormsQuestionComponent },
       { path: 'create', component: FormsQuestionCreateComponent },
     ]
   },

@@ -5,20 +5,23 @@ import { SharedModule } from './../../shared/shared.module';
 import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
-import { RequiredPermissions } from 'src/app/models/permission';
 import { UserImageComponent } from './users-profile/user-image/user-image.component';
+import { UserNewComponent } from './user-new/user-new.component';
+import { RegisterModule } from '../register/register.module';
 
 @NgModule({
   declarations: [
     UsersComponent,
     UsersProfileComponent,
-    UserImageComponent
+    UserImageComponent,
+    UserNewComponent
   ],
   imports: [
     CommonModule,
     AppMaterialModule,
     UsersRoutingModule,
+    RegisterModule,
     SharedModule
   ],
 })
-export class UsersModule extends RequiredPermissions { }
+export class UsersModule { }

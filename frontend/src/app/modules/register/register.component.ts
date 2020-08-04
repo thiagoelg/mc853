@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private registerService: RegisterService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router
   ) {
     this.buildForm();
@@ -45,10 +45,14 @@ export class RegisterComponent implements OnInit {
   registered() {
     const email = this.form.controls.email.value;
     const password = this.form.controls.password.value;
-    this.authService.login({ email, password }).subscribe({
-      next: () => {
-        this.router.navigate(['/']);
-      }
-    })
+    if (this.authService.user) {
+      this.router.navigate(['/users/list']);
+    } else {
+      this.authService.login({ email, password }).subscribe({
+        next: () => {
+          this.router.navigate(['/']);
+        }
+      });
+    }
   }
 }
