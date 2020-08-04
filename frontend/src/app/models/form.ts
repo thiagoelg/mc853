@@ -3,6 +3,7 @@ import { FormQuestion } from './formQuestion';
 
 export interface Form extends BaseModel {
   name: string;
+  description: string;
   is_template: boolean;
 }
 
@@ -12,6 +13,7 @@ export interface FormFull extends Form {
 
 export interface FormData {
   name: string;
+  description: string;
   is_template: boolean;
   form_questions: {
     question_id: number;

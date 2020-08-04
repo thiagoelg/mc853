@@ -12,12 +12,13 @@
     <ng-template let-item>
       <mat-card class="question-details">
         <mat-card-title>{{ item.text }}</mat-card-title>
+        <p matLine *ngIf="item.description"><strong>Descrição:</strong> {{ item.description }}</p>
         <p matLine><strong>Tipo de resposta:</strong> {{ item.response_type_name }}</p>
         <div class="question-response-type">
-            <p matLine><strong>Tipo:</strong> {{ item.response_type.basic_type }}</p>
-            <p matLine><strong>Valor mínimo:</strong> {{ item.response_type.min }}</p>
-            <p matLine><strong>Valor máximo:</strong> {{ item.response_type.max }}</p>
-            <p matLine><strong>Regex:</strong> {{ item.response_type.regex || ' - ' }}</p>
+          <p matLine><strong>Tipo:</strong> {{ item.response_type.basic_type }}</p>
+          <p matLine><strong>Valor mínimo:</strong> {{ item.response_type.min }}</p>
+          <p matLine><strong>Valor máximo:</strong> {{ item.response_type.max }}</p>
+          <p matLine *ngIf="item.response_type.regex"><strong>Regex:</strong> {{ item.response_type.regex || ' - ' }}</p>
         </div>
       </mat-card>
     </ng-template>

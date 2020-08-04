@@ -5,11 +5,13 @@ import ResponseType from "./ResponseType";
 export interface QuestionData {
   text: string;
   response_type_id: number;
+  description?: string;
 }
 
 export default class Question extends BaseModel {
   text!: string;
   response_type_id!: number;
+  description?: string;
 
   static get tableName() {
     return "question";
@@ -36,6 +38,7 @@ export default class Question extends BaseModel {
       properties: {
         id: { type: "integer" },
         text: { type: "string", minLength: 1, maxLength: 1024 },
+        description: { type: "text", minLength: 1, maxLength: 4096 },
         response_type_id: { type: "number" },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" },

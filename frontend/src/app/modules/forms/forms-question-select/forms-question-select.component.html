@@ -23,7 +23,9 @@
     <mat-selection-list multiple formControlName="questions">
       <mat-list-option [checkboxPosition]="'before'" #myOption [value]="item"
         *ngFor="let item of filteredQuestions$ | async" (click)="search.value=''"
-        [ngClass]="{'hide': (item.hide)}">
+        [ngClass]="{'hide': (item.hide)}"
+        color="primary"
+      >
         <div style="display:flex; justify-content:space-between;align-items:center">
 
           <div style="display:flex; flex-direction:column">
@@ -37,10 +39,6 @@
     </mat-selection-list>
   </div>
   <div mat-dialog-actions class="action-buttons">
-    <button class="bottom-left-area" mat-raised-button style="background-color: green;" color="primary"
-      type="button">
-      Criar pergunta
-    </button>
     <button class="bottom-right-area1" mat-button (click)="onCloseClick()">Cancelar</button>
     <button class="bottom-right-area2" mat-raised-button color="primary" cdkFocusInitial
       [mat-dialog-close]="questionForm.value.questions">

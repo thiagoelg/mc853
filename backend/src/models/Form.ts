@@ -5,11 +5,13 @@ import { default as FormQuestion, FormQuestionData } from "./FormQuestion";
 export interface FormData {
   name: string;
   is_template?: boolean;
+  description: string,
   form_questions?: Omit<FormQuestionData, 'form_id'>[];
 }
 
 export default class Form extends BaseModel {
   name!: string;
+  description?: string;
   is_template!: boolean;
 
   static get tableName() {
@@ -37,6 +39,7 @@ export default class Form extends BaseModel {
       properties: {
         id: { type: "integer" },
         name: { type: "string", minLength: 1, maxLength: 1024 },
+        description: { type: "text", minLength: 1, maxLength: 4096 },
         is_template: { type: "boolean" },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" },

@@ -13,7 +13,7 @@
         <p matLine><strong>Tipo:</strong> {{ item.basic_type }}</p>
         <p matLine><strong>Valor mínimo:</strong> {{ item.min }}</p>
         <p matLine><strong>Valor máximo:</strong> {{ item.max }}</p>
-        <p matLine><strong>Regex:</strong> {{ item.regex || ' - ' }}</p>
+        <p matLine *ngIf="item.regex"><strong>Regex:</strong> {{ item.regex || ' - ' }}</p>
         <p matLine><strong>Status:</strong> {{ item.status ? 'Habilitado' : 'Desabilitado' }}</p>
         <p matLine><strong>Criado em:</strong> {{ item.created_at }}</p>
         <p matLine><strong>Atualizado em:</strong> {{ item.updated_at }}</p>

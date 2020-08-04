@@ -25,15 +25,21 @@ export async function seed(knex: Knex): Promise<any> {
                           basic_type: "text"
                         },
                         {
-                          name: "Avaliação",
+                          name: "Texto Curto",
                           min: 1,
-                          max: 5,
-                          basic_type: "number"
+                          max: 255,
+                          basic_type: "text"
                         },
                         {
                           name: "Texto Médio",
                           min: 1,
-                          max: 1023,
+                          max: 1000,
+                          basic_type: "text"
+                        },
+                        {
+                          name: "Texto Grande",
+                          min: 1,
+                          max: 2000,
                           basic_type: "text"
                         },
                         {
@@ -48,6 +54,12 @@ export async function seed(knex: Knex): Promise<any> {
                           max: 0,
                           basic_type: "date"
                         },
+                        {
+                          name: "Avaliação",
+                          min: 1,
+                          max: 10,
+                          basic_type: "number"
+                        },
                       ],
                       "id"
                     )
@@ -56,25 +68,33 @@ export async function seed(knex: Knex): Promise<any> {
                         .insert(
                           [
                             {
-                              text: "Qual o seu nome?",
-                              response_type_id: responseTypes[0]
-                            },
-                            {
-                              text: "Avalie seu atendimento",
+                              text: "Sobre qual assunto você quer falar?",
                               response_type_id: responseTypes[1]
                             },
                             {
-                              text: "Me diga o que você fez hoje",
-                              response_type_id: responseTypes[2]
-                            },
-                            {
-                              text: "Você aceita isso?",
+                              text: "Fale aqui",
+                              description: "Descreva abaixo o conteúdo de sua sugestão. Seja claro e objetivo. Informações pessoais, inclusive identificação, não devem ser inseridas a não ser que sejam essenciais para a caracterização da sugestão.",
                               response_type_id: responseTypes[3]
                             },
                             {
-                              text: "Até que dia você pode esperar?",
-                              response_type_id: responseTypes[4]
+                              text: "Proposta de melhoria",
+                              response_type_id: responseTypes[3]
                             },
+                            {
+                              text: "Regulamentação",
+                              description: "Informe as legislações internas ou externas à Unicamp que regem o escopo da sugestão.",
+                              response_type_id: responseTypes[2]
+                            },
+                            {
+                              text: "Avalie seu atendimento",
+                              description: "De 1 a 10, o que achou do nosso atendimento?",
+                              response_type_id: responseTypes[6]
+                            },
+                            {
+                              text: "Comentários ou sugestões",
+                              description: "Deixe aqui algum comentário ou sugestão sobre nosso atendimento e como podemos melhorar.",
+                              response_type_id: responseTypes[2]
+                            }
                           ],
                           "id"
                         )
@@ -83,15 +103,13 @@ export async function seed(knex: Knex): Promise<any> {
                             .insert(
                               [
                                 {
-                                  name: "Formulário Grande",
+                                  name: "Formulário Simplifica",
+                                  description: "Ao utilizar algum serviço da universidade, podemos nos deparar com exigências que acabam por complicar o que esperávamos ser simples e rápido. A partir de agora, sempre que você se deparar com esta situação, basta enviar sua sugestão para desburocratizar este serviço por meio do Simplifica.",
                                   is_template: true
                                 },
                                 {
-                                  name: "Formulário pequeno",
-                                  is_template: true
-                                },
-                                {
-                                  name: "Formulário de satisfação",
+                                  name: "Pesquisa de satisfação",
+                                  description: "Nos ajude a melhorar respondendo as perguntas abaixo, é rapidinho!",
                                   is_template: true
                                 },
                               ],
@@ -120,25 +138,15 @@ export async function seed(knex: Knex): Promise<any> {
                                   order: 4
                                 },
                                 {
-                                  form_id: form_ids[0],
-                                  question_id: questions[4],
-                                  order: 5
-                                },
-                                {
                                   form_id: form_ids[1],
-                                  question_id: questions[2],
+                                  question_id: questions[4],
                                   order: 1
                                 },
                                 {
                                   form_id: form_ids[1],
-                                  question_id: questions[4],
+                                  question_id: questions[5],
                                   order: 2
-                                },
-                                {
-                                  form_id: form_ids[2],
-                                  question_id: questions[2],
-                                  order: 1
-                                },
+                                }
                               ]);
                             });
                         });

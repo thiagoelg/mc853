@@ -75,11 +75,10 @@ export class FormsCreateComponent implements OnInit {
   buildForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
+      description: ['', [Validators.minLength(3)]],
       is_template: [false, [Validators.required]],
       form_questions: this.fb.array([]),
     });
-
-    // this.form.valueChanges.subscribe({ next: (values) => console.log({ values }) });
   }
 
   onSubmit() {
@@ -99,6 +98,7 @@ export class FormsCreateComponent implements OnInit {
     const fv: {
       is_template: boolean,
       name: string,
+      description: string,
       form_questions: { question: Question, required: boolean }[]
     } = this.form.value;
 
