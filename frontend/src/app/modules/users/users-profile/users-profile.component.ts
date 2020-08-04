@@ -5,9 +5,8 @@ import { UsersService } from './../users.service';
 import { AuthService } from 'src/app/security/auth.service';
 import { RoleWithPermissions } from 'src/app/models/role';
 import { PermissionGuard } from 'src/app/security/permission.guard';
-import { FileUploadService } from 'src/app/shared/file-upload/file-upload.service';
 import { environment } from 'src/environments/environment';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { UserImageComponent } from './user-image/user-image.component';
 
 @Component({

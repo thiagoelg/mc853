@@ -12,6 +12,7 @@ export interface UserData {
   name: string;
   email: string;
   password: string;
+  origin?: string;
   role_id?: number;
   profile_image_id?: number;
 }
@@ -27,6 +28,7 @@ export default class User extends BaseModel {
   password!: string;
   role_id!: number;
   role!: Role;
+  origin?: string;
   permissions!: Array<Permission>;
   profile_image_id!: number;
   profile_image!: File;
@@ -92,6 +94,7 @@ export default class User extends BaseModel {
         name: { type: "string", minLength: 1, maxLength: 255 },
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
+        origin: { type: "string", minLength: 1, maxLength: 255 },
         status: { type: 'boolean' },
         profile_image_id: { type: "integer" },
         created_at: { type: "timestamp" },

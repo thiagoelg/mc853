@@ -11,6 +11,12 @@
   </p>
   <p>
     <mat-form-field appearance="outline">
+      <mat-label>Orgão de origem</mat-label>
+      <input matInput placeholder="Orgão da Unicamp que você faz parte" formControlName='origin'>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
       <input matInput placeholder="exemplo@exemplo.com" formControlName='email'>
       <mat-error *ngIf="form.controls.email.invalid">Email inválido</mat-error>
@@ -36,6 +42,11 @@
       <div class="cancel-button" *ngIf="authService.user">
         <button mat-raised-button type="button" [routerLink]="['../list']">
           Cancelar
+        </button>
+      </div>
+      <div class="cancel-button" *ngIf="!authService.user">
+        <button mat-raised-button type="button" [routerLink]="['/login']">
+          Voltar para login
         </button>
       </div>
       <div class="submit-button">

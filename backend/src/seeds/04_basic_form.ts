@@ -60,7 +60,7 @@ export async function seed(knex: Knex): Promise<any> {
                               response_type_id: responseTypes[0]
                             },
                             {
-                              text: "Avalie este aplicativo",
+                              text: "Avalie seu atendimento",
                               response_type_id: responseTypes[1]
                             },
                             {

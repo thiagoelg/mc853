@@ -28,12 +28,7 @@ export async function seed(knex: Knex): Promise<any> {
           content:
             "Tempo para entrega: 1 mês\nNão é garantido que o problema será resolvido devido à atual situação global",
           isTemplate: true
-        },
-        {
-          name: "Pro chefe",
-          content: "Tempo para entrega: pra ontem kkkkk",
-          isTemplate: false
-        },
+        }
       ]);
     });
 }
