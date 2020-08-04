@@ -6,6 +6,7 @@ export async function up(knex: Knex): Promise<any> {
     table.string("name");
     table.string("email");
     table.string("password");
+    table.string("origin");
     table.integer("profile_image_id").unsigned().nullable();
     table.foreign("profile_image_id").references("id").inTable("file").onUpdate('CASCADE').onDelete('CASCADE');
     table.timestamps(true, true);

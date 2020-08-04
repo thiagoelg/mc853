@@ -22,9 +22,19 @@ router.get("/:form_id", User.validateToken, async (req: Request, res: Response) 
   }
 });
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', User.validateToken, async (req: Request, res: Response) => {
   try {
     return res.status(200).send(await Form.newForm(req.body));
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
+router.put("/:form_id/status", User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const form_id = Number(req.params["form_id"]);
+    const status = Boolean(req.body["status"]);
+    return res.status(200).send(await Form.setStatus(form_id, status));
   } catch (error) {
     return res.status(500).send(error.toString());
   }

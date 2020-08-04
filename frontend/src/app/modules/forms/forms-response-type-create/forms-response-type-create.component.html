@@ -1,4 +1,8 @@
-<p>Todo: Adicionar tipos básicos: boolean, files</p>
+<div class="card-header">
+  <mat-card-title>
+    Cadastrar tipo de resposta
+  </mat-card-title>
+</div>
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
   <p>
     <mat-form-field appearance="outline">
@@ -48,9 +52,18 @@
     </mat-form-field>
   </p>
 
-  <p>
-    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-      Criar
-    </button>
-  </p>
+  <div class="form-footer">
+    <div class="action-area">
+      <div class="cancel-button">
+        <button mat-raised-button type="button" [routerLink]="['../list']">
+          Cancelar
+        </button>
+      </div>
+      <div class="submit-button">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          Criar
+        </button>
+      </div>
+    </div>
+  </div>
 </form>

@@ -17,7 +17,8 @@ export async function seed(knex: Knex): Promise<any> {
               email: "admin",
               password:
                 "$2y$10$.mADKr979TNBWOrdhOHODuceBTe9A8frbgeg8l1iVSvDtWCLn0gUi",
-              role_id: role.id
+              role_id: role.id,
+              origin: "UNICAMP"
             },
           ]);
         });

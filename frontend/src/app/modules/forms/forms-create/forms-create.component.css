@@ -49,8 +49,8 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-.listMessage {
-  margin: 30px 0;
+.list-message {
+  margin: 8px 0;
   padding: 0 10px;
   white-space: normal;
 }

@@ -8,7 +8,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export interface TableAction {
   name: string,
   label: string,
-  icon?: string
+  icon?: string,
+  color?: string,
+  condition?: (item: any) => {}
 }
 
 export interface TableEmittedAction {
@@ -67,5 +69,9 @@ export class DataTableComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  isBoolean(value: any) {
+    return typeof value === 'boolean';
   }
 }

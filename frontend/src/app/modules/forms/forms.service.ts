@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { FormData, FormFull } from 'src/app/models/form';
-import { ResponseType } from 'src/app/models/responseType';
+import { ResponseType, ResponseTypeData } from 'src/app/models/responseType';
 import { Form } from './../../models/form';
 import { Question, QuestionData } from './../../models/question';
 
@@ -25,6 +25,27 @@ export class FormsService {
     return this.http.post<Question>(url, body).pipe(take(1));
   }
 
+  createResponseType(body: ResponseTypeData): Observable<ResponseType> {
+    const url = 'response_types';
+
+    return this.http.post<ResponseType>(url, body).pipe(take(1));
+  }
+
+  toggleStatusResponseType(response_type_id: number, status: boolean) {
+    const url = `response_types/${response_type_id}/status`;
+    return this.http.put<ResponseType>(url, { status }).pipe(take(1));
+  }
+
+  toggleStatusQuestion(question_id: number, status: boolean) {
+    const url = `questions/${question_id}/status`;
+    return this.http.put<Question>(url, { status }).pipe(take(1));
+  }
+
+  toggleStatusForm(form_id: number, status: boolean) {
+    const url = `forms/${form_id}/status`;
+    return this.http.put<Form>(url, { status }).pipe(take(1));
+  }
+
   fetchForm(id: number): Observable<FormFull> {
     const url = `forms/${id}`;
 
@@ -38,13 +59,13 @@ export class FormsService {
   }
 
   fetchResponseTypes(): Observable<ResponseType[]> {
-    const url = 'responseTypes';
+    const url = 'response_types';
 
     return this.http.get<ResponseType[]>(url).pipe(take(1));
   }
 
   fetchResponseTypesByBasicType(basicType: string): Observable<ResponseType[]> {
-    const url = `responseTypes/${basicType}`;
+    const url = `response_types/${basicType}`;
 
     return this.http.get<ResponseType[]>(url).pipe(take(1));
   }

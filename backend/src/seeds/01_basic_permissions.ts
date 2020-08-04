@@ -77,7 +77,6 @@ export async function seed(knex: Knex): Promise<any> {
                       const my_permissions = permissions.filter((perm) =>
                         [
                           Permission.shortNames.CREATE_SOLICITATION,
-                          Permission.shortNames.ANSWER_SOLICITATION,
                           Permission.shortNames.REOPEN_SOLICITATION,
                           Permission.shortNames.ANSWER_SATISFACTION_SURVEY,
                         ].includes(perm.short_name)

@@ -8,6 +8,14 @@ export interface ResponseType extends BaseModel {
   basic_type: string;
 }
 
+export interface ResponseTypeData {
+  name: string;
+  min?: number;
+  max?: number;
+  regex?: string;
+  basic_type: string;
+}
+
 export interface ResponseTypeCreate extends ResponseType {
   basic_type: 'text' | 'number' | 'file' | 'date';
 }

@@ -7,6 +7,7 @@ export interface User extends BaseModel {
   id: number;
   name: string;
   email: string;
+  origin: string;
   role?: Role;
   permissions?: Array<Permission>;
   profile_image?: File;
@@ -16,4 +17,5 @@ export interface UserCreate {
   name: string;
   email: string;
   password: string;
+  origin: string;
 }

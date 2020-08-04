@@ -19,7 +19,7 @@ export class FormsQuestionSelectComponent implements OnInit {
   @Output() questionSelect = new EventEmitter<Question>();
 
   basicTypes = [
-    { value: null, viewValue: '' },
+    { value: null, viewValue: 'Todas' },
     { value: 'text', viewValue: 'Texto' },
     { value: 'number', viewValue: 'Numero' },
     { value: 'date', viewValue: 'Data' },

@@ -5,6 +5,7 @@ import { map, tap } from 'rxjs/operators';
 import { Question } from 'src/app/models/question';
 import { ResponseType } from 'src/app/models/responseType';
 import { FormsService } from '../forms.service';
+import { Router, ActivatedRoute, UrlSegment } from '@angular/router';
 
 @Component({
   selector: 'app-forms-question-create',
@@ -17,10 +18,19 @@ export class FormsQuestionCreateComponent implements OnInit {
 
   responseTypes$: Observable<ResponseType[]>;
   types$: Observable<{ groupName: string; types: ResponseType[] }[]>;
+  currentPath: string;
 
-  constructor(private fb: FormBuilder, private formService: FormsService) {
+  constructor(
+    private fb: FormBuilder,
+    private formService: FormsService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.buildForm();
     this.setTypeObservables();
+    this.route.parent.url.subscribe(url => {
+      this.currentPath = url[0].path;
+    });
   }
 
   ngOnInit(): void { }
@@ -40,6 +50,7 @@ export class FormsQuestionCreateComponent implements OnInit {
       next: (data) => {
         console.log({ data });
         this.created.emit(data);
+        this.router.navigate(['/forms/questions/list']);
       },
       error: (error) => {
         console.error(error);

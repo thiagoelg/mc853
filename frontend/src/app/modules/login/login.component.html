@@ -1,39 +1,37 @@
 <div class="login">
-  <mat-card>
-    <mat-card-content>
-      <form (ngSubmit)="onSubmit()" [formGroup]="form">
-        <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput placeholder="Placeholder" formControlName='email'>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="outline">
-            <mat-label>Senha</mat-label>
-            <input [type]="hidePassword? 'password': 'text'" matInput placeholder="******" formControlName='password'>
-            <mat-button-toggle matSuffix>
-              <mat-icon (click)="hidePassword = !hidePassword" style="margin: 0 -12px;">
-                {{hidePassword ? 'visibility_off' : 'visibility'}}
-              </mat-icon>
-            </mat-button-toggle>
-          </mat-form-field>
-        </p>
-        <div class="action-area">
-          <div *ngIf="errorMsg" class="login-error">
-            {{errorMsg}}
-          </div>
-          <div class="login-button">
-            <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-              Entrar
-            </button>
-          </div>
+  <mat-card-content>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput placeholder="Placeholder" formControlName='email'>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input [type]="hidePassword? 'password': 'text'" matInput placeholder="******" formControlName='password'>
+          <mat-button-toggle matSuffix>
+            <mat-icon (click)="hidePassword = !hidePassword" style="margin: 0 -12px;">
+              {{hidePassword ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+          </mat-button-toggle>
+        </mat-form-field>
+      </p>
+      <div class="action-area">
+        <div *ngIf="errorMsg" class="login-error">
+          {{errorMsg}}
         </div>
-        <div class="register">
-          Não tem uma conta?
-          <a routerLink="/register">Registre-se!</a>
+        <div class="login-button">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+            Entrar
+          </button>
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      </div>
+      <div class="register">
+        Não tem uma conta?
+        <a routerLink="/register">Registre-se!</a>
+      </div>
+    </form>
+  </mat-card-content>
 </div>

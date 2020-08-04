@@ -3,14 +3,23 @@
   <a mat-raised-button class="card-header-actions" color="primary" routerLink="/forms/questions/new">Nova pergunta</a>
 </div>
 
-<ng-container *ngIf="questions$ | async as questions">
+<ng-container *ngIf="questions">
 
   <!-- User list -->
-  <app-data-table [data]="questions" [columnNames]="columnNames" [pageSizeOptions]="[10, 50, 100]">
+  <app-data-table [data]="questions" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)">
 
     <!-- Inner table component when a row is clicked -->
     <ng-template let-item>
-      {{item| json}}
+      <mat-card class="question-details">
+        <mat-card-title>{{ item.text }}</mat-card-title>
+        <p matLine><strong>Tipo de resposta:</strong> {{ item.response_type_name }}</p>
+        <div class="question-response-type">
+            <p matLine><strong>Tipo:</strong> {{ item.response_type.basic_type }}</p>
+            <p matLine><strong>Valor mínimo:</strong> {{ item.response_type.min }}</p>
+            <p matLine><strong>Valor máximo:</strong> {{ item.response_type.max }}</p>
+            <p matLine><strong>Regex:</strong> {{ item.response_type.regex || ' - ' }}</p>
+        </div>
+      </mat-card>
     </ng-template>
   </app-data-table>
 </ng-container>
