@@ -61,4 +61,14 @@ router.delete("/:question_id", User.validateToken, async (req: Request, res: Res
   }
 });
 
+router.put("/:question_id/status", User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const question_id = Number(req.params["question_id"]);
+    const status = Boolean(req.body["status"]);
+    return res.status(200).send(await Question.setStatus(question_id, status));
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
 export default router;

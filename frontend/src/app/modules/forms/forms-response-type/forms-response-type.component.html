@@ -3,15 +3,22 @@
   <a mat-raised-button class="card-header-actions" color="primary" routerLink="/forms/response-types/new">Novo tipo de resposta</a>
 </div>
 
-<div class="response-types-list">
-  <div class="response-type" *ngFor="let item of responseTypes$ | async">
-    <mat-card>
-      <mat-card-title matLine>{{ item.name }}</mat-card-title>
-      <p matLine><strong>Tipo:</strong> {{ item.basic_type }}</p>
-      <p matLine><strong>Valor mínimo:</strong> {{ item.min }}</p>
-      <p matLine><strong>Valor máximo:</strong> {{ item.max }}</p>
-      <p matLine><strong>Criado em:</strong> {{ item.created_at }}</p>
-      <p matLine><strong>Atualizado em:</strong> {{ item.updated_at }}</p>
-    </mat-card>
-  </div>
-</div>
+<ng-container *ngIf="responseTypes">
+  <!-- User list -->
+  <app-data-table [data]="responseTypes" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)">
+    <!-- Inner table component when a row is clicked -->
+    <ng-template let-item>
+      <mat-card class="response-type-details">
+        <mat-card-title>{{ item.name }}</mat-card-title>
+        <p matLine><strong>Tipo:</strong> {{ item.basic_type }}</p>
+        <p matLine><strong>Valor mínimo:</strong> {{ item.min }}</p>
+        <p matLine><strong>Valor máximo:</strong> {{ item.max }}</p>
+        <p matLine><strong>Regex:</strong> {{ item.regex || ' - ' }}</p>
+        <p matLine><strong>Status:</strong> {{ item.status ? 'Habilitado' : 'Desabilitado' }}</p>
+        <p matLine><strong>Criado em:</strong> {{ item.created_at }}</p>
+        <p matLine><strong>Atualizado em:</strong> {{ item.updated_at }}</p>
+      </mat-card>
+    </ng-template>
+  </app-data-table>
+</ng-container>
+

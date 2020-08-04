@@ -15,10 +15,16 @@
       <ng-container *ngIf="column === 'actions'; else normalColumn">
         <th mat-header-cell *matHeaderCellDef>Ações</th>
         <td mat-cell *matCellDef="let element">
-          <button color="primary" mat-button *ngFor="let action of actions" (click)="onAction.emit({ action: action.name, element: element })" [matTooltip]="action.label">
-            <mat-icon *ngIf="action.icon">{{action.icon}}</mat-icon>
-            <ng-container *ngIf="!action.icon">{{action.label}}</ng-container>
-          </button>
+          <ng-container *ngFor="let action of actions">
+            <ng-container *ngIf="!action.condition || action.condition(element)">
+              <button color="primary" mat-button (click)="onAction.emit({ action: action.name, element: element })" [matTooltip]="action.label">
+                <mat-icon *ngIf="action.icon" [ngStyle]="{ 'color': action.color ? action.color : '#3f51b5' }">{{action.icon}}</mat-icon>
+                <ng-container *ngIf="!action.icon">
+                  <div [ngStyle]="{ 'color': action.color ? action.color : '#3f51b5' }">{{action.label}}</div>
+                </ng-container>
+              </button>
+            </ng-container>
+          </ng-container>
         </td>
       </ng-container>
       <ng-template #normalColumn>

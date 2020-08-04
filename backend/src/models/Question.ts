@@ -82,5 +82,11 @@ export default class Question extends BaseModel {
     }
   }
 
+  static async setStatus(question_id: number, status: boolean) {
+    const query = Question.query().patchAndFetchById(question_id, {
+      status
+    });
+    return await query;
+  }
 
 }

@@ -45,24 +45,21 @@ export default class ResponseType extends BaseModel {
   }
 
   static async listByBasicType(basic_type: string) {
-    try {
-      const query = ResponseType.query()
-        .where({ basic_type: basic_type })
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = ResponseType.query()
+      .where({ basic_type: basic_type })
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async list() {
-    try {
-      const query = ResponseType.query().orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = ResponseType.query().orderBy("id", "asc");
+    return await query;
+  }
+
+  static async setStatus(response_type_id: number, status: boolean) {
+    const query = ResponseType.query().patchAndFetchById(response_type_id, {
+      status
+    });
+    return await query;
   }
 }

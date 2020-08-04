@@ -1,37 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { Question } from 'src/app/models/question';
 import { FormsService } from './../forms.service';
+import { TableAction, TableEmittedAction } from 'src/app/shared/data-table/data-table.component';
 
 @Component({
   selector: 'app-forms-question',
   templateUrl: './forms-question.component.html',
   styleUrls: ['./forms-question.component.css'],
 })
-export class FormsQuestionComponent implements OnInit {
-  questions$: Observable<Question[]>;
+export class FormsQuestionComponent {
+  questions: Question[];
   columnNames: any;
+  actions: TableAction[] = [
+    {
+      name: 'enable',
+      label: 'Habilitar',
+      condition: (item) => !item.status
+    },
+    {
+      name: 'disable',
+      label: 'Desabilitar',
+      condition: (item) => item.status
+    }
+  ];
 
   constructor(private formsService: FormsService) {
     this.columnNames = {
       id: 'Número',
       text: 'Pergunta',
       response_type_name: 'Tipo de resposta',
-      response_type_basic_type: 'Categoria da resposta',
-      created_at: 'Criado em:',
-      updated_at: 'Atualizado em:'
+      response_type_basic_type: 'Categoria da resposta'
     };
-    this.questions$ = this.formsService.fetchQuestions().pipe(
-      map(questions => questions.map(q => {
+    this.formsService.fetchQuestions().subscribe((questions) => {
+      this.questions = questions.map(q => {
         return {
           ...q,
           response_type_name: q.response_type.name,
           response_type_basic_type: q.response_type.basic_type
         };
-      }))
-    );
+      });
+    });
   }
 
-  ngOnInit(): void { }
+  onAction(event: TableEmittedAction) {
+    const { action, element } = event;
+    if (action === 'enable') {
+      this.formsService.toggleStatusQuestion(element.id, true).subscribe(() => {
+        this.questions.find(type => element.id === type.id).status = true;
+      });
+    } else {
+      this.formsService.toggleStatusQuestion(element.id, false).subscribe(() => {
+        this.questions.find(type => element.id === type.id).status = false;
+      });
+    }
+  }
 }

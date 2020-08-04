@@ -8,7 +8,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export interface TableAction {
   name: string,
   label: string,
-  icon?: string
+  icon?: string,
+  color?: string,
+  condition?: (item: any) => {}
 }
 
 export interface TableEmittedAction {

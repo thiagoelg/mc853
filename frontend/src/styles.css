@@ -19,6 +19,10 @@ label.mat-checkbox-layout {
   white-space: normal;
 }
 
+.mat-card-title {
+  margin-bottom: 16px !important;
+}
+
 .flex-container {
   display: flex;
 }
