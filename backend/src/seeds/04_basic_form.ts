@@ -57,33 +57,23 @@ export async function seed(knex: Knex): Promise<any> {
                           [
                             {
                               text: "Qual o seu nome?",
-                              response_type_id: responseTypes[0],
-                              created_at: new Date().toISOString(),
-                              updated_at: new Date().toISOString(),
+                              response_type_id: responseTypes[0]
                             },
                             {
                               text: "Avalie este aplicativo",
-                              response_type_id: responseTypes[1],
-                              created_at: new Date().toISOString(),
-                              updated_at: new Date().toISOString(),
+                              response_type_id: responseTypes[1]
                             },
                             {
                               text: "Me diga o que você fez hoje",
-                              response_type_id: responseTypes[2],
-                              created_at: new Date().toISOString(),
-                              updated_at: new Date().toISOString(),
+                              response_type_id: responseTypes[2]
                             },
                             {
                               text: "Você aceita isso?",
-                              response_type_id: responseTypes[3],
-                              created_at: new Date().toISOString(),
-                              updated_at: new Date().toISOString(),
+                              response_type_id: responseTypes[3]
                             },
                             {
                               text: "Até que dia você pode esperar?",
-                              response_type_id: responseTypes[4],
-                              created_at: new Date().toISOString(),
-                              updated_at: new Date().toISOString(),
+                              response_type_id: responseTypes[4]
                             },
                           ],
                           "id"
@@ -94,21 +84,15 @@ export async function seed(knex: Knex): Promise<any> {
                               [
                                 {
                                   name: "Formulário Grande",
-                                  is_template: true,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  is_template: true
                                 },
                                 {
                                   name: "Formulário pequeno",
-                                  is_template: true,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  is_template: true
                                 },
                                 {
                                   name: "Formulário de satisfação",
-                                  is_template: true,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  is_template: true
                                 },
                               ],
                               "id"
@@ -118,58 +102,42 @@ export async function seed(knex: Knex): Promise<any> {
                                 {
                                   form_id: form_ids[0],
                                   question_id: questions[0],
-                                  order: 1,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 1
                                 },
                                 {
                                   form_id: form_ids[0],
                                   question_id: questions[1],
-                                  order: 2,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 2
                                 },
                                 {
                                   form_id: form_ids[0],
                                   question_id: questions[2],
-                                  order: 3,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 3
                                 },
                                 {
                                   form_id: form_ids[0],
                                   question_id: questions[3],
-                                  order: 4,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 4
                                 },
                                 {
                                   form_id: form_ids[0],
                                   question_id: questions[4],
-                                  order: 5,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 5
                                 },
                                 {
                                   form_id: form_ids[1],
                                   question_id: questions[2],
-                                  order: 1,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 1
                                 },
                                 {
                                   form_id: form_ids[1],
                                   question_id: questions[4],
-                                  order: 2,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 2
                                 },
                                 {
                                   form_id: form_ids[2],
                                   question_id: questions[2],
-                                  order: 1,
-                                  created_at: new Date().toISOString(),
-                                  updated_at: new Date().toISOString(),
+                                  order: 1
                                 },
                               ]);
                             });

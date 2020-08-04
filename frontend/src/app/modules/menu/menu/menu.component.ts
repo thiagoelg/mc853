@@ -6,6 +6,7 @@ import { MenuService } from '../menu.service';
 import { UsersComponent } from '../../users/users.component';
 import { AuthService } from '../../../security/auth.service';
 import { User } from '../../../models/user';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 
 @Component({
   selector: 'app-menu',
@@ -27,17 +28,17 @@ export class MenuComponent {
     { 
       name: 'Formulários',
       icon: 'dynamic_form',
-      path: ['/forms/list'], permissions: []
+      path: ['/forms/list'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORMS]
     },
     { 
       name: 'Questões',
       icon: 'short_text',
-      path: ['/forms/questions/list'], permissions: []
+      path: ['/forms/questions/list'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORM_FIELDS]
     },
     { 
       name: 'Tipos de resposta',
       icon: 'grading',
-      path: ['/forms/response-types'], permissions: []
+      path: ['/forms/response-types'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORM_FIELD_TYPES]
     },
     { 
       name: 'Usuários',

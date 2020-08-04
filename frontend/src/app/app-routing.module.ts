@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './security/auth.guard';
 import { HomeLayoutComponent } from './layouts/home-layout.component';
 import { LoginLayoutComponent } from './layouts/login-layout.component';
-import { PermissionGuard } from './security/permission.guard';
 import { OverviewModule } from './modules/overview/overview.module';
 import { UsersModule } from './modules/users/users.module';
-import { AdminModule } from './modules/admin/admin.module';
 import { RegisterModule } from './modules/register/register.module';
 import { SolicitationsModule } from './modules/solicitations/solicitations.module';
 import { FormsModule } from './modules/forms/forms.module';
@@ -22,12 +20,6 @@ const routes: Routes = [
       {
         path: '',
         loadChildren: () => OverviewModule
-      },
-      {
-        path: 'admin',
-        loadChildren: () => AdminModule,
-        canActivate: [PermissionGuard],
-        data: { permissions: AdminModule.requiredPermissions }
       },
       {
         path: 'users',
