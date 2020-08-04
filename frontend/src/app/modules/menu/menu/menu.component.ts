@@ -21,6 +21,11 @@ export class MenuComponent {
   title$ = MenuService.menu.title.asObservable();
   items = [
     { 
+      name: 'Início',
+      icon: 'home',
+      path: ['/'], permissions: []
+    },
+    { 
       name: 'Solicitações',
       icon: 'article',
       path: ['/solicitations/list'], permissions: []
