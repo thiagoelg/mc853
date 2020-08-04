@@ -4,7 +4,7 @@
 </div>
 
 <mat-tab-group animationDuration="0ms">
-    <mat-tab [appHideIfUnauthorized]="(['answer-solicitation'])" label="Solicitações disponíveis">
+    <mat-tab *ngIf="canAnswerSolicitations" label="Solicitações disponíveis">
         Solicitações disponíveis
     </mat-tab>
 

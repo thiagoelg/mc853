@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Solicitation } from 'src/app/models/solicitation';
 import { SolicitationsService } from './../solicitations.service';
+import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-solicitations-list',
@@ -12,8 +13,9 @@ import { SolicitationsService } from './../solicitations.service';
 export class SolicitationsListComponent implements OnInit {
   userSolicitations$: Observable<Solicitation[]>;
   columnNames: any;
+  canAnswerSolicitations: boolean;
 
-  constructor(private solicitationsService: SolicitationsService) {
+  constructor(private solicitationsService: SolicitationsService, private authService: AuthService) {
     this.columnNames = {
       id: 'Número',
       submitted_by_user_name: 'Solicitante',
@@ -37,6 +39,8 @@ export class SolicitationsListComponent implements OnInit {
         })
       )
     );
+
+    this.canAnswerSolicitations = this.authService.hasPermissions(['answer_solicitation']);
   }
 
   ngOnInit(): void {}
