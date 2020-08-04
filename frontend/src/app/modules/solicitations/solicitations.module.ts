@@ -10,7 +10,6 @@ import { SolicitationsFormPageComponent } from './solicitations-form-page/solici
 import { SolicitationsListComponent } from './solicitations-list/solicitations-list.component';
 import { SolicitationsRoutingModule } from './solicitations-routing.module';
 import { SolicitationsComponent } from './solicitations.component';
-import { SecurityModule } from 'src/app/security/security.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +26,6 @@ import { SecurityModule } from 'src/app/security/security.module';
     ReactiveFormsModule,
     FormsModule,
     AppMaterialModule,
-    SecurityModule,
     SharedModule
   ],
 })
