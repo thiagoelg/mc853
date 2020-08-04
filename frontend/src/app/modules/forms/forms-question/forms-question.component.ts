@@ -46,11 +46,11 @@ export class FormsQuestionComponent {
     const { action, element } = event;
     if (action === 'enable') {
       this.formsService.toggleStatusQuestion(element.id, true).subscribe(() => {
-        this.questions.find(type => element.id === type.id).status = true;
+        this.questions.find(question => element.id === question.id).status = true;
       });
     } else {
       this.formsService.toggleStatusQuestion(element.id, false).subscribe(() => {
-        this.questions.find(type => element.id === type.id).status = false;
+        this.questions.find(question => element.id === question.id).status = false;
       });
     }
   }

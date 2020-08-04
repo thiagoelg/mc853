@@ -31,7 +31,12 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>
           {{ columnNames[column] }}
         </th>
-        <td mat-cell *matCellDef="let element">{{element[column]}}</td>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon *ngIf="isBoolean(element[column]); else normalValue">
+            {{ element[column] ? 'check_circle_outline' : 'highlight_off' }}
+          </mat-icon>
+          <ng-template #normalValue>{{ element[column] }}</ng-template>
+        </td>
       </ng-template>
     </ng-container>
 

@@ -70,4 +70,8 @@ export class DataTableComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  isBoolean(value: any) {
+    return typeof value === 'boolean';
+  }
 }

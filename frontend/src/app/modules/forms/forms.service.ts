@@ -41,6 +41,11 @@ export class FormsService {
     return this.http.put<Question>(url, { status }).pipe(take(1));
   }
 
+  toggleStatusForm(form_id: number, status: boolean) {
+    const url = `forms/${form_id}/status`;
+    return this.http.put<Form>(url, { status }).pipe(take(1));
+  }
+
   fetchForm(id: number): Observable<FormFull> {
     const url = `forms/${id}`;
 

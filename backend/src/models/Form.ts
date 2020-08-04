@@ -83,4 +83,11 @@ export default class Form extends BaseModel {
       return error;
     }
   }
+
+  static async setStatus(form_id: number, status: boolean) {
+    const query = Form.query().patchAndFetchById(form_id, {
+      status
+    });
+    return await query;
+  }
 }

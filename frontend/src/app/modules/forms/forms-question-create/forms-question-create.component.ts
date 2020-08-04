@@ -30,7 +30,6 @@ export class FormsQuestionCreateComponent implements OnInit {
     this.setTypeObservables();
     this.route.parent.url.subscribe(url => {
       this.currentPath = url[0].path;
-      console.log(url);
     });
   }
 
@@ -47,16 +46,16 @@ export class FormsQuestionCreateComponent implements OnInit {
     const form = this.form.value;
     console.log({ form });
 
-    // this.formService.createQuestion(form).subscribe({
-    //   next: (data) => {
-    //     console.log({ data });
-    //     this.created.emit(data);
-    //     this.router.navigate(['/forms/questions/list']);
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //   }
-    // });
+    this.formService.createQuestion(form).subscribe({
+      next: (data) => {
+        console.log({ data });
+        this.created.emit(data);
+        this.router.navigate(['/forms/questions/list']);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   setTypeObservables() {
