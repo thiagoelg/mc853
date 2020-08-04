@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 import { FormData, FormFull } from 'src/app/models/form';
 import { ResponseType } from 'src/app/models/responseType';
 import { Form } from './../../models/form';

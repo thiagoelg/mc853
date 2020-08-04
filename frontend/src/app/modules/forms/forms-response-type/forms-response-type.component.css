@@ -1,0 +1,9 @@
+.response-types-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.response-type {
+  flex: 1 0 25%;
+  margin: 8px;
+}

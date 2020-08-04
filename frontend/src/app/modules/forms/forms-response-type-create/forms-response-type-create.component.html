@@ -1,55 +1,56 @@
 <p>Todo: Adicionar tipos básicos: boolean, files</p>
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Nome</mat-label>
-            <input matInput required placeholder="Descreva o tipo de resposta" formControlName='name'>
-        </mat-form-field>
-    </p>
-    <p>
-        <mat-form-field appearance="outline">
-            <mat-label>Tipo básico de dado</mat-label>
-            <mat-select #typeInput required formControlName='basic_type'>
-                <mat-option *ngFor="let type of basicTypes" [value]="type.value">
-                    {{type.viewValue}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </p>
-    <p *ngIf="typeInput.value != 'date'">
-        <mat-form-field appearance="outline">
-            <mat-label>{{labels.min}}</mat-label>
-            <input matInput type="number" formControlName='min'>
-        </mat-form-field>
-    </p>
-    <p *ngIf="typeInput.value != 'date'">
-        <mat-form-field appearance="outline">
-            <mat-label>{{labels.max}}</mat-label>
-            <input matInput type="number" formControlName='max'>
-        </mat-form-field>
-    </p>
-    <p *ngIf="typeInput.value == 'text'">
-        <mat-form-field appearance="outline">
-            <mat-label>Expressão regular</mat-label>
-            <input matInput type="string" formControlName='regex'>
-        </mat-form-field>
-        <mat-hint>
-            {{form.controls['regex'].valid ? '': 'Not '}}Valid
-        </mat-hint>
-    </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Nome</mat-label>
+      <input matInput required placeholder="Descreva o tipo de resposta" formControlName='name'>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo básico de dado</mat-label>
+      <mat-select #typeInput required formControlName='basic_type'>
+        <mat-option *ngFor="let type of basicTypes" [value]="type.value">
+          {{type.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p *ngIf="typeInput.value != 'date'">
+    <mat-form-field appearance="outline">
+      <mat-label>{{labels.min}}</mat-label>
+      <input matInput type="number" formControlName='min'>
+    </mat-form-field>
+  </p>
+  <p *ngIf="typeInput.value != 'date'">
+    <mat-form-field appearance="outline">
+      <mat-label>{{labels.max}}</mat-label>
+      <input matInput type="number" formControlName='max'>
+    </mat-form-field>
+  </p>
+  <p *ngIf="typeInput.value == 'text'">
+    <mat-form-field appearance="outline">
+      <mat-label>Expressão regular</mat-label>
+      <input matInput type="string" formControlName='regex'>
+      <mat-error *ngIf="!form.controls['regex'].valid">
+        Insira uma expressão regular válida
+      </mat-error>
+    </mat-form-field>
+  </p>
 
-    <!-- WARN: Remove this? Idk -->
-    <div *ngIf="form.controls['regex'].valid && form.controls['regex'].value != '' ">
-        <mat-form-field appearance="outline">
-            <mat-label>Teste de entrada</mat-label>
-            <input #teste matInput type="string">
-        </mat-form-field>
-        <mat-hint>{{ validate(teste.value) ? '': 'Not '}}Valid</mat-hint>
-    </div>
+  <!-- WARN: Remove this? Idk -->
+  <p *ngIf="form.controls['regex'].valid && form.controls['regex'].value != '' ">
+    <mat-form-field appearance="outline" class="regex-test">
+      <mat-label>Teste sua expressão regular</mat-label>
+      <input #teste matInput type="string">
+      <mat-hint *ngIf="validate(teste.value)">String válida</mat-hint>
+      <mat-hint *ngIf="!validate(teste.value)" class="result-failed">String falhou no teste</mat-hint>
+    </mat-form-field>
+  </p>
 
-    <p>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-            Criar
-        </button>
-    </p>
+  <p>
+    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+      Criar
+    </button>
+  </p>
 </form>

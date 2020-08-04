@@ -6,16 +6,23 @@ import { FormsQuestionCreateComponent } from './forms-question-create/forms-ques
 import { FormsQuestionComponent } from './forms-question/forms-question.component';
 import { FormsResponseTypeComponent } from './forms-response-type/forms-response-type.component';
 import { FormsComponent } from './forms.component';
+import { FormsResponseTypeCreateComponent } from './forms-response-type-create/forms-response-type-create.component';
 
 const routes: Routes = [
   { path: 'list', component: FormsComponent },
   { path: 'new', component: FormsCreateComponent },
-  { path: 'response-types', component: FormsResponseTypeComponent },
   {
     path: 'questions',
     children: [
       { path: 'list', component: FormsQuestionComponent },
       { path: 'new', component: FormsQuestionCreateComponent },
+    ]
+  },
+  {
+    path: 'response-types',
+    children: [
+      { path: 'list', component: FormsResponseTypeComponent },
+      { path: 'new', component: FormsResponseTypeCreateComponent },
     ]
   },
   { path: ':form_id', component: FormsDisplayComponent },

@@ -10,3 +10,14 @@ if (environment.production) {
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+
+Date.prototype.toString = function() {
+  function pad(number) {
+    if (number < 10) {
+      return '0' + number;
+    }
+    return number;
+  }
+
+  return `${pad(this.getDate())}/${pad(this.getMonth())}/${pad(this.getFullYear())} - ${pad(this.getHours())}:${pad(this.getMinutes())}`;
+}

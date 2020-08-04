@@ -7,11 +7,6 @@ table {
   width: 100%;
 }
 
-td,
-th {
-  width: 25%;
-}
-
 tr.example-detail-row {
   height: 0;
 }
@@ -56,15 +51,15 @@ tr.example-element-row:not(.example-expanded-row):active {
   opacity: 0.5;
 }
 
-::ng-deep .mat-paginator-page-size-select {
+app-data-table ::ng-deep .mat-paginator-page-size-select {
   width: 56px !important;
 }
 
-::ng-deep .mat-form-field-wrapper {
-  padding: 0;
+app-data-table  ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 1em;
 }
 
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+app-data-table  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
   color: #1e254d;
 }
 

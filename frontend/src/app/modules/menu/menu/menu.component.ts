@@ -38,7 +38,7 @@ export class MenuComponent {
     { 
       name: 'Tipos de resposta',
       icon: 'grading',
-      path: ['/forms/response-types'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORM_FIELD_TYPES]
+      path: ['/forms/response-types/list'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORM_FIELD_TYPES]
     },
     { 
       name: 'Usuários',

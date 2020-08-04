@@ -1,5 +1,6 @@
 <div class="card-header">
   <mat-card-title>Usuários</mat-card-title>
+  <a mat-raised-button class="card-header-actions" color="primary" routerLink="/users/new">Novo usuário</a>
 </div>
 <ng-container *ngIf="users$ | async as users">
   <!-- User list -->
