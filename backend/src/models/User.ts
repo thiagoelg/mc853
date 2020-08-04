@@ -115,71 +115,60 @@ export default class User extends BaseModel {
   }
 
   static async listUsers(parameters: UserQuery) {
-    try {
-      const query = User.query().withGraphFetched("role").where("status", true);
-      if (parameters.orderBy) {
-        const [field, direction] = parameters.orderBy.split(" ");
-        query.orderBy(field, direction as OrderByDirection);
-      } else {
-        query.orderBy(parameters.orderBy || "id", "asc");
-      }
-      return await query;
-    } catch (error) {
-      return error;
+    const query = User.query().withGraphFetched("role").where("status", true);
+    if (parameters.orderBy) {
+      const [field, direction] = parameters.orderBy.split(" ");
+      query.orderBy(field, direction as OrderByDirection);
+    } else {
+      query.orderBy(parameters.orderBy || "id", "asc");
     }
+    return await query;
   }
 
   static async listUsersByRole(role_id: number) {
-    try {
-      const query = User.query().where("status", true).where("role_id", role_id)
-        .orderBy("id", "desc")
-        .withGraphFetched("role")
-        .withGraphFetched("permissions")
-        .withGraphFetched("profile_image");
+    const query = User.query().where("status", true).where("role_id", role_id)
+      .orderBy("id", "desc")
+      .withGraphFetched("role")
+      .withGraphFetched("permissions")
+      .withGraphFetched("profile_image");
 
-      return await query;
-    } catch (error) {
-      return error;
-    }
+    return await query;
   }
 
   static async get(id: number) {
-    try {
-      const query = User.query().findById(id)
-        .withGraphFetched("role")
-        .withGraphFetched("profile_image")
-        .withGraphFetched("permissions");
+    const query = User.query().findById(id)
+      .withGraphFetched("role")
+      .withGraphFetched("profile_image")
+      .withGraphFetched("permissions");
 
-      return await query;
-    } catch (error) {
-      return error;
-    }
+    return await query;
   }
 
   static async changeRoleId(data: { requester: User, user_id: number, role_id: number }) {
-    try {
-
-      const target_role = await Role.get(data.role_id);
-
-      if (!target_role) throw new Error('Perfil não encontrado.');
-
-      console.log(data.requester);
-
-      if (target_role.level < data.requester.role.level) {
-        throw new Error('Não tem permissão para associar este perfil.');
-      }
-
-      const query = User.query().patchAndFetchById(data.user_id, {
-        role_id: data.role_id
-      }).withGraphFetched("role")
-        .withGraphFetched("permissions")
-        .withGraphFetched("profile_image")
-        .where("status", true);
-
-      return await query;
-    } catch (error) {
-      return error;
+    const target_role = await Role.get(data.role_id);
+    if (!target_role) throw new Error('Perfil não encontrado.');
+    if (target_role.level < data.requester.role.level) {
+      throw new Error('Não tem permissão para associar este perfil.');
     }
+    const query = User.query().patchAndFetchById(data.user_id, {
+      role_id: data.role_id
+    }).withGraphFetched("role")
+      .withGraphFetched("permissions")
+      .withGraphFetched("profile_image")
+      .where("status", true);
+    return await query;
+  }
+
+  static async changeProfileImage(data: { requester: User, user_id: number, profile_image_id: number }) {
+    const target_profile_image = await File.get(data.profile_image_id);
+    if (!target_profile_image) throw new Error('Imagem não encontrada.');
+    const query = User.query().patchAndFetchById(data.user_id, {
+      profile_image_id: data.profile_image_id
+    }).withGraphFetched("role")
+      .withGraphFetched("permissions")
+      .withGraphFetched("profile_image")
+      .where("status", true);
+    return await query;
   }
 
   static async authenticate(email: string, password: string) {

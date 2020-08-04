@@ -44,13 +44,27 @@ router.get('/:user_id', User.validateToken, async (req: Request, res: Response) 
   }
 });
 
-router.put('/:user_id/assign_role', User.validateToken, async (req: Request, res: Response) => {
+router.put('/:user_id/role', User.validateToken, async (req: Request, res: Response) => {
   try {
     const user_id = Number(req.params["user_id"]);
     const role_id = Number(req.body["role_id"]);
     const requester = req.body.decoded.user;
 
     const user = await User.changeRoleId({ requester, user_id, role_id });
+
+    return res.status(200).send(user);
+  } catch (error) {
+    return res.status(500).send(error.toString());
+  }
+});
+
+router.put('/:user_id/profile_image', User.validateToken, async (req: Request, res: Response) => {
+  try {
+    const user_id = Number(req.params["user_id"]);
+    const profile_image_id = Number(req.body["profile_image_id"]);
+    const requester = req.body.decoded.user;
+
+    const user = await User.changeProfileImage({ requester, user_id, profile_image_id });
 
     return res.status(200).send(user);
   } catch (error) {

@@ -7,6 +7,8 @@ import { RoleWithPermissions } from 'src/app/models/role';
 import { PermissionGuard } from 'src/app/security/permission.guard';
 import { FileUploadService } from 'src/app/shared/file-upload/file-upload.service';
 import { environment } from 'src/environments/environment';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserImageComponent } from './user-image/user-image.component';
 
 @Component({
   templateUrl: './users-profile.component.html',
@@ -19,7 +21,6 @@ export class UsersProfileComponent implements OnInit {
   roles: Array<RoleWithPermissions> = [];
   selectedRoleId: number;
   selectedRole: RoleWithPermissions;
-  newUserImage: File;
   baseUrl: string = environment.backend;
   userImageUrl: string;
 
@@ -27,7 +28,7 @@ export class UsersProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private usersService: UsersService,
     private authService: AuthService,
-    private fileUploadSerivce: FileUploadService
+    public dialog: MatDialog
   ) {
     this.canEdit = this.authService.hasPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]);
   }
@@ -55,28 +56,29 @@ export class UsersProfileComponent implements OnInit {
   }
 
   loadUser() {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!this.id) {
-      this.id = this.authService.user.id;
-      this.user = this.authService.user;
-      this.selectedRoleId = this.user.role.id;
-      this.loadRole();
-    } else {
-      this.usersService.getUser(this.id).subscribe({
-        next: (user) => {
-          this.user = user;
+    this.id = Number(this.route.snapshot.paramMap.get('id')) || this.authService.user.id;
+    this.usersService.getUser(this.id).subscribe({
+      next: (user) => {
+        this.user = user;
+        if (this.user.profile_image) {
           this.userImageUrl = `${this.baseUrl}/files/${user.profile_image.id}/${user.profile_image.name}`;
-          this.selectedRoleId = this.user.role.id;
-          this.loadRole();
+        } else {
+          this.userImageUrl = "assets/images/profile.jpg";
         }
-      });
-    }
+        this.selectedRoleId = this.user.role.id;
+        this.loadRole();
+      }
+    });
   }
 
-  onUploadImage() {
-    console.log(this.newUserImage);
-    if (this.newUserImage) {
-      this.fileUploadSerivce.uploadFile(this.newUserImage);
-    }
+  onEditUserImage() {
+    const dialogRef = this.dialog.open(UserImageComponent, {
+      width: '340px',
+      data: { user: this.user }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadUser();
+    });
   }
 }

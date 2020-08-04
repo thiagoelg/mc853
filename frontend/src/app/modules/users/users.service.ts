@@ -24,8 +24,13 @@ export class UsersService {
   }
 
   updateRole(userId: number, roleId: number): Observable<User> {
-    const url = `users/${userId}/assign_role`;
+    const url = `users/${userId}/role`;
     return this.http.put<User>(url, { role_id: roleId }).pipe(take(1));
+  }
+
+  updateImage(userId: number, profileImageId: number): Observable<User> {
+    const url = `users/${userId}/profile_image`;
+    return this.http.put<User>(url, { profile_image_id: profileImageId }).pipe(take(1));
   }
 
   listRoles(): Observable<Array<RoleWithPermissions>> {

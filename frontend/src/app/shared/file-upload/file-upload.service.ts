@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { File as FileModel } from 'src/app/models/file';
 
 @Injectable({
   providedIn: 'root',
@@ -7,25 +9,14 @@ import { HttpClient, HttpEventType } from '@angular/common/http';
 export class FileUploadService {
   constructor(private http: HttpClient) { }
 
-  uploadFile(file: File) {
+  uploadFile(file: File): Observable<FileModel>  {
     const formData = new FormData();
     formData.append('file', file);
 
-    this.http.post('files/upload', formData, {
-      reportProgress: true,
-      observe: 'events',
+    return this.http.post<FileModel>('files/upload', formData, {
       headers: {
         'ignore-content-type': 'ignore-content-type'
       }
-    }).subscribe(event => {
-      if (event.type === HttpEventType.UploadProgress ) {
-        const progress = Math.round((100 * event.loaded) / event.total);
-        console.log(progress);
-      }
-
-      if (event.type === HttpEventType.Response ) {
-        console.log(event.body);
-      }
-    })
+    });
   }
 }

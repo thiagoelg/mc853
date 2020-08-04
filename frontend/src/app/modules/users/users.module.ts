@@ -6,11 +6,13 @@ import { UsersProfileComponent } from './users-profile/users-profile.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
 import { RequiredPermissions } from 'src/app/models/permission';
+import { UserImageComponent } from './users-profile/user-image/user-image.component';
 
 @NgModule({
   declarations: [
     UsersComponent,
-    UsersProfileComponent
+    UsersProfileComponent,
+    UserImageComponent
   ],
   imports: [
     CommonModule,

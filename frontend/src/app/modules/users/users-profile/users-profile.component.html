@@ -2,8 +2,11 @@
   <mat-card-title>Perfil</mat-card-title>
   <div class="user-main-info flex-container">
     <div class="flex-left">
-      <div class="user-profile-image">
+      <div class="user-profile-image" >
         <img [src]="userImageUrl">
+        <button class="user-profile-edit" type="button" (click)="onEditUserImage()">
+          <mat-icon>edit</mat-icon>
+        </button>
       </div>
     </div>
     <div class="user-profile-info flex-right">
@@ -24,6 +27,3 @@
     </ul>
   </div>
 </mat-card>
-
-<app-file-upload (onSelectImage)="newUserImage = $event"></app-file-upload>
-<button mat-button (click)="onUploadImage()">Upload</button>
