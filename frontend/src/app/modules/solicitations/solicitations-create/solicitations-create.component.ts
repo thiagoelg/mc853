@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 import { Form, FormFull } from 'src/app/models/form';
 import { SolicitationsService } from './../solicitations.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './solicitations-create.component.html',
@@ -13,7 +14,7 @@ export class SolicitationsCreateComponent implements OnInit {
   formId$ = new BehaviorSubject<number>(null);
   form$: Observable<FormFull>;
 
-  constructor(private solicitationsService: SolicitationsService) {
+  constructor(private solicitationsService: SolicitationsService, private router: Router) {
     this.forms$ = this.solicitationsService.fetchForms();
   }
 
@@ -30,6 +31,7 @@ export class SolicitationsCreateComponent implements OnInit {
     this.solicitationsService.createSolicitation(formValue).subscribe({
       next: (data) => {
         console.log(data);
+        this.router.navigate(['/solicitations', data.id]);
       },
       error: (error) => {
         console.error(error);
