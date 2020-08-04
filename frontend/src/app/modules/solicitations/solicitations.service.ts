@@ -25,14 +25,6 @@ export class SolicitationsService {
     return this.http.get<Solicitation[]>(url).pipe(take(1));
   }
 
-  fetchSolicitationsSubmittedBy(userId: number): Observable<Solicitation[]> {
-    return this.fetchAllSolicitations().pipe(
-      map((solicitations) =>
-        solicitations.filter((solicitation) => solicitation.submitted_by_user_id == userId)
-      )
-    );
-  }
-
   fetchSolicitation(id: number): Observable<Solicitation> {
     const url = `solicitations/${id}`;
 
