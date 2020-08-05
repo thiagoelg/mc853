@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/security/auth.service';
 import { map } from 'rxjs/operators';
 import { PermissionGuard } from 'src/app/security/permission.guard';
+import { MatDialog } from '@angular/material/dialog';
+import { SolicitationsAssignableUsersComponent } from '../solicitations-assignable-users/solicitations-assignable-users.component';
 
 @Component({
   selector: 'app-solicitations-display',
@@ -32,7 +34,8 @@ export class SolicitationsDisplayComponent implements OnInit {
   constructor(
     private solicitationsService: SolicitationsService,
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -95,6 +98,8 @@ export class SolicitationsDisplayComponent implements OnInit {
   }
 
   onAssignToSelectedUser() {
-    console.log('assign to selected user');
+    this.dialog.open(SolicitationsAssignableUsersComponent, {
+      width: '340px',
+    });
   }
 }
