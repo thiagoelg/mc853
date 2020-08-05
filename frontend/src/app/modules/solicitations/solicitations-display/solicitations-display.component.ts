@@ -29,7 +29,7 @@ export class SolicitationsDisplayComponent implements OnInit {
   responsible: User;
   responsibleImageUrl: string;
 
-  get canAssignToUser(): boolean {
+  get canAssignToSelf(): boolean {
     if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS])) {
       return this.solicitation.managed_by_user_id !== this.authService.user.id;
     } else if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION])) {
@@ -75,8 +75,8 @@ export class SolicitationsDisplayComponent implements OnInit {
     });
   }
 
-  onAssignToUser() {
-    this.solicitationsService.assignToUser(this.solicitationId).subscribe({
+  onAssignToSelf() {
+    this.solicitationsService.assignToSelf(this.solicitationId).subscribe({
       next: (data) => {
         this.loadSolicitation(data);
       },

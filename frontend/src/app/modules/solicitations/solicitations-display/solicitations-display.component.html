@@ -3,8 +3,8 @@
   <ng-template #loading>
     <mat-card-title>Solicitação</mat-card-title>
   </ng-template>
-  <button *ngIf="canAssignToUser" mat-raised-button class="card-header-actions" color="primary"
-    (click)="onAssignToUser()">Atribuir para mim</button>
+  <button *ngIf="canAssignToSelf" mat-raised-button class="card-header-actions" color="primary"
+    (click)="onAssignToSelf()">Atribuir para mim</button>
 </div>
 
 <div class="card-separator"></div>
