@@ -50,7 +50,7 @@ export class FormsResponseTypeCreateComponent implements OnInit {
   onSubmit() {
     this.formService.createResponseType(this.form.value).subscribe({
       next: () => {
-        this.router.navigate(['/forms/response-types/list'])
+        this.router.navigate(['/forms/response-types/list']);
       },
     });
   }
