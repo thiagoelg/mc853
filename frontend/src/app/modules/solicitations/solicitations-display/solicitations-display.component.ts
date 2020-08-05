@@ -48,7 +48,6 @@ export class SolicitationsDisplayComponent implements OnInit {
     this.solicitationId = Number(this.route.snapshot.paramMap.get('solicitation_id'));
     this.solicitationsService.fetchSolicitation(this.solicitationId).subscribe((solicitation) => {
       this.loadSolicitation(solicitation);
-      this.canAssignToUser = this.solicitation.managed_by_user_id !== this.authService.user.id;
     });
     this.solicitationsService.listPosts(this.solicitationId).subscribe((posts) => {
       this.posts = posts.map((post) => {
@@ -103,6 +102,7 @@ export class SolicitationsDisplayComponent implements OnInit {
         question: this.questions.find((q) => q.id === answer.form_question_id),
       });
     });
+    this.canAssignToUser = this.solicitation.managed_by_user_id !== this.authService.user.id;
   }
 
   onAssignToUser() {
