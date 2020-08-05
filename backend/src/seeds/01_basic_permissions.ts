@@ -60,9 +60,7 @@ export async function seed(knex: Knex): Promise<any> {
                       .then(([role_id]) => {
                         const my_permissions = permissions.filter((perm) =>
                           [
-                            Permission.shortNames.MANAGE_FORMS,
                             Permission.shortNames.CREATE_SOLICITATION,
-                            Permission.shortNames.MANAGE_SOLICITATIONS,
                             Permission.shortNames.ANSWER_SOLICITATION,
                             Permission.shortNames.REOPEN_SOLICITATION,
                             Permission.shortNames.ANSWER_SATISFACTION_SURVEY

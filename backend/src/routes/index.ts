@@ -1,5 +1,5 @@
 import { Router } from "express";
-import agreementsRoutes from "./agreements";
+import solicitationPostRoutes from "./solicitationPost";
 import answersRoutes from "./answers";
 import authRoutes from "./auth";
 import formQuestionsRoutes from "./formQuestions";
@@ -15,11 +15,11 @@ import filesRoutes from "./files";
 
 const router = Router();
 
-router.use('/files', filesRoutes);
+router.use("/files", filesRoutes);
 router.use("/users", usersRoutes);
 router.use("/auth", authRoutes);
 router.use("/roles", roleRoutes);
-router.use("/agreements", agreementsRoutes);
+router.use("/solicitation_post", solicitationPostRoutes);
 router.use("/questions", questionsRoutes);
 router.use("/forms", formsRoutes);
 router.use("/forms/:form_id/questions", formQuestionsRoutes);

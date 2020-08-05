@@ -1,11 +1,11 @@
 import { Model, RelationMappings } from "objection";
-import Agreement from "./Agreement";
 import Answer from "./Answer";
 import BaseModel from "./BaseModel";
 import Form from "./Form";
 import User from "./User";
 import FormQuestion from "./FormQuestion";
 import Question from "./Question";
+import SolicitationPost from "./SolicitationPost";
 
 export interface SolicitationData {
   form_id: number;
@@ -15,9 +15,6 @@ export interface SolicitationData {
 export default class Solicitation extends BaseModel {
   submitted_by_user_id!: number;
   managed_by_user_id!: number;
-
-  agreement_id!: number;
-  agreed_at!: string;
 
   form_id!: number;
 
@@ -49,12 +46,12 @@ export default class Solicitation extends BaseModel {
           to: "user.id"
         }
       },
-      agreement: {
-        relation: Model.HasOneRelation,
-        modelClass: Agreement,
+      solicitation_posts: {
+        relation: Model.HasManyRelation,
+        modelClass: SolicitationPost,
         join: {
-          from: "solicitation.agreement_id",
-          to: "agreement.id"
+          from: "solicitation.id",
+          to: "solicitation_post.solicitation_id"
         }
       },
       form: {
@@ -114,8 +111,6 @@ export default class Solicitation extends BaseModel {
         id: { type: "integer" },
         submitted_by_user_id: { type: "integer" },
         managed_by_user_id: { type: "integer" },
-        agreement_id: { type: "integer" },
-        agreed_at: { type: "string", minLength: 1, maxLength: 255 },
         form_id: { type: "integer" },
         solution_form_id: { type: "integer" },
         solved_at: { type: "string", minLength: 1, maxLength: 255 },
@@ -150,9 +145,7 @@ export default class Solicitation extends BaseModel {
 
   static async listAll() {
     const query = Solicitation.query()
-      .withGraphFetched(
-        "[submitted_by_user, managed_by_user, agreement, form, solution_form, evaluation_form, questions]"
-      )
+      .withGraphFetched("[submitted_by_user, managed_by_user, form, solution_form, evaluation_form, questions]")
       .orderBy("id", "asc");
     return await query;
   }
@@ -161,7 +154,7 @@ export default class Solicitation extends BaseModel {
     const query = Solicitation.query()
       .where("submitted_by_user_id", user_id)
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       )
       .orderBy("id", "asc");
     return await query;
@@ -171,7 +164,7 @@ export default class Solicitation extends BaseModel {
     const query = Solicitation.query()
       .where("managed_by_user_id", user_id)
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       )
       .orderBy("id", "asc");
     return await query;
@@ -181,7 +174,7 @@ export default class Solicitation extends BaseModel {
     const query = Solicitation.query()
       .where("managed_by_user_id", null)
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       )
       .orderBy("id", "asc");
     return await query;
@@ -193,7 +186,7 @@ export default class Solicitation extends BaseModel {
         managed_by_user_id: data.user_id
       })
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       );
     return await query;
   }
@@ -204,29 +197,7 @@ export default class Solicitation extends BaseModel {
         solution_form_id: data.form_id
       })
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
-      );
-    return await query;
-  }
-
-  static async changeAgreement(data: { solicitation_id: number; agreement_id: number }) {
-    const query = Solicitation.query()
-      .patchAndFetchById(data.solicitation_id, {
-        agreement_id: data.agreement_id
-      })
-      .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
-      );
-    return await query;
-  }
-
-  static async agree(data: { solicitation_id: number }) {
-    const query = Solicitation.query()
-      .patchAndFetchById(data.solicitation_id, {
-        agreed_at: new Date().toISOString()
-      })
-      .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       );
     return await query;
   }
@@ -235,7 +206,7 @@ export default class Solicitation extends BaseModel {
     const query = Solicitation.query()
       .findById(solicitation_id)
       .withGraphFetched(
-        "[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]"
+        "[submitted_by_user, managed_by_user, answers, form, solution_form, evaluation_form, questions]"
       )
       .orderBy("id", "asc");
     return await query;
