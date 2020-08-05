@@ -7,19 +7,10 @@ import { DisableIfUnauthorizedDirective } from './directives/disable-if-unauthor
 import { HideIfUnauthorizedDirective } from './directives/hide-if-unauthorized.directive';
 import { httpInterceptorProviders } from './interceptors';
 
-
 @NgModule({
-  declarations: [
-    DisableIfUnauthorizedDirective,
-    HideIfUnauthorizedDirective
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    DisableIfUnauthorizedDirective,
-    HideIfUnauthorizedDirective
-  ],
+  declarations: [DisableIfUnauthorizedDirective, HideIfUnauthorizedDirective],
+  imports: [CommonModule],
+  exports: [DisableIfUnauthorizedDirective, HideIfUnauthorizedDirective],
   providers: [
     AuthService,
     AuthGuard,
@@ -29,8 +20,8 @@ import { httpInterceptorProviders } from './interceptors';
       provide: APP_INITIALIZER,
       useFactory: (authService: AuthService) => () => authService.reauth(),
       deps: [AuthService],
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
-export class SecurityModule { }
+export class SecurityModule {}
