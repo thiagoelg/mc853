@@ -10,6 +10,13 @@ import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/security/auth.service';
 import { map } from 'rxjs/operators';
+import { PermissionGuard } from 'src/app/security/permission.guard';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  SolicitationsAssignableUsersComponent,
+  SolicitationsAssignableUsersComponentData,
+  SolicitationsAssignableUsersComponentResult,
+} from '../solicitations-assignable-users/solicitations-assignable-users.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SolicitationPost } from 'src/app/models/solicitationPost';
 
@@ -29,9 +36,7 @@ export class SolicitationsDisplayComponent implements OnInit {
   authorImageUrl: string;
   responsible: User;
   responsibleImageUrl: string;
-  canAssignToUser: boolean;
   posts: SolicitationPost[];
-
   postForm: FormGroup;
   errorMsg: string = null;
 
@@ -39,6 +44,7 @@ export class SolicitationsDisplayComponent implements OnInit {
     private solicitationsService: SolicitationsService,
     private authService: AuthService,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
     private fb: FormBuilder
   ) {
     this.buildForm();
@@ -102,17 +108,53 @@ export class SolicitationsDisplayComponent implements OnInit {
         question: this.questions.find((q) => q.id === answer.form_question_id),
       });
     });
-    this.canAssignToUser = this.solicitation.managed_by_user_id !== this.authService.user.id;
   }
 
-  onAssignToUser() {
-    this.solicitationsService.assignToUser(this.solicitationId).subscribe({
+  get canAssignToSelf(): boolean {
+    if (this.solicitation === undefined) {
+      return false;
+    }
+
+    if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS])) {
+      return this.solicitation.managed_by_user_id !== this.authService.user.id;
+    } else if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION])) {
+      // Juggle-check for null and undefined
+      return this.solicitation.managed_by_user_id == null;
+    } else {
+      return false;
+    }
+  }
+
+  onAssignToSelf() {
+    this.solicitationsService.assignToSelf(this.solicitationId).subscribe({
       next: (data) => {
         this.loadSolicitation(data);
       },
       error: (error) => {
         console.log({ error });
       },
+    });
+  }
+
+  get canAssignToSelectedUser(): boolean {
+    return this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS]);
+  }
+
+  onAssignToSelectedUser() {
+    const dialogRef = this.dialog.open<
+      SolicitationsAssignableUsersComponent,
+      SolicitationsAssignableUsersComponentData,
+      SolicitationsAssignableUsersComponentResult
+    >(SolicitationsAssignableUsersComponent, {
+      data: { solicitationId: this.solicitationId },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if ('error' in result) {
+        console.log(result.error);
+      } else {
+        this.loadSolicitation(result);
+      }
     });
   }
 }

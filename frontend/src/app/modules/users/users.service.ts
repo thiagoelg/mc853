@@ -23,14 +23,32 @@ export class UsersService {
     return this.http.get<User>(url).pipe(take(1));
   }
 
+  getUsersWithPermission(permissionShortName: string): Observable<User[]> {
+    return this.getAllUsers().pipe(
+      map((users) =>
+        users.filter((user) => {
+          if (user.permissions == null) {
+            return false;
+          }
+
+          return user.permissions.find((permission) => permission.short_name === permissionShortName) !== undefined;
+        })
+      )
+    );
+  }
+
   updateRole(userId: number, roleId: number): Observable<User> {
     const url = `users/${userId}/role`;
-    return this.http.put<User>(url, { role_id: roleId }).pipe(take(1));
+    return this.http
+      .put<User>(url, { role_id: roleId })
+      .pipe(take(1));
   }
 
   updateImage(userId: number, profileImageId: number): Observable<User> {
     const url = `users/${userId}/profile_image`;
-    return this.http.put<User>(url, { profile_image_id: profileImageId }).pipe(take(1));
+    return this.http
+      .put<User>(url, { profile_image_id: profileImageId })
+      .pipe(take(1));
   }
 
   listRoles(): Observable<Array<RoleWithPermissions>> {

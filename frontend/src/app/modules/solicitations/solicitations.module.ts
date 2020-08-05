@@ -9,6 +9,7 @@ import { SolicitationsFormFillComponent } from './solicitations-form-fill/solici
 import { SolicitationsListComponent } from './solicitations-list/solicitations-list.component';
 import { SolicitationsRoutingModule } from './solicitations-routing.module';
 import { SolicitationsComponent } from './solicitations.component';
+import { SolicitationsAssignableUsersComponent } from './solicitations-assignable-users/solicitations-assignable-users.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { SolicitationsComponent } from './solicitations.component';
     SolicitationsFormFillComponent,
     SolicitationsListComponent,
     SolicitationsDisplayComponent,
+    SolicitationsAssignableUsersComponent,
   ],
   imports: [
     CommonModule,

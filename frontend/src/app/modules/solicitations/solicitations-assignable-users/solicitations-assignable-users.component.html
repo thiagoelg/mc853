@@ -1,0 +1,3 @@
+<ng-container *ngIf="rows$ | async as rows">
+  <app-data-table [data]="rows" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)"></app-data-table>
+</ng-container>

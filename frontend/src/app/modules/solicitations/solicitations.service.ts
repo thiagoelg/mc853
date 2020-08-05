@@ -8,6 +8,7 @@ import { SolicitationPost } from './../../models/solicitationPost';
 import { ResponseType } from './../../models/responseType';
 import { Solicitation, SolicitationForm } from './../../models/solicitation';
 import { AuthService } from 'src/app/security/auth.service';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -82,8 +83,14 @@ export class SolicitationsService {
     return this.http.post<Solicitation>(url, body).pipe(take(1));
   }
 
-  assignToUser(id: number): Observable<Solicitation> {
+  assignToSelf(id: number): Observable<Solicitation> {
     const url = `solicitations/${id}/managedByMe`;
+
+    return this.http.put<Solicitation>(url, {}).pipe(take(1));
+  }
+
+  assignToUser(solicitationId: number, userId: number): Observable<Solicitation> {
+    const url = `solicitations/${solicitationId}/managedBy/${userId}`;
 
     return this.http.put<Solicitation>(url, {}).pipe(take(1));
   }
