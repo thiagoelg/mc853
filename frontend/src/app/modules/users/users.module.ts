@@ -8,20 +8,10 @@ import { UsersComponent } from './users.component';
 import { UserImageComponent } from './users-profile/user-image/user-image.component';
 import { UserNewComponent } from './user-new/user-new.component';
 import { RegisterModule } from '../register/register.module';
+import { UserRoleComponent } from './users-profile/user-role/user-role.component';
 
 @NgModule({
-  declarations: [
-    UsersComponent,
-    UsersProfileComponent,
-    UserImageComponent,
-    UserNewComponent
-  ],
-  imports: [
-    CommonModule,
-    AppMaterialModule,
-    UsersRoutingModule,
-    RegisterModule,
-    SharedModule
-  ],
+  declarations: [UsersComponent, UsersProfileComponent, UserImageComponent, UserNewComponent, UserRoleComponent],
+  imports: [CommonModule, AppMaterialModule, UsersRoutingModule, RegisterModule, SharedModule],
 })
-export class UsersModule { }
+export class UsersModule {}

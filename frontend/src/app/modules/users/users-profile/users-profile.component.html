@@ -3,9 +3,10 @@
 </div>
 <div class="user-main-info flex-container" *ngIf="user">
   <div class="flex-left">
-    <div class="user-profile-image" >
+    <div class="user-profile-image">
       <img [src]="userImageUrl">
-      <button class="user-profile-edit" type="button" (click)="onEditUserImage()">
+      <button *ngIf="authService.user.id === user.id" class="user-profile-edit" type="button"
+        (click)="onEditUserImage()">
         <mat-icon>edit</mat-icon>
       </button>
     </div>
@@ -14,7 +15,14 @@
     <h1>{{ user.name }}</h1>
     <h3><strong>Orgão de origem: </strong>{{ user.origin }}</h3>
     <h3><strong>Email: </strong>{{ user.email }}</h3>
-    <h3><strong>Perfil de acesso: </strong>{{ user.role.name }}</h3>
+    <h3>
+      <strong>Perfil de acesso: </strong>
+      {{ user.role.name }}
+      <button *ngIf="canEdit" mat-stroked-button type="button" align="end" class="assign-role-button"
+        (click)="onEditUserRole()">
+        <mat-icon>edit</mat-icon>
+      </button>
+    </h3>
   </div>
 </div>
 
@@ -27,4 +35,14 @@
       {{ permission.name }}
     </li>
   </ul>
+</div>
+
+<div class="form-footer">
+  <div class="action-area">
+    <div class="cancel-button">
+      <button mat-raised-button type="button" [routerLink]="['../list']">
+        Voltar
+      </button>
+    </div>
+  </div>
 </div>

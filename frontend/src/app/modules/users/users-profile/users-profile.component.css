@@ -1,4 +1,5 @@
-.user-main-info, .user-permissions {
+.user-main-info,
+.user-permissions {
   margin: 0 0 16px;
 }
 
@@ -42,4 +43,8 @@
 
 .user-profile-edit mat-icon {
   color: white;
+}
+
+.assign-role-button {
+  margin-left: 8px;
 }

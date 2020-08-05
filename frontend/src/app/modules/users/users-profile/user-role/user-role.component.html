@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Novo perfil de acesso</h1>
+<div mat-dialog-content class="role-content">
+  <p>Escolha o perfil de acesso para {{ data.user.name }}</p>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let role of roles">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ role.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <h3>Permissões</h3>
+      <ul>
+        <li *ngFor="let permission of role.permissions">
+          {{ permission.name }}
+        </li>
+      </ul>
+      <div class="role-button-area">
+        <button mat-raised-button (click)="onChangeRole(role)" color="primary">Escolher</button>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button (click)="onCancel()">Cancelar</button>
+</div>

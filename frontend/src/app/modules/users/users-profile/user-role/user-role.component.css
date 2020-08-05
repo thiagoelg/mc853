@@ -1,0 +1,8 @@
+.role-button-area {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.role-content {
+  padding-bottom: 8px;
+}

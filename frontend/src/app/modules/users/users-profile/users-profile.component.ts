@@ -8,6 +8,7 @@ import { PermissionGuard } from 'src/app/security/permission.guard';
 import { environment } from 'src/environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { UserImageComponent } from './user-image/user-image.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 @Component({
   templateUrl: './users-profile.component.html',
@@ -26,11 +27,9 @@ export class UsersProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
-    private authService: AuthService,
+    public authService: AuthService,
     public dialog: MatDialog
-  ) {
-    this.canEdit = this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.listRoles().then(() => {
@@ -66,6 +65,10 @@ export class UsersProfileComponent implements OnInit {
         }
         this.selectedRoleId = this.user.role.id;
         this.loadRole();
+        this.canEdit =
+          this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]) &&
+          this.authService.user.role.level <= this.user.role.level &&
+          this.user.id !== this.authService.user.id;
       },
     });
   }
@@ -76,7 +79,19 @@ export class UsersProfileComponent implements OnInit {
       data: { user: this.user },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadUser();
+    });
+  }
+
+  onEditUserRole() {
+    const dialogRef = this.dialog.open(UserRoleComponent, {
+      minWidth: '340px',
+      width: '400px',
+      data: { user: this.user },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
       this.loadUser();
     });
   }
