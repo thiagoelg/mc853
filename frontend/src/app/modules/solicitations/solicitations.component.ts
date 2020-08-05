@@ -3,6 +3,7 @@ import { SolicitationsService } from './solicitations.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Solicitation } from 'src/app/models/solicitation';
 import { AuthService } from 'src/app/security/auth.service';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 
 @Component({
   selector: 'app-solicitations',
@@ -26,19 +27,19 @@ export class SolicitationsComponent implements OnInit {
 
   ngOnInit() {
     this.areUnassignedVisible = this.authService.hasEitherPermission([
-      'manage_solicitations',
-      'answer_solicitation',
+      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
+      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
     ]);
 
     this.areManagedVisible = this.authService.hasEitherPermission([
-      'manage_solicitations',
-      'answer_solicitation',
+      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
+      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
     ]);
 
     this.areSubmittedVisible = this.authService.hasEitherPermission([
-      'manage_solicitations',
-      'answer_solicitation',
-      'create_solicitation',
+      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
+      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
+      PermissionGuard.PERMISSIONS.CREATE_SOLICITATION,
     ]);
   }
 }
