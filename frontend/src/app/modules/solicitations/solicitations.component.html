@@ -16,7 +16,7 @@
     </ng-container>
   </mat-tab>
 
-  <mat-tab *ngIf="areUnassignedVisible" label="Minhas solicitações">
+  <mat-tab *ngIf="areSubmittedVisible" label="Minhas solicitações">
     <ng-container *ngIf="solicitationsSubmittedByUser$ | async as solicitationsSubmittedByUser">
       <app-solicitations-list [solicitations]="solicitationsSubmittedByUser"></app-solicitations-list>
     </ng-container>

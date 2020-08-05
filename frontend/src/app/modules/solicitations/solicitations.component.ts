@@ -25,17 +25,17 @@ export class SolicitationsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.areUnassignedVisible = this.authService.hasPermissions([
+    this.areUnassignedVisible = this.authService.hasEitherPermission([
       'manage_solicitations',
       'answer_solicitation',
     ]);
 
-    this.areManagedVisible = this.authService.hasPermissions([
+    this.areManagedVisible = this.authService.hasEitherPermission([
       'manage_solicitations',
       'answer_solicitation',
     ]);
 
-    this.areSubmittedVisible = this.authService.hasPermissions([
+    this.areSubmittedVisible = this.authService.hasEitherPermission([
       'manage_solicitations',
       'answer_solicitation',
       'create_solicitation',
