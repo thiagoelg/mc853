@@ -9,7 +9,7 @@ export class DisableIfUnauthorizedDirective implements OnInit {
   constructor(private el: ElementRef, private authService: AuthService) { }
 
   ngOnInit() {
-    if (!this.authService.hasPermissions(this.requiredPermissions)) {
+    if (!this.authService.hasAllPermissions(this.requiredPermissions)) {
       this.el.nativeElement.disabled = true;
     }
   }

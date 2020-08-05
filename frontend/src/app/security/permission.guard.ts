@@ -29,7 +29,7 @@ export class PermissionGuard implements CanActivate, CanActivateChild, CanLoad {
     const requiredPermissions = next?.data?.permissions;
     if (!requiredPermissions.length) return true;
 
-    if (this.authService.hasPermissions(requiredPermissions)) {
+    if (this.authService.hasAllPermissions(requiredPermissions)) {
       return true;
     }
 

@@ -1,6 +1,11 @@
 <div class="card-header">
   <mat-card-title>
-    Solicitação
+    <ng-container *ngIf="form$ | async as form; else pageName">
+      {{ form.name }}
+    </ng-container>
+    <ng-template #pageName>
+      Solicitação
+    </ng-template>
   </mat-card-title>
 </div>
 
@@ -24,7 +29,6 @@
 </div>
 
 <!-- Fill submission form -->
-<div *ngIf="form$ | async as form">
-  <p>Formulário selecionado: {{form.name}}</p>
+<ng-container *ngIf="form$ | async as form">
   <app-form-fill [formType]="form" (formData)="onSubmit($event)" (onCancel)="onCancelFormFill()"></app-form-fill>
-</div>
+</ng-container>
