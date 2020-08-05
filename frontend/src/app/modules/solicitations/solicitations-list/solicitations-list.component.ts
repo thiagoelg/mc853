@@ -1,9 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { OnInit, Input, Component } from '@angular/core';
 import { Solicitation } from 'src/app/models/solicitation';
-import { SolicitationsService } from './../solicitations.service';
-import { AuthService } from 'src/app/security/auth.service';
 
 @Component({
   selector: 'app-solicitations-list',
@@ -11,37 +7,29 @@ import { AuthService } from 'src/app/security/auth.service';
   styleUrls: ['./solicitations-list.component.css'],
 })
 export class SolicitationsListComponent implements OnInit {
-  userSolicitations$: Observable<Solicitation[]>;
-  columnNames: any;
-  canAnswerSolicitations: boolean;
+  @Input() solicitations: Solicitation[] = [];
 
-  constructor(private solicitationsService: SolicitationsService, private authService: AuthService) {
-    this.columnNames = {
-      id: 'Número',
-      submitted_by_user_name: 'Solicitante',
-      managed_by_user_name: 'Atendente',
-      created_at: 'Data de criação',
-      updated_at: 'Última atualização',
-      solved_at: 'Data de resolução',
-    };
+  rows: SolicitationRow[] = [];
 
-    this.userSolicitations$ = this.solicitationsService.fetchSolicitations().pipe(
-      map((solicitations) =>
-        solicitations.map((s) => {
-          return {
-            ...s,
-            submitted_by_user_name: s.submitted_by_user?.name,
-            managed_by_user_name: s.managed_by_user?.name,
-            form_name: s.form?.name,
-            solution_form_name: s.solution_form?.name,
-            evaluation_form_name: s.evaluation_form?.name,
-          };
-        })
-      )
-    );
+  columnNames = {
+    id: 'Número',
+    submitter: 'Solicitante',
+    manager: 'Atendente',
+    created_at: 'Data de criação',
+    updated_at: 'Data de atualização',
+    solved_at: 'Data de resolução',
+  };
 
-    this.canAnswerSolicitations = this.authService.hasPermissions(['answer_solicitation']);
+  ngOnInit() {
+    this.rows = this.solicitations.map((s) => ({
+      ...s,
+      submitter: s.submitted_by_user?.name,
+      manager: s.managed_by_user?.name,
+    }));
   }
-
-  ngOnInit(): void {}
 }
+
+type SolicitationRow = {
+  submitter?: string;
+  manager?: string;
+};
