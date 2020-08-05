@@ -10,6 +10,7 @@ import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/security/auth.service';
 import { map } from 'rxjs/operators';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 
 @Component({
   selector: 'app-solicitations-display',
@@ -29,7 +30,14 @@ export class SolicitationsDisplayComponent implements OnInit {
   responsibleImageUrl: string;
 
   get canAssignToUser(): boolean {
-    return this.solicitation.managed_by_user_id !== this.authService.user.id;
+    if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS])) {
+      return this.solicitation.managed_by_user_id !== this.authService.user.id;
+    } else if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION])) {
+      // Juggle-check for null and undefined
+      return this.solicitation.managed_by_user_id == null;
+    } else {
+      return false;
+    }
   }
 
   constructor(
