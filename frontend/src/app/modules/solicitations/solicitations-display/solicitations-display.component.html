@@ -1,3 +1,11 @@
+<div class="card-header">
+  <mat-card-title *ngIf="solicitation$ | async as solicitation; else loading">Solicitação #{{ solicitation.id }}</mat-card-title>
+  <ng-template #loading>
+    <mat-card-title>Solicitação</mat-card-title>
+  </ng-template>
+  <a *ngIf="canCreateSolicitation" mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
+</div>
+
 <p>solicitations-display works!</p>
 {{solicitation$ | async | json}}
 <br><br>
