@@ -4,6 +4,8 @@ import Answer from './Answer';
 import BaseModel from "./BaseModel";
 import Form from "./Form";
 import User from './User';
+import FormQuestion from "./FormQuestion";
+import Question from "./Question";
 
 
 export interface SolicitationData {
@@ -81,7 +83,6 @@ export default class Solicitation extends BaseModel {
           to: "form.id",
         },
       },
-
       answers: {
         relation: Model.HasManyRelation,
         modelClass: Answer,
@@ -89,7 +90,20 @@ export default class Solicitation extends BaseModel {
           from: "solicitation.id",
           to: "answer.solicitation_id",
         },
-      }
+      },
+      questions: {
+        relation: Model.ManyToManyRelation,
+        modelClass: Question,
+        join: {
+          from: "solicitation.form_id",
+          through: {
+            modelClass: FormQuestion,
+            from: "form_question.form_id",
+            to: "form_question.question_id",
+          },
+          to: "question.id",
+        },
+      },
     };
   }
 
@@ -123,162 +137,102 @@ export default class Solicitation extends BaseModel {
   }
 
   static async setSolved(data: { solicitation_id: number }) {
-    try {
-      const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
-        solved_at: new Date().toISOString()
-      });
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
+      solved_at: new Date().toISOString()
+    });
+    return await query;
   }
 
   static async setNotSolved(data: { solicitation_id: number }) {
-    try {
-      const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
-        solved_at: "Not solved"
-      });
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query().patchAndFetchById(data.solicitation_id, {
+      solved_at: "Not solved"
+    });
+    return await query;
   }
 
   static async listAll() {
-    try {
-      const query = Solicitation.query()
-        .withGraphFetched("[submitted_by_user, managed_by_user, agreement, form, solution_form, evaluation_form]")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .withGraphFetched("[submitted_by_user, managed_by_user, agreement, form, solution_form, evaluation_form, questions]")
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async listSubmittedByUser(user_id: number) {
-    try {
-      const query = Solicitation.query()
-        .where("submitted_by_user_id", user_id)
-        .withGraphFetched("[managed_by_user, agreement, form, solution_form, evaluation_form]")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .where("submitted_by_user_id", user_id)
+      .withGraphFetched("[managed_by_user, agreement, form, solution_form, evaluation_form, questions]")
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async listManagedByUser(user_id: number) {
-    try {
-      const query = Solicitation.query()
-        .where("managed_by_user_id", user_id)
-        .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form]")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .where("managed_by_user_id", user_id)
+      .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form, questions]")
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async listNotManaged() {
-    try {
-      const query = Solicitation.query()
-        .where("managed_by_user_id", null)
-        .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form]")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .where("managed_by_user_id", null)
+      .withGraphFetched("[submitted_by_user, agreement, form, solution_form, evaluation_form, questions]")
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async changeManaged(data: { solicitation_id: number, user_id: number }) {
-    try {
-      const query = Solicitation.query()
-        .patchAndFetchById(data.solicitation_id, {
-          managed_by_user_id: data.user_id
-        })
-        .withGraphFetched("[submitted_by_user, managed_by_user]")
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .patchAndFetchById(data.solicitation_id, {
+        managed_by_user_id: data.user_id
+      })
+      .withGraphFetched("[submitted_by_user, managed_by_user]")
+    return await query;
   }
 
   static async changeSolutionForm(data: { solicitation_id: number, form_id: number }) {
-    try {
-      const query = Solicitation.query()
-        .patchAndFetchById(data.solicitation_id, {
-          solution_form_id: data.form_id
-        })
-        .withGraphFetched("[managed_by_user, solution_form]")
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .patchAndFetchById(data.solicitation_id, {
+        solution_form_id: data.form_id
+      })
+      .withGraphFetched("[managed_by_user, solution_form]")
+    return await query;
   }
 
   static async changeAgreement(data: { solicitation_id: number, agreement_id: number }) {
-    try {
-      const query = Solicitation.query()
-        .patchAndFetchById(data.solicitation_id, {
-          agreement_id: data.agreement_id
-        })
-        .withGraphFetched("[agreement]")
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .patchAndFetchById(data.solicitation_id, {
+        agreement_id: data.agreement_id
+      })
+      .withGraphFetched("[agreement]")
+    return await query;
   }
 
   static async agree(data: { solicitation_id: number }) {
-    try {
-      const query = Solicitation.query()
-        .patchAndFetchById(data.solicitation_id, {
-          agreed_at: new Date().toISOString()
-        })
-        .withGraphFetched("[agreement]")
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .patchAndFetchById(data.solicitation_id, {
+        agreed_at: new Date().toISOString()
+      })
+      .withGraphFetched("[agreement]")
+    return await query;
   }
 
   static async get(solicitation_id: number) {
-    try {
-      const query = Solicitation.query()
-        .findById(solicitation_id)
-        .withGraphFetched("[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form]")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Solicitation.query()
+      .findById(solicitation_id)
+      .withGraphFetched("[submitted_by_user, managed_by_user, answers, agreement, form, solution_form, evaluation_form, questions]")
+      .orderBy("id", "asc");
+    return await query;
   }
 
   static async delete(solicitation_id: number) {
-    try {
-      const query = Solicitation.transaction(async (trx) => {
-        await Answer.query(trx).where("solicitation_id", solicitation_id).delete()
+    const query = Solicitation.transaction(async (trx) => {
+      await Answer.query(trx).where("solicitation_id", solicitation_id).delete()
 
-        return await Solicitation.query(trx).deleteById(solicitation_id)
-      });
+      return await Solicitation.query(trx).deleteById(solicitation_id)
+    });
 
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    return await query;
   }
 
 }
