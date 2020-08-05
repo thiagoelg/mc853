@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 import { FormQuestion } from 'src/app/models/formQuestion';
-import { Form, FormFull } from './../../models/form';
+import { FormFull } from './../../models/form';
+import { SolicitationPost } from './../../models/solicitationPost';
 import { ResponseType } from './../../models/responseType';
 import { Solicitation, SolicitationForm } from './../../models/solicitation';
 import { AuthService } from 'src/app/security/auth.service';
@@ -85,5 +86,15 @@ export class SolicitationsService {
     const url = `solicitations/${id}/managedByMe`;
 
     return this.http.put<Solicitation>(url, {}).pipe(take(1));
+  }
+
+  newPost(body: any): Observable<any> {
+    const url = 'solicitation_post';
+    return this.http.post<any>(url, body).pipe(take(1));
+  }
+
+  listPosts(solicitationId: number) {
+    const url = `solicitation_post/${solicitationId}`;
+    return this.http.get<SolicitationPost[]>(url).pipe(take(1));
   }
 }

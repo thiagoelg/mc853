@@ -10,6 +10,8 @@ import { User } from 'src/app/models/user';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/security/auth.service';
 import { map } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SolicitationPost } from 'src/app/models/solicitationPost';
 
 @Component({
   selector: 'app-solicitations-display',
@@ -28,18 +30,56 @@ export class SolicitationsDisplayComponent implements OnInit {
   responsible: User;
   responsibleImageUrl: string;
   canAssignToUser: boolean;
+  posts: SolicitationPost[];
+
+  postForm: FormGroup;
+  errorMsg: string = null;
 
   constructor(
     private solicitationsService: SolicitationsService,
     private authService: AuthService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {
+    this.buildForm();
+  }
 
   ngOnInit(): void {
     this.solicitationId = Number(this.route.snapshot.paramMap.get('solicitation_id'));
     this.solicitationsService.fetchSolicitation(this.solicitationId).subscribe((solicitation) => {
       this.loadSolicitation(solicitation);
       this.canAssignToUser = this.solicitation.managed_by_user_id !== this.authService.user.id;
+    });
+    this.solicitationsService.listPosts(this.solicitationId).subscribe((posts) => {
+      this.posts = posts.map((post) => {
+        post.authorProfileImageUrl = post.author.profile_image_id
+          ? `${this.baseUrl}files/${post.author.profile_image_id}`
+          : 'assets/images/profile.jpg';
+        return post;
+      });
+    });
+  }
+
+  buildForm() {
+    this.postForm = this.fb.group({
+      content: ['', [Validators.required]],
+    });
+  }
+
+  onSubmitPost() {
+    const values = {
+      ...this.postForm.value,
+      solicitation_id: this.solicitationId,
+    };
+    this.solicitationsService.newPost(values).subscribe({
+      next: () => {
+        this.ngOnInit();
+        this.postForm.reset();
+        this.errorMsg = null;
+      },
+      error: (error) => {
+        this.errorMsg = error.error.message;
+      },
     });
   }
 

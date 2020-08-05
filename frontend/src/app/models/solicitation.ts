@@ -14,8 +14,6 @@ export interface Solicitation extends BaseModel {
   form: Form;
   questions: Question[];
   answers: Answer[];
-  agreement_id: number;
-  agreement: any;
   agreed_at: string;
   solution_form_id: number;
   solution_form: Form;

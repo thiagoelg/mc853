@@ -20,6 +20,56 @@
         </div>
       </ng-container>
     </div>
+    <div class="solicitation-separator"></div>
+    <div class="solicitation-posts">
+      <ng-container *ngFor="let post of posts">
+        <div class="solicitation-post-item">
+          <div class="solicitation-post-item-header">
+            <div class="solicitation-post-item-profile">
+              <div class="solicitation-post-item-profile-image">
+                <img [src]="post.authorProfileImageUrl">
+              </div>
+              <div class="solicitation-post-item-profile-name">
+                {{ post.author.name }}
+              </div>
+            </div>
+            <div class="solicitation-post-item-date">
+              <div class="solicitation-post-item-date-icon">
+                <mat-icon>today</mat-icon>
+              </div>
+              {{ post.created_at }}
+            </div>
+          </div>
+          <div class="solicitation-post-item-content">
+            <p>{{ post.content }}</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="solicitation-separator"></div>
+    <div class="solicitation-actions">
+      <form (ngSubmit)="onSubmitPost()" [formGroup]="postForm">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Adicione um comentário</mat-label>
+            <textarea matInput placeholder="Escreva aqui o conteúdo da sua mensagem"
+              formControlName='content'></textarea>
+          </mat-form-field>
+        </div>
+        <div class="form-footer">
+          <div class="error-area">
+            {{ errorMsg }}
+          </div>
+          <div class="action-area">
+            <div class="submit-button">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!postForm.valid">
+                Enviar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="solicitation-meta">
     <div class="solicitation-status">
