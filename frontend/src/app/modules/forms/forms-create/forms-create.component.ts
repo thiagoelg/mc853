@@ -82,11 +82,10 @@ export class FormsCreateComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.formsService.createForm(this.formattedForm).subscribe({
       next: (data) => {
         console.log({ data });
-        this.router.navigate(['/forms', data.id]);
+        this.router.navigate(['/forms/list']);
       },
       error: (error) => {
         console.log({ error });

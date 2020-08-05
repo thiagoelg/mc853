@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsCreateComponent } from './forms-create/forms-create.component';
-import { FormsDisplayComponent } from './forms-display/forms-display.component';
 import { FormsQuestionCreateComponent } from './forms-question-create/forms-question-create.component';
 import { FormsQuestionComponent } from './forms-question/forms-question.component';
 import { FormsResponseTypeComponent } from './forms-response-type/forms-response-type.component';
@@ -24,8 +23,7 @@ const routes: Routes = [
       { path: 'list', component: FormsResponseTypeComponent },
       { path: 'new', component: FormsResponseTypeCreateComponent },
     ]
-  },
-  { path: ':form_id', component: FormsDisplayComponent },
+  }
 ];
 
 @NgModule({

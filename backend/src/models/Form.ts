@@ -11,7 +11,7 @@ export interface FormData {
 
 export default class Form extends BaseModel {
   name!: string;
-  description?: string;
+  description?: string | null;
   is_template!: boolean;
 
   static get tableName() {
@@ -48,10 +48,10 @@ export default class Form extends BaseModel {
   }
 
   static async newForm(data: FormData) {
-    const { name, is_template = false } = data;
+    const { name, description = null, is_template = false } = data;
 
     const form = await Form.transaction(async (trx) => {
-      const created_form = await Form.query(trx).insert({ name, is_template });
+      const created_form = await Form.query(trx).insert({ name, description, is_template });
 
       const form_questions = data.form_questions?.map(fq => {
         return {

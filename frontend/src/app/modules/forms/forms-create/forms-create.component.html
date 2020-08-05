@@ -46,20 +46,24 @@
             </div>
 
             <!-- "Is required?" checkbox -->
-            <mat-checkbox style="margin-right: auto;" formControlName='required' [labelPosition]="'before'">
+            <mat-checkbox color="primary" formControlName='required' [labelPosition]="'before'">
               É obrigatório?
             </mat-checkbox>
 
+            <mat-divider vertical style="height: 24px; margin: 0 16px"></mat-divider>
+
             <!-- Question -->
-            <div style="margin-right: auto">{{i+1}}) {{question?.text}} </div>
+            <div>{{i+1}}) {{question?.text}} </div>
+
+            <mat-divider vertical style="height: 24px; margin: 0 16px"></mat-divider>
 
             <!-- Response type -->
-            <div style="margin-right: 10px">
+            <div>
               ({{question?.response_type?.name}})
             </div>
 
             <!-- Button to remove question -->
-            <button mat-mini-fab type="button" color="warn" (click)="removeControl(i)">
+            <button mat-flat-button class="remove-button" type="button" color="warn" (click)="removeControl(i)">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-container>
@@ -67,22 +71,33 @@
 
         <!-- Show this message when no question is selected -->
         <div *ngIf="formArr.length == 0" class="list-message">
-          Clique no botão abaixo para adicionar algumas perguntas no seu formulário.
+          Sem nenhuma pergunta. Adicione clicando no botão abaixo!
         </div>
+        <div class="add-button">
+          <!-- Add Questions to the form -->
+          <button mat-stroked-button color="primary" type="button" (click)="openAddQuestionDialog()">
+            <mat-icon color="primary">playlist_add</mat-icon>
+            Perguntas
+          </button>
+        </div>
+
       </div>
 
 
-      <!-- Add Questions to the form -->
-      <button style="width: 100%;" mat-raised-button
-        color="primary" type="button" (click)="openAddQuestionDialog()">
-        Adicionar perguntas
-      </button>
     </ng-container>
   </p>
-  <p>
-    <!-- Submit button -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
-      Submeter formulário
-    </button>
-  </p>
+  <div class="form-footer">
+    <div class="action-area">
+      <div class="cancel-button">
+        <button mat-raised-button type="button" [routerLink]="['../list']">
+          Cancelar
+        </button>
+      </div>
+      <div class="submit-button">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">
+          Criar formulário
+        </button>
+      </div>
+    </div>
+  </div>
 </form>
