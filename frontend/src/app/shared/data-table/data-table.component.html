@@ -1,9 +1,9 @@
 <!-- Search bar -->
 <div class="search-bar-container">
-  <mat-form-field id="data-table-search" class="search-bar" color="primary">
+  <mat-form-field appearance="fill" id="data-table-search" class="search-bar" color="primary">
     <mat-label>Digite aqui para pesquisar</mat-label>
     <input matInput (keyup)="applyFilter($event)" #input cdkFocusInitial>
-    <mat-icon color="primary" class="search-icon">search</mat-icon>
+    <mat-icon matSuffix color="primary" class="search-icon">search</mat-icon>
   </mat-form-field>
 </div>
 

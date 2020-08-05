@@ -71,20 +71,11 @@ tr.example-element-row:not(.example-expanded-row):active {
 .search-bar-container {
   width: 100%;
   text-align: left;
+  margin-top: 8px;
 }
 
 .search-bar {
   width: 350px;
   max-width: 100%;
   position: relative;
-}
-
-.search-icon {
-  position: absolute;
-  bottom: 2px;
-  right: 0;
-}
-
-.search-bar ::ng-deep .mat-form-field-infix {
-  padding-right: 24px !important;
 }
