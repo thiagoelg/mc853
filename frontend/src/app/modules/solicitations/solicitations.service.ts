@@ -14,11 +14,17 @@ import { AuthService } from 'src/app/security/auth.service';
 export class SolicitationsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  fetchSolicitations(): Observable<Solicitation[]> {
-    const url = 'solicitations';
+  fetchUnassignedSolicitations(): Observable<Solicitation[]> {
+    return this.http.get<Solicitation[]>('solicitations/managedByNone').pipe(take(1));
+  }
 
+  fetchSolicitationsManagedByUser(): Observable<Solicitation[]> {
+    return this.http.get<Solicitation[]>('solicitations/managedByMe').pipe(take(1));
+  }
+
+  fetchSolicitationsSubmittedByUser(): Observable<Solicitation[]> {
     return this.http
-      .get<Solicitation[]>(url)
+      .get<Solicitation[]>('solicitations/submittedByMe')
       .pipe(take(1))
       .pipe(
         map((solicitations) =>
@@ -39,10 +45,6 @@ export class SolicitationsService {
           })
         )
       );
-  }
-
-  fetchUnassignedSolicitations(): Observable<Solicitation[]> {
-    return this.http.get<Solicitation[]>("solicitations/managedByNone").pipe(take(1));
   }
 
   fetchSolicitation(id: number): Observable<Solicitation> {

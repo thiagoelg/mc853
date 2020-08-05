@@ -11,6 +11,8 @@ import { PermissionGuard } from 'src/app/security/permission.guard';
   styleUrls: ['./solicitations.component.css'],
 })
 export class SolicitationsComponent implements OnInit {
+  canCreateSolicitation: boolean = true;
+
   areUnassignedVisible: boolean = true;
   unassignedSolicitations$: Observable<Solicitation[]> = new BehaviorSubject([]);
 
@@ -20,26 +22,25 @@ export class SolicitationsComponent implements OnInit {
   areSubmittedVisible: boolean = true;
   solicitationsSubmittedByUser$: Observable<Solicitation[]> = new BehaviorSubject([]);
 
-  constructor(
-    private solicitationsService: SolicitationsService,
-    private authService: AuthService
-  ) {}
+  constructor(private solicitationsService: SolicitationsService, private authService: AuthService) {}
 
   ngOnInit() {
-    this.areUnassignedVisible = this.authService.hasEitherPermission([
-      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
-      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
-    ]);
-
-    this.areManagedVisible = this.authService.hasEitherPermission([
-      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
-      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
-    ]);
-
-    this.areSubmittedVisible = this.authService.hasEitherPermission([
-      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
-      PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
+    this.canCreateSolicitation = this.authService.hasEitherPermission([
       PermissionGuard.PERMISSIONS.CREATE_SOLICITATION,
     ]);
+
+    this.areUnassignedVisible = this.authService.hasEitherPermission([
+      PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
+    ]);
+
+    this.unassignedSolicitations$ = this.solicitationsService.fetchUnassignedSolicitations();
+
+    this.areManagedVisible = this.authService.hasEitherPermission([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION]);
+
+    this.solicitationsManagedByUser$ = this.solicitationsService.fetchSolicitationsManagedByUser();
+
+    this.areSubmittedVisible = this.authService.hasEitherPermission([PermissionGuard.PERMISSIONS.CREATE_SOLICITATION]);
+
+    this.solicitationsSubmittedByUser$ = this.solicitationsService.fetchSolicitationsSubmittedByUser();
   }
 }

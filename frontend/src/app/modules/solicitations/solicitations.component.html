@@ -1,6 +1,6 @@
 <div class="card-header">
   <mat-card-title>Solicitações</mat-card-title>
-  <a mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
+  <a *ngIf="canCreateSolicitation" mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
 </div>
 
 <mat-tab-group animationDuration="0ms">
