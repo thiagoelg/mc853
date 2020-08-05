@@ -56,8 +56,8 @@ export default class User extends BaseModel {
         modelClass: Role,
         join: {
           from: "user.role_id",
-          to: "role.id",
-        },
+          to: "role.id"
+        }
       },
       permissions: {
         relation: Model.ManyToManyRelation,
@@ -67,19 +67,19 @@ export default class User extends BaseModel {
           through: {
             modelClass: RolePermissions,
             from: "role_permissions.role_id",
-            to: "role_permissions.permission_id",
+            to: "role_permissions.permission_id"
           },
-          to: "permission.id",
-        },
+          to: "permission.id"
+        }
       },
       profile_image: {
         relation: Model.HasOneRelation,
         modelClass: File,
         join: {
           from: "user.profile_image_id",
-          to: "file.id",
-        },
-      },
+          to: "file.id"
+        }
+      }
     };
   }
 
@@ -95,11 +95,11 @@ export default class User extends BaseModel {
         email: { type: "string", minLength: 1, maxLength: 255 },
         password: { type: "string", minLength: 1, maxLength: 255 },
         origin: { type: "string", minLength: 1, maxLength: 255 },
-        status: { type: 'boolean' },
+        status: { type: "boolean" },
         profile_image_id: { type: "integer" },
         created_at: { type: "timestamp" },
         updated_at: { type: "timestamp" }
-      },
+      }
     };
   }
 
@@ -130,7 +130,9 @@ export default class User extends BaseModel {
   }
 
   static async listUsersByRole(role_id: number) {
-    const query = User.query().where("status", true).where("role_id", role_id)
+    const query = User.query()
+      .where("status", true)
+      .where("role_id", role_id)
       .orderBy("id", "desc")
       .withGraphFetched("role")
       .withGraphFetched("permissions")
@@ -140,7 +142,8 @@ export default class User extends BaseModel {
   }
 
   static async get(id: number) {
-    const query = User.query().findById(id)
+    const query = User.query()
+      .findById(id)
       .withGraphFetched("role")
       .withGraphFetched("profile_image")
       .withGraphFetched("permissions");
@@ -148,27 +151,31 @@ export default class User extends BaseModel {
     return await query;
   }
 
-  static async changeRoleId(data: { requester: User, user_id: number, role_id: number }) {
+  static async changeRoleId(data: { requester: User; user_id: number; role_id: number }) {
     const target_role = await Role.get(data.role_id);
-    if (!target_role) throw new Error('Perfil não encontrado.');
+    if (!target_role) throw new Error("Perfil não encontrado.");
     if (target_role.level < data.requester.role.level) {
-      throw new Error('Não tem permissão para associar este perfil.');
+      throw new Error("Não tem permissão para associar este perfil.");
     }
-    const query = User.query().patchAndFetchById(data.user_id, {
-      role_id: data.role_id
-    }).withGraphFetched("role")
+    const query = User.query()
+      .patchAndFetchById(data.user_id, {
+        role_id: data.role_id
+      })
+      .withGraphFetched("role")
       .withGraphFetched("permissions")
       .withGraphFetched("profile_image")
       .where("status", true);
     return await query;
   }
 
-  static async changeProfileImage(data: { requester: User, user_id: number, profile_image_id: number }) {
+  static async changeProfileImage(data: { requester: User; user_id: number; profile_image_id: number }) {
     const target_profile_image = await File.get(data.profile_image_id);
-    if (!target_profile_image) throw new Error('Imagem não encontrada.');
-    const query = User.query().patchAndFetchById(data.user_id, {
-      profile_image_id: data.profile_image_id
-    }).withGraphFetched("role")
+    if (!target_profile_image) throw new Error("Imagem não encontrada.");
+    const query = User.query()
+      .patchAndFetchById(data.user_id, {
+        profile_image_id: data.profile_image_id
+      })
+      .withGraphFetched("role")
       .withGraphFetched("permissions")
       .withGraphFetched("profile_image")
       .where("status", true);
@@ -190,7 +197,7 @@ export default class User extends BaseModel {
     const user = results[0];
     if (BcryptJS.compareSync(password, user.password)) {
       const token = jwt.sign(user.toJSON(), process.env.SECRET as string, {
-        expiresIn: 60000,
+        expiresIn: 60000
       });
       return token;
     }
@@ -202,15 +209,17 @@ export default class User extends BaseModel {
     try {
       const decoded_token = jwt.verify(token, process.env.SECRET as string) as any;
 
-      const user = await User.query()
+      const user = (await User.query()
         .where("status", true)
-        .findById(decoded_token?.id).withGraphFetched("role")
-        .withGraphFetched("permissions") as User;
+        .findById(decoded_token?.id)
+        .withGraphFetched("role")
+        .withGraphFetched("permissions")) as User;
 
       req.body.decoded = {
         user,
         token: decoded_token,
-        hasPermission: (permission: string) => (user?.permissions as Permission[]).some(p => p.short_name === permission)
+        hasPermission: (permission: string) =>
+          (user?.permissions as Permission[]).some((p) => p.short_name === permission)
       } as const;
 
       return next();
