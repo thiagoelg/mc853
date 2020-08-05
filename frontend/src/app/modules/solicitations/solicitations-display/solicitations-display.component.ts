@@ -28,6 +28,10 @@ export class SolicitationsDisplayComponent implements OnInit {
   responsible: User;
   responsibleImageUrl: string;
 
+  get canAssignToUser(): boolean {
+    return this.solicitation.managed_by_user_id !== this.authService.user.id;
+  }
+
   constructor(
     private solicitationsService: SolicitationsService,
     private authService: AuthService,
@@ -72,9 +76,5 @@ export class SolicitationsDisplayComponent implements OnInit {
         console.log({ error });
       },
     });
-  }
-
-  canAssignToUser(): boolean {
-    return this.solicitation.managed_by_user_id !== this.authService.user.id;
   }
 }
