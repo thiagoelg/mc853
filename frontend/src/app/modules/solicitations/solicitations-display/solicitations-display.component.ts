@@ -12,7 +12,11 @@ import { AuthService } from 'src/app/security/auth.service';
 import { map } from 'rxjs/operators';
 import { PermissionGuard } from 'src/app/security/permission.guard';
 import { MatDialog } from '@angular/material/dialog';
-import { SolicitationsAssignableUsersComponent } from '../solicitations-assignable-users/solicitations-assignable-users.component';
+import {
+  SolicitationsAssignableUsersComponent,
+  SolicitationsAssignableUsersComponentData,
+  SolicitationsAssignableUsersComponentResult,
+} from '../solicitations-assignable-users/solicitations-assignable-users.component';
 
 @Component({
   selector: 'app-solicitations-display',
@@ -98,6 +102,20 @@ export class SolicitationsDisplayComponent implements OnInit {
   }
 
   onAssignToSelectedUser() {
-    this.dialog.open(SolicitationsAssignableUsersComponent, {});
+    const dialogRef = this.dialog.open<
+      SolicitationsAssignableUsersComponent,
+      SolicitationsAssignableUsersComponentData,
+      SolicitationsAssignableUsersComponentResult
+    >(SolicitationsAssignableUsersComponent, {
+      data: { solicitationId: this.solicitationId },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if ('error' in result) {
+        console.log(result.error);
+      } else {
+        this.loadSolicitation(result);
+      }
+    });
   }
 }

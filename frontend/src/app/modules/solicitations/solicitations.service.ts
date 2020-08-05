@@ -87,4 +87,10 @@ export class SolicitationsService {
 
     return this.http.put<Solicitation>(url, {}).pipe(take(1));
   }
+
+  assignToUser(solicitationId: number, userId: number): Observable<Solicitation> {
+    const url = `solicitations/${solicitationId}/managedBy/${userId}`;
+
+    return this.http.put<Solicitation>(url, {}).pipe(take(1));
+  }
 }
