@@ -1,9 +1,10 @@
 <div class="card-header">
   <mat-card-title>Solicitações</mat-card-title>
-  <a *ngIf="canCreateSolicitation" mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
+  <a *ngIf="canCreateSolicitation" mat-raised-button class="card-header-actions" color="primary"
+    routerLink="/solicitations/new">Nova solicitação</a>
 </div>
 
-<mat-tab-group animationDuration="0ms">
+<mat-tab-group animationDuration="100ms">
   <mat-tab *ngIf="areUnassignedVisible" label="Solicitações não atribuídas a ninguém">
     <ng-container *ngIf="unassignedSolicitations$ | async as unassignedSolicitations">
       <app-solicitations-list [solicitations]="unassignedSolicitations"></app-solicitations-list>
@@ -19,6 +20,12 @@
   <mat-tab *ngIf="areSubmittedVisible" label="Minhas solicitações">
     <ng-container *ngIf="solicitationsSubmittedByUser$ | async as solicitationsSubmittedByUser">
       <app-solicitations-list [solicitations]="solicitationsSubmittedByUser"></app-solicitations-list>
+    </ng-container>
+  </mat-tab>
+
+  <mat-tab *ngIf="areAllVisible" label="Todas solicitações">
+    <ng-container *ngIf="solicitationsAll$ | async as solicitationsAll">
+      <app-solicitations-list [solicitations]="solicitationsAll"></app-solicitations-list>
     </ng-container>
   </mat-tab>
 </mat-tab-group>

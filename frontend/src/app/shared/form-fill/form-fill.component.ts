@@ -6,11 +6,9 @@ import { FormQuestion } from 'src/app/models/formQuestion';
 @Component({
   selector: 'app-form-fill',
   templateUrl: './form-fill.component.html',
-  styleUrls: ['./form-fill.component.css']
+  styleUrls: ['./form-fill.component.css'],
 })
 export class FormFillComponent implements OnInit {
-
-
   @Input() formType: FormFull;
   @Output() formData = new EventEmitter<any>();
   @Output() onCancel = new EventEmitter<any>();
@@ -26,16 +24,17 @@ export class FormFillComponent implements OnInit {
   sortedQuestions: FormQuestion[];
   elementTypes: string[];
   hints: string[];
+  descriptions: string[];
 
   formCreated = false;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.sortedQuestions = this.formType?.form_questions?.sort((a, b) => a.order - b.order);
     this.buildForm();
     this.setHints();
+    this.setDescriptions();
     this.setElementTypes();
 
     this.formCreated = true;
@@ -48,10 +47,15 @@ export class FormFillComponent implements OnInit {
   private buildForm() {
     this.form = new FormGroup({
       form_id: new FormControl(this.formType.id, Validators.required),
-      answers: new FormArray(this.sortedQuestions.map(fq => new FormGroup({
-        form_question_id: new FormControl(fq.id),
-        answer: new FormControl(undefined, this.toValidators(fq))
-      })))
+      answers: new FormArray(
+        this.sortedQuestions.map(
+          (fq) =>
+            new FormGroup({
+              form_question_id: new FormControl(fq.id),
+              answer: new FormControl(undefined, this.toValidators(fq)),
+            })
+        )
+      ),
     });
 
     this.answers = this.form.get('answers') as FormArray;
@@ -137,4 +141,7 @@ export class FormFillComponent implements OnInit {
     });
   }
 
+  setDescriptions() {
+    this.descriptions = this.sortedQuestions.map((fq) => fq.question.description);
+  }
 }

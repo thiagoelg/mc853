@@ -14,6 +14,10 @@ import { AuthService } from 'src/app/security/auth.service';
 export class SolicitationsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  fetchAllSolicitations(): Observable<Solicitation[]> {
+    return this.http.get<Solicitation[]>('solicitations').pipe(take(1));
+  }
+
   fetchUnassignedSolicitations(): Observable<Solicitation[]> {
     return this.http.get<Solicitation[]>('solicitations/managedByNone').pipe(take(1));
   }

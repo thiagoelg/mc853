@@ -12,13 +12,12 @@ import { PermissionGuard } from 'src/app/security/permission.guard';
 })
 export class SolicitationsComponent implements OnInit {
   canCreateSolicitation: boolean = true;
-
   areUnassignedVisible: boolean = true;
+  areAllVisible: boolean = true;
   unassignedSolicitations$: Observable<Solicitation[]> = new BehaviorSubject([]);
-
+  solicitationsAll$: Observable<Solicitation[]> = new BehaviorSubject([]);
   areManagedVisible: boolean = true;
   solicitationsManagedByUser$: Observable<Solicitation[]> = new BehaviorSubject([]);
-
   areSubmittedVisible: boolean = true;
   solicitationsSubmittedByUser$: Observable<Solicitation[]> = new BehaviorSubject([]);
 
@@ -29,18 +28,15 @@ export class SolicitationsComponent implements OnInit {
       PermissionGuard.PERMISSIONS.CREATE_SOLICITATION,
     ]);
 
-    this.areUnassignedVisible = this.authService.hasEitherPermission([
+    this.areAllVisible = this.areUnassignedVisible = this.authService.hasEitherPermission([
       PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
     ]);
 
+    this.solicitationsAll$ = this.solicitationsService.fetchAllSolicitations();
     this.unassignedSolicitations$ = this.solicitationsService.fetchUnassignedSolicitations();
-
     this.areManagedVisible = this.authService.hasEitherPermission([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION]);
-
     this.solicitationsManagedByUser$ = this.solicitationsService.fetchSolicitationsManagedByUser();
-
     this.areSubmittedVisible = this.authService.hasEitherPermission([PermissionGuard.PERMISSIONS.CREATE_SOLICITATION]);
-
     this.solicitationsSubmittedByUser$ = this.solicitationsService.fetchSolicitationsSubmittedByUser();
   }
 }

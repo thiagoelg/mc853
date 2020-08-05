@@ -12,84 +12,89 @@ export async function seed(knex: Knex): Promise<any> {
           // Inserts seed entries
           return knex("permission")
             .insert(
-              Object.keys(Permission.shortNames).map(key => (
-                { "name": Permission.names[key], "short_name": Permission.shortNames[key] }
-              )),
+              Object.keys(Permission.shortNames).map((key) => ({
+                name: Permission.names[key],
+                short_name: Permission.shortNames[key]
+              })),
               ["id", "short_name"]
             )
             .then((permissions: { id: number; short_name: string }[]) => {
               knex("role")
                 .del()
-                .then(() => Promise.all([
-                  knex("role")
-                    .insert({ name: "Administrador", short_name: "admin", is_default: false, level: 0 }, "id")
-                    .then(([role_id]) => {
-                      const role_permissions = permissions.map((perm) => {
-                        return { role_id, permission_id: perm.id };
-                      });
+                .then(() =>
+                  Promise.all([
+                    knex("role")
+                      .insert({ name: "Administrador", short_name: "admin", is_default: false, level: 0 }, "id")
+                      .then(([role_id]) => {
+                        const role_permissions = permissions.map((perm) => {
+                          return { role_id, permission_id: perm.id };
+                        });
 
-                      return knex("role_permissions").insert(role_permissions);
-                    }),
-                  knex("role")
-                    .insert({ name: "Gerente", short_name: "manager", is_default: false, level: 1 }, "id")
-                    .then(([role_id]) => {
-                      const my_permissions = permissions.filter((perm) =>
-                        [
-                          Permission.shortNames.ASSIGN_ROLES,
-                          Permission.shortNames.MANAGE_USERS,
-                          Permission.shortNames.MANAGE_FORMS,
-                          Permission.shortNames.MANAGE_FORM_FIELDS,
-                          Permission.shortNames.MANAGE_SOLICITATIONS,
-                          Permission.shortNames.ANSWER_SOLICITATION,
-                        ].includes(perm.short_name)
-                      );
+                        return knex("role_permissions").insert(role_permissions);
+                      }),
+                    knex("role")
+                      .insert({ name: "Gerente", short_name: "manager", is_default: false, level: 1 }, "id")
+                      .then(([role_id]) => {
+                        const my_permissions = permissions.filter((perm) =>
+                          [
+                            Permission.shortNames.ASSIGN_ROLES,
+                            Permission.shortNames.MANAGE_USERS,
+                            Permission.shortNames.MANAGE_FORMS,
+                            Permission.shortNames.MANAGE_FORM_FIELDS,
+                            Permission.shortNames.MANAGE_SOLICITATIONS,
+                            Permission.shortNames.CREATE_SOLICITATION,
+                            Permission.shortNames.ANSWER_SOLICITATION,
+                            Permission.shortNames.REOPEN_SOLICITATION,
+                            Permission.shortNames.ANSWER_SATISFACTION_SURVEY
+                          ].includes(perm.short_name)
+                        );
 
-                      const role_permissions = my_permissions.map((perm) => {
-                        return { role_id, permission_id: perm.id };
-                      });
+                        const role_permissions = my_permissions.map((perm) => {
+                          return { role_id, permission_id: perm.id };
+                        });
 
-                      return knex("role_permissions").insert(role_permissions);
-                    }),
-                  knex("role")
-                    .insert({ name: "Atendente", short_name: "worker", is_default: false, level: 2 }, "id")
-                    .then(([role_id]) => {
-                      const my_permissions = permissions.filter((perm) =>
-                        [
-                          Permission.shortNames.MANAGE_FORMS,
-                          Permission.shortNames.MANAGE_FORM_FIELDS,
-                          Permission.shortNames.MANAGE_SOLICITATIONS,
-                          Permission.shortNames.ANSWER_SOLICITATION,
-                        ].includes(perm.short_name)
-                      );
+                        return knex("role_permissions").insert(role_permissions);
+                      }),
+                    knex("role")
+                      .insert({ name: "Atendente", short_name: "worker", is_default: false, level: 2 }, "id")
+                      .then(([role_id]) => {
+                        const my_permissions = permissions.filter((perm) =>
+                          [
+                            Permission.shortNames.MANAGE_FORMS,
+                            Permission.shortNames.CREATE_SOLICITATION,
+                            Permission.shortNames.MANAGE_SOLICITATIONS,
+                            Permission.shortNames.ANSWER_SOLICITATION,
+                            Permission.shortNames.REOPEN_SOLICITATION,
+                            Permission.shortNames.ANSWER_SATISFACTION_SURVEY
+                          ].includes(perm.short_name)
+                        );
 
-                      const role_permissions = my_permissions.map((perm) => {
-                        return { role_id, permission_id: perm.id };
-                      });
+                        const role_permissions = my_permissions.map((perm) => {
+                          return { role_id, permission_id: perm.id };
+                        });
 
-                      return knex("role_permissions").insert(role_permissions);
-                    }),
-                  knex("role")
-                    .insert(
-                      { name: "Solicitante", short_name: "requester", is_default: true, level: 3 },
-                      "id"
-                    )
-                    .then(([role_id]) => {
-                      const my_permissions = permissions.filter((perm) =>
-                        [
-                          Permission.shortNames.CREATE_SOLICITATION,
-                          Permission.shortNames.REOPEN_SOLICITATION,
-                          Permission.shortNames.ANSWER_SATISFACTION_SURVEY,
-                        ].includes(perm.short_name)
-                      );
+                        return knex("role_permissions").insert(role_permissions);
+                      }),
+                    knex("role")
+                      .insert({ name: "Solicitante", short_name: "requester", is_default: true, level: 3 }, "id")
+                      .then(([role_id]) => {
+                        const my_permissions = permissions.filter((perm) =>
+                          [
+                            Permission.shortNames.CREATE_SOLICITATION,
+                            Permission.shortNames.REOPEN_SOLICITATION,
+                            Permission.shortNames.ANSWER_SATISFACTION_SURVEY
+                          ].includes(perm.short_name)
+                        );
 
-                      const role_permissions = my_permissions.map((perm) => {
-                        return { role_id, permission_id: perm.id };
-                      });
+                        const role_permissions = my_permissions.map((perm) => {
+                          return { role_id, permission_id: perm.id };
+                        });
 
-                      return knex("role_permissions").insert(role_permissions);
-                    }),
-                  ]))
-          });
+                        return knex("role_permissions").insert(role_permissions);
+                      })
+                  ])
+                );
+            });
         });
     });
 }

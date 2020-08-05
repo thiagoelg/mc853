@@ -16,7 +16,7 @@ import { SolicitationsComponent } from './solicitations.component';
     SolicitationsCreateComponent,
     SolicitationsFormFillComponent,
     SolicitationsListComponent,
-    SolicitationsDisplayComponent
+    SolicitationsDisplayComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +24,8 @@ import { SolicitationsComponent } from './solicitations.component';
     ReactiveFormsModule,
     FormsModule,
     AppMaterialModule,
-    SharedModule
+    SharedModule,
   ],
+  exports: [SolicitationsComponent],
 })
-export class SolicitationsModule { }
+export class SolicitationsModule {}

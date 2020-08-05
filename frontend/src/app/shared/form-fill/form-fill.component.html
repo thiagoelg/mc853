@@ -5,12 +5,18 @@
       <div class="question-content">
         <!-- <mat-divider style="margin-bottom: 10px ;" *ngIf="i!=0"></mat-divider> -->
         <ng-container *ngIf="sortedQuestions[i] as formQuestion" [formGroupName]="i">
+          <div class="question-title">
+            {{formQuestion.question.text}}
+          </div>
+          <p *ngIf="descriptions[i]" class="question-description">
+            {{ descriptions[i] }}
+          </p>
           <ng-container [ngSwitch]="elementTypes[i]">
 
             <!-- Number -->
             <ng-container *ngSwitchCase="'number'">
               <mat-form-field appearance="outline">
-                <mat-label>{{formQuestion.question.text}}</mat-label>
+                <!-- <mat-label>{{formQuestion.question.text}}</mat-label> -->
                 <input type="number" matInput required="formQuestion.required" formControlName="answer">
 
                 <mat-hint *ngIf="hints[i] as hint">
@@ -24,7 +30,7 @@
             <!-- Email -->
             <ng-container *ngSwitchCase="'email'">
               <mat-form-field appearance="outline">
-                <mat-label>{{formQuestion.question.text}}</mat-label>
+                <!-- <mat-label>{{formQuestion.question.text}}</mat-label> -->
                 <input type="email" matInput required="formQuestion.required" formControlName="answer">
               </mat-form-field>
               <mat-hint *ngIf="hints[i] as hint">
@@ -36,7 +42,7 @@
             <!-- Date -->
             <ng-container *ngSwitchCase="'date'">
               <mat-form-field appearance="outline" [floatLabel]="false">
-                <mat-label>{{formQuestion.question.text}}</mat-label>
+                <!-- <mat-label>{{formQuestion.question.text}}</mat-label> -->
                 <input matInput type="date" required="formQuestion.required" formControlName="answer">
               </mat-form-field>
               <mat-hint *ngIf="hints[i] as hint">
@@ -58,7 +64,7 @@
             <!-- Textarea -->
             <ng-container *ngSwitchCase="'textarea'">
               <mat-form-field appearance="outline">
-                <mat-label>{{formQuestion.question.text}}</mat-label>
+                <!-- <mat-label>{{formQuestion.question.text}}</mat-label> -->
                 <textarea matInput required="formQuestion.required" formControlName="answer"></textarea>
                 <mat-hint *ngIf="hints[i] as hint">
                   {{hint}}
@@ -70,7 +76,7 @@
             <!-- Small Text  (default) -->
             <ng-container *ngSwitchDefault>
               <mat-form-field appearance="outline">
-                <mat-label>{{formQuestion.question.text}}</mat-label>
+                <!-- <mat-label>{{formQuestion.question.text}}</mat-label> -->
                 <input matInput required="formQuestion.required" formControlName="answer">
                 <mat-hint *ngIf="hints[i] as hint">
                   {{hint}}
@@ -80,6 +86,7 @@
           </ng-container>
         </ng-container>
       </div>
+      <div class="question-separator"></div>
     </div>
   </ng-container>
 
