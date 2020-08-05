@@ -20,10 +20,7 @@ export class SolicitationsComponent implements OnInit {
   areSubmittedVisible: boolean = true;
   solicitationsSubmittedByUser$: Observable<Solicitation[]> = new BehaviorSubject([]);
 
-  constructor(
-    private solicitationsService: SolicitationsService,
-    private authService: AuthService
-  ) {}
+  constructor(private solicitationsService: SolicitationsService, private authService: AuthService) {}
 
   ngOnInit() {
     this.areUnassignedVisible = this.authService.hasEitherPermission([
@@ -31,15 +28,21 @@ export class SolicitationsComponent implements OnInit {
       PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
     ]);
 
+    this.unassignedSolicitations$ = this.solicitationsService.fetchUnassignedSolicitations();
+
     this.areManagedVisible = this.authService.hasEitherPermission([
       PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
       PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
     ]);
+
+    this.solicitationsManagedByUser$ = this.solicitationsService.fetchSolicitationsManagedByUser();
 
     this.areSubmittedVisible = this.authService.hasEitherPermission([
       PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS,
       PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION,
       PermissionGuard.PERMISSIONS.CREATE_SOLICITATION,
     ]);
+
+    this.solicitationsSubmittedByUser$ = this.solicitationsService.fetchSolicitationsSubmittedByUser();
   }
 }
