@@ -4,19 +4,19 @@
 </div>
 
 <mat-tab-group animationDuration="0ms">
-  <mat-tab label="Solicitações não atribuídas a ninguém">
+  <mat-tab *ngIf="areUnassignedVisible" label="Solicitações não atribuídas a ninguém">
     <ng-container *ngIf="unassignedSolicitations$ | async as unassignedSolicitations">
       <app-solicitations-list [solicitations]="unassignedSolicitations"></app-solicitations-list>
     </ng-container>
   </mat-tab>
 
-  <mat-tab label="Solicitações atribuídas a mim">
+  <mat-tab *ngIf="areManagedVisible" label="Solicitações atribuídas a mim">
     <ng-container *ngIf="solicitationsManagedByUser$ | async as solicitationsManagedByUser">
       <app-solicitations-list [solicitations]="solicitationsManagedByUser"></app-solicitations-list>
     </ng-container>
   </mat-tab>
 
-  <mat-tab label="Minhas solicitações">
+  <mat-tab *ngIf="areUnassignedVisible" label="Minhas solicitações">
     <ng-container *ngIf="solicitationsSubmittedByUser$ | async as solicitationsSubmittedByUser">
       <app-solicitations-list [solicitations]="solicitationsSubmittedByUser"></app-solicitations-list>
     </ng-container>
