@@ -1,3 +1,9 @@
+<div class="card-header">
+  <mat-card-title>
+    Cadastrar formulário
+  </mat-card-title>
+</div>
+
 <form (ngSubmit)="onSubmit()" [formGroup]="form">
   <p>
     <!-- Título do formulário -->
@@ -10,7 +16,7 @@
     <!-- Descrição do formulário -->
     <mat-form-field appearance="outline">
       <mat-label>Descrição</mat-label>
-      <input matInput formControlName='description'>
+      <textarea matInput formControlName='description'></textarea>
     </mat-form-field>
   </p>
   <p>

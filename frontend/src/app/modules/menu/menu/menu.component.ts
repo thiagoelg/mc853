@@ -36,7 +36,7 @@ export class MenuComponent {
       path: ['/forms/list'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORMS]
     },
     { 
-      name: 'Questões',
+      name: 'Perguntas',
       icon: 'short_text',
       path: ['/forms/questions/list'], permissions: [PermissionGuard.PERMISSIONS.MANAGE_FORM_FIELDS]
     },
