@@ -18,6 +18,7 @@ import { SolicitationsAssignableUsersComponent } from './solicitations-assignabl
     SolicitationsFormFillComponent,
     SolicitationsListComponent,
     SolicitationsDisplayComponent,
+    SolicitationsAssignableUsersComponent,
   ],
   imports: [
     CommonModule,

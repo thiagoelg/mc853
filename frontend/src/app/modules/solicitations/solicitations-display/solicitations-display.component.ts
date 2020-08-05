@@ -98,8 +98,6 @@ export class SolicitationsDisplayComponent implements OnInit {
   }
 
   onAssignToSelectedUser() {
-    this.dialog.open(SolicitationsAssignableUsersComponent, {
-      width: '340px',
-    });
+    this.dialog.open(SolicitationsAssignableUsersComponent, {});
   }
 }

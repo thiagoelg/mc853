@@ -7,6 +7,7 @@ import { Form, FormFull } from './../../models/form';
 import { ResponseType } from './../../models/responseType';
 import { Solicitation, SolicitationForm } from './../../models/solicitation';
 import { AuthService } from 'src/app/security/auth.service';
+import { User } from 'src/app/models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,10 @@ export class SolicitationsService {
     const url = `forms/${formId}`;
 
     return this.http.get<FormFull>(url).pipe(take(1));
+  }
+
+  fetchAssignableUsers(): Observable<User[]> {
+    return this.http.get<User[]>('users').pipe(take(1));
   }
 
   createSolicitation(body: SolicitationForm) {

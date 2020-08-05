@@ -1,1 +1,3 @@
-<p>Hello, world!</p>
+<ng-container *ngIf="users$ | async as users">
+  <app-data-table [data]="users"></app-data-table>
+</ng-container>
