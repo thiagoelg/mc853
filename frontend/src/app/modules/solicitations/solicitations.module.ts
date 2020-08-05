@@ -6,7 +6,6 @@ import { SharedModule } from './../../shared/shared.module';
 import { SolicitationsCreateComponent } from './solicitations-create/solicitations-create.component';
 import { SolicitationsDisplayComponent } from './solicitations-display/solicitations-display.component';
 import { SolicitationsFormFillComponent } from './solicitations-form-fill/solicitations-form-fill.component';
-import { SolicitationsFormPageComponent } from './solicitations-form-page/solicitations-form-page.component';
 import { SolicitationsListComponent } from './solicitations-list/solicitations-list.component';
 import { SolicitationsRoutingModule } from './solicitations-routing.module';
 import { SolicitationsComponent } from './solicitations.component';
@@ -17,8 +16,7 @@ import { SolicitationsComponent } from './solicitations.component';
     SolicitationsCreateComponent,
     SolicitationsFormFillComponent,
     SolicitationsListComponent,
-    SolicitationsDisplayComponent,
-    SolicitationsFormPageComponent,
+    SolicitationsDisplayComponent
   ],
   imports: [
     CommonModule,

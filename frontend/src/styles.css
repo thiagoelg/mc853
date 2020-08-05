@@ -73,3 +73,10 @@ label.mat-checkbox-layout {
 .card-header {
   margin-bottom: 8px;
 }
+
+.card-separator {
+  height: 1px;
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  background-color: rgba(0, 0, 0, 0.10);
+}

@@ -39,4 +39,8 @@ export class SolicitationsCreateComponent implements OnInit {
       }
     });
   }
+
+  onCancelFormFill() {
+    this.formId$.next(null);
+  }
 }

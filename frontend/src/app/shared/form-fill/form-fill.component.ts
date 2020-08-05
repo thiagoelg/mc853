@@ -13,6 +13,7 @@ export class FormFillComponent implements OnInit {
 
   @Input() formType: FormFull;
   @Output() formData = new EventEmitter<any>();
+  @Output() onCancel = new EventEmitter<any>();
 
   @Input() displayOnly = false;
   @Input() submitText = 'Enviar requisição';

@@ -1,6 +1,0 @@
-<div style="max-width: 700px;" *ngIf="form$ | async as form">
-    <br>
-    <p>Criar solicitação: {{form.name}}</p>
-    <br>
-    <app-form-fill [formType]="form" (formData)="onSubmit($event)"></app-form-fill>
-</div>

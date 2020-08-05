@@ -7,6 +7,15 @@
 .card-grid-container > mat-card {
   justify-self: center;
   overflow: hidden;
-  width: 80%;
+  width: 90%;
   min-height: 50px;
+}
+
+.form-select-list-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-select-item-content {
+  flex-grow: 1;
 }
