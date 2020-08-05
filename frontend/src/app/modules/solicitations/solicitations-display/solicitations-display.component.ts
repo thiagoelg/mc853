@@ -89,4 +89,12 @@ export class SolicitationsDisplayComponent implements OnInit {
       },
     });
   }
+
+  get canAssignToSelectedUser(): boolean {
+    return true;
+  }
+
+  onAssignToSelectedUser() {
+    console.log('assign to selected user');
+  }
 }

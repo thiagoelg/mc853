@@ -72,3 +72,7 @@
   align-items: flex-end;
   margin-top: 6px;
 }
+
+#solicitation-assign-to-selected-user-button {
+  margin-left: 8px;
+}
