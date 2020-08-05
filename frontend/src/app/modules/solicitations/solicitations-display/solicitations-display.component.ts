@@ -27,7 +27,6 @@ export class SolicitationsDisplayComponent implements OnInit {
   authorImageUrl: string;
   responsible: User;
   responsibleImageUrl: string;
-  canAssignToUser: boolean;
 
   constructor(
     private solicitationsService: SolicitationsService,
@@ -39,7 +38,6 @@ export class SolicitationsDisplayComponent implements OnInit {
     this.solicitationId = Number(this.route.snapshot.paramMap.get('solicitation_id'));
     this.solicitationsService.fetchSolicitation(this.solicitationId).subscribe((solicitation) => {
       this.loadSolicitation(solicitation);
-      this.canAssignToUser = this.solicitation.managed_by_user_id !== this.authService.user.id;
     });
   }
 
@@ -74,5 +72,9 @@ export class SolicitationsDisplayComponent implements OnInit {
         console.log({ error });
       },
     });
+  }
+
+  canAssignToUser(): boolean {
+    return this.solicitation.managed_by_user_id !== this.authService.user.id;
   }
 }
