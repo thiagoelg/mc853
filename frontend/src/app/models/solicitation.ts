@@ -2,6 +2,7 @@ import { BaseModel } from '.';
 import { Answer, AnswerForm } from './answer';
 import { Form } from './form';
 import { User } from './user';
+import { Question } from './question';
 
 export interface SolicitationForm {
   form_id: number;
@@ -11,6 +12,7 @@ export interface SolicitationForm {
 export interface Solicitation extends BaseModel {
   form_id: number;
   form: Form;
+  questions: Question[];
   answers: Answer[];
   agreement_id: number;
   agreement: any;

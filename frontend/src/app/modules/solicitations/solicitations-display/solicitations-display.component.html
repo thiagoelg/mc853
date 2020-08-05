@@ -1,11 +1,53 @@
 <div class="card-header">
-  <mat-card-title *ngIf="solicitation$ | async as solicitation; else loading">Solicitação #{{ solicitation.id }}</mat-card-title>
+  <mat-card-title *ngIf="solicitation; else loading">Solicitação #{{ solicitation.id }}</mat-card-title>
   <ng-template #loading>
     <mat-card-title>Solicitação</mat-card-title>
   </ng-template>
   <button mat-raised-button class="card-header-actions" color="primary">Atribuir para mim</button>
 </div>
 
-<p>solicitations-display works!</p>
-{{solicitation$ | async | json}}
-<br><br>
+<div class="card-separator"></div>
+
+<div class="solicitation-details" *ngIf="solicitation">
+  <div class="solicitation-content">
+    <h2>{{ solicitation.form.name }}</h2>
+
+  </div>
+  <div class="solicitation-meta">
+    <div class="solicitation-status">
+      <div class="meta-item-title">Situação</div>
+      <div class="meta-item-value">{{ solicitation.solved_at ? 'Resolvido' : 'Pendente' }}</div>
+    </div>
+    <div class="solicitation-author">
+      <div class="meta-item-title">Autor</div>
+      <div class="meta-item-value">
+        <div class="meta-item-profile-image">
+          <img [src]="authorImageUrl">
+        </div>
+        <div class="meta-item-profile-name">
+          {{ author.name }}
+        </div>
+      </div>
+    </div>
+    <div class="solicitation-atendente">
+      <div class="meta-item-title">Responsável</div>
+      <div class="meta-item-value">
+        <ng-container *ngIf="!this.responsible; else responsibleBlock">
+          Não atribuído
+        </ng-container>
+        <ng-template #responsibleBlock>
+          <div class="meta-item-profile-image">
+            <img [src]="responsibleImageUrl">
+          </div>
+          <div class="meta-item-profile-name">
+            {{ responsible.name }}
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre>
+  {{solicitation | json}}
+</pre>

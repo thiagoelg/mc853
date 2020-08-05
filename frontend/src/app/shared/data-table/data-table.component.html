@@ -35,7 +35,7 @@
           <mat-icon *ngIf="isBoolean(element[column]); else normalValue">
             {{ element[column] ? 'check_circle_outline' : 'highlight_off' }}
           </mat-icon>
-          <ng-template #normalValue>{{ element[column] }}</ng-template>
+          <ng-template #normalValue>{{ element[column] ? element[column] : ' - ' }}</ng-template>
         </td>
       </ng-template>
     </ng-container>

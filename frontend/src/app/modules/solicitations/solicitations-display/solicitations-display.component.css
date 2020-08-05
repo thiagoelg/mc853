@@ -1,0 +1,56 @@
+.solicitation-details {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 16px 8px;
+  display: flex;
+}
+
+.solicitation-content {
+  flex-grow: 1;
+  padding-right: 32px;
+}
+
+.solicitation-meta {
+  flex: 0 0 250px;
+}
+
+.meta-item-title {
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.meta-item-value {
+  color: #777777;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 6px;
+}
+
+.solicitation-meta>div:not(:first-child) {
+  margin-top: 24px;
+}
+
+.meta-item-profile-image {
+  width: 28px;
+  height: 28px;
+  overflow: hidden;
+  border-radius: 100%;
+  position: relative;
+  margin-right: 8px;
+}
+
+.meta-item-profile-name {
+  padding-bottom: 2px;
+}
+
+.meta-item-profile-image img {
+  height: 28px;
+  margin: 0 auto;
+  display: block;
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}

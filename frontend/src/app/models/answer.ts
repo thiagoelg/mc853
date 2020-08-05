@@ -2,17 +2,16 @@ import { BaseModel } from '.';
 import { User } from './user';
 
 export interface AnswerForm {
-    form_question_id: number;
-    answer: string | number;
+  form_question_id: number;
+  answer: string | number;
 }
 
-
 export interface Answer extends BaseModel {
-    solicitation_id: number;
-    form_question_id: number;
+  solicitation_id: number;
+  form_question_id: number;
 
-    value: string;
+  value: string;
 
-    answered_by_user_id: number;
-    answered_by_user?: User;
+  answered_by_user_id: number;
+  answered_by_user?: User;
 }

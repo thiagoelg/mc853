@@ -11,6 +11,7 @@ export interface User extends BaseModel {
   role?: Role;
   permissions?: Array<Permission>;
   profile_image?: File;
+  profile_image_id?: number;
 }
 
 export interface UserCreate {
