@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", User.validateToken, async (req: Request, res: Response) => {
   try {
-    const response_types = await ResponseType.list();
+    const response_types = await ResponseType.list(req.query);
     return res.status(200).send(response_types);
   } catch (error) {
     return res.status(500).send(error.toString());

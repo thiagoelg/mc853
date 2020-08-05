@@ -51,8 +51,9 @@ export default class ResponseType extends BaseModel {
     return await query;
   }
 
-  static async list() {
+  static async list(filters: { [key: string]: any }) {
     const query = ResponseType.query().orderBy("id", "asc");
+    BaseModel.applyFilters(query, filters);
     return await query;
   }
 

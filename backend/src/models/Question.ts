@@ -53,36 +53,22 @@ export default class Question extends BaseModel {
     return question;
   }
 
-  static async list() {
-    try {
-      const query = Question.query()
-        .withGraphFetched("response_type")
-        .orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+  static async list(filters: { [key: string]: any }) {
+    const query = Question.query()
+      .withGraphFetched("response_type")
+      .orderBy("id", "asc");
+    BaseModel.applyFilters(query, filters);
+    return await query;
   }
 
   static async get(question_id: number) {
-    try {
-      const query = Question.query().findById(question_id).withGraphFetched("response_type");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Question.query().findById(question_id).withGraphFetched("response_type");
+    return await query;
   }
 
   static async delete(question_id: number) {
-    try {
-      const query = Question.query().deleteById(question_id);
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Question.query().deleteById(question_id);
+    return await query;
   }
 
   static async setStatus(question_id: number, status: boolean) {

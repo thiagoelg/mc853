@@ -11,10 +11,10 @@
 }
 
 .logo {
-  padding: 60px;
+  padding: 60px 0;
   text-align: center;
   color: whitesmoke;
-  font-size: 60px;
+  font-size: 46px;
   text-transform: uppercase;
   font-weight: bold;
 }

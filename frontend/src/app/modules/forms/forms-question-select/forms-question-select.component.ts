@@ -36,17 +36,13 @@ export class FormsQuestionSelectComponent implements OnInit {
     private formsService: FormsService,
     private fb: FormBuilder
   ) {
-    this.questions$ = this.formsService.fetchQuestions();
+    this.questions$ = this.formsService.fetchQuestions({ status: true });
 
     this.questionForm = this.fb.group({
       searchText: [''],
       typeFilter: [null],
       questions: [null, [Validators.required]],
     });
-
-    // this.questionForm.valueChanges.subscribe({
-    //   next: (questionForm) => console.log({ questionForm }),
-    // });
   }
 
   onCloseClick(): void {

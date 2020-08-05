@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
@@ -58,10 +58,16 @@ export class FormsService {
     return this.http.get<Form[]>(url).pipe(take(1));
   }
 
-  fetchResponseTypes(): Observable<ResponseType[]> {
+  fetchResponseTypes(filters?: any): Observable<ResponseType[]> {
     const url = 'response_types';
+    let params = new HttpParams();   
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        params = params.append(key, filters[key]);
+      });
+    }
 
-    return this.http.get<ResponseType[]>(url).pipe(take(1));
+    return this.http.get<ResponseType[]>(url, { params }).pipe(take(1));
   }
 
   fetchResponseTypesByBasicType(basicType: string): Observable<ResponseType[]> {
@@ -70,9 +76,14 @@ export class FormsService {
     return this.http.get<ResponseType[]>(url).pipe(take(1));
   }
 
-  fetchQuestions(): Observable<Question[]> {
+  fetchQuestions(filters?: any): Observable<Question[]> {
     const url = 'questions';
-
-    return this.http.get<Question[]>(url).pipe(take(1));
+    let params = new HttpParams();   
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        params = params.append(key, filters[key]);
+      });
+    }
+    return this.http.get<Question[]>(url, { params }).pipe(take(1));
   }
 }

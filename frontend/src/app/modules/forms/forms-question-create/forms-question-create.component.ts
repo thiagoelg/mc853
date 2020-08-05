@@ -61,7 +61,7 @@ export class FormsQuestionCreateComponent implements OnInit {
   setTypeObservables() {
     this.responseTypes$ = this.formService.fetchResponseTypes();
 
-    this.types$ = this.formService.fetchResponseTypes().pipe(
+    this.types$ = this.formService.fetchResponseTypes({ status: true }).pipe(
       tap((value) => console.log(value)),
       map((items) => {
         return [

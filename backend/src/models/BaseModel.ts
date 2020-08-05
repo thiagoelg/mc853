@@ -13,4 +13,12 @@ export default class BaseModel extends Model {
   $beforeInsert() {
     this.created_at = new Date().toISOString();
   }
+
+  static applyFilters(query: any, filters: { [key: string]: any }) {
+    if (filters) {
+      Object.keys(filters).forEach((filter) => {
+        query.where(filter, '=', filters[filter]);
+      });
+    }
+  }
 }
