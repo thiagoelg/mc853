@@ -1,8 +1,9 @@
 import { OnInit, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
-import { SolicitationsService } from '../solicitations.service';
 import { map } from 'rxjs/operators';
+import { UsersService } from '../../users/users.service';
+import { PermissionGuard } from 'src/app/security/permission.guard';
 
 @Component({
   templateUrl: './solicitations-assignable-users.component.html',
@@ -17,8 +18,10 @@ export class SolicitationsAssignableUsersComponent implements OnInit {
     roleName: 'Perfil de acesso',
   };
 
-  constructor(private solicitationsService: SolicitationsService) {
-    this.rows$ = solicitationsService.fetchAssignableUsers().pipe(
+  constructor(private usersService: UsersService) {}
+
+  ngOnInit() {
+    this.rows$ = this.usersService.getUsersWithPermission(PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION).pipe(
       map((users) =>
         users.map((user) => ({
           id: user.id,
@@ -28,8 +31,6 @@ export class SolicitationsAssignableUsersComponent implements OnInit {
       )
     );
   }
-
-  ngOnInit() {}
 }
 
 type UserRow = Pick<User, 'id' | 'name'> | { roleName?: string };

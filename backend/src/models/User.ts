@@ -119,7 +119,7 @@ export default class User extends BaseModel {
   }
 
   static async listUsers(parameters: UserQuery) {
-    const query = User.query().withGraphFetched("role").where("status", true);
+    const query = User.query().withGraphFetched("role").withGraphFetched("permissions").where("status", true);
     if (parameters.orderBy) {
       const [field, direction] = parameters.orderBy.split(" ");
       query.orderBy(field, direction as OrderByDirection);

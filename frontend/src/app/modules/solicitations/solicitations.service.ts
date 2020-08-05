@@ -76,10 +76,6 @@ export class SolicitationsService {
     return this.http.get<FormFull>(url).pipe(take(1));
   }
 
-  fetchAssignableUsers(): Observable<User[]> {
-    return this.http.get<User[]>('users').pipe(take(1));
-  }
-
   createSolicitation(body: SolicitationForm) {
     const url = `solicitations`;
 
