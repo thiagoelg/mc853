@@ -29,17 +29,6 @@ export class SolicitationsDisplayComponent implements OnInit {
   responsible: User;
   responsibleImageUrl: string;
 
-  get canAssignToSelf(): boolean {
-    if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS])) {
-      return this.solicitation.managed_by_user_id !== this.authService.user.id;
-    } else if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION])) {
-      // Juggle-check for null and undefined
-      return this.solicitation.managed_by_user_id == null;
-    } else {
-      return false;
-    }
-  }
-
   constructor(
     private solicitationsService: SolicitationsService,
     private authService: AuthService,
@@ -73,6 +62,21 @@ export class SolicitationsDisplayComponent implements OnInit {
         question: this.questions.find((q) => q.id === answer.form_question_id),
       });
     });
+  }
+
+  get canAssignToSelf(): boolean {
+    if (this.solicitation === undefined) {
+      return false;
+    }
+
+    if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS])) {
+      return this.solicitation.managed_by_user_id !== this.authService.user.id;
+    } else if (this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.ANSWER_SOLICITATION])) {
+      // Juggle-check for null and undefined
+      return this.solicitation.managed_by_user_id == null;
+    } else {
+      return false;
+    }
   }
 
   onAssignToSelf() {
