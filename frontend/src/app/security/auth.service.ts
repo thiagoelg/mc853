@@ -13,17 +13,15 @@ import { Permission } from '../models/permission';
 export class AuthService {
   public token: string;
   public user: User;
-  public userPermissions: { [key: string]: boolean; } = {};
+  public userPermissions: { [key: string]: boolean } = {};
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  constructor(
-    private http: HttpClient,
-    private router: Router
-  ) {
+
+  constructor(private http: HttpClient, private router: Router) {
     const savedToken = localStorage.getItem('token');
     this.token = savedToken || null;
 
     const savedUser = localStorage.getItem('user');
-    this.user = JSON.parse(savedUser) as User || null;
+    this.user = (JSON.parse(savedUser) as User) || null;
 
     if (this.token && this.user) {
       this.setUserPermissions(this.user);
@@ -45,7 +43,7 @@ export class AuthService {
             this.loggedIn.next(true);
             this.router.navigate(['/']);
           },
-          error: console.log
+          error: console.log,
         });
       })
     );
@@ -65,7 +63,9 @@ export class AuthService {
     if (!this.token || !this.user) {
       return Promise.resolve();
     }
-    return this.http.post(url, null).toPromise()
+    return this.http
+      .post(url, null)
+      .toPromise()
       .then(() => {
         this.loggedIn.next(true);
       })
@@ -93,9 +93,14 @@ export class AuthService {
     });
   }
 
-  hasPermissions(permissions: Array<string>) {
+  hasAllPermissions(permissions: Array<string>) {
     if (!this.userPermissions) return false;
-    return permissions.every(permission => this.userPermissions[permission]);
+    return permissions.every((permission) => this.userPermissions[permission]);
+  }
+
+  hasEitherPermission(permissions: Array<string>) {
+    if (!this.userPermissions) return false;
+    return permissions.filter((permission) => this.userPermissions[permission]).length > 0;
   }
 
   get isLoggedIn() {

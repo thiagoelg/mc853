@@ -1,17 +1,1 @@
-<div class="card-header">
-    <mat-card-title>Solicitações</mat-card-title>
-    <a mat-raised-button class="card-header-actions" color="primary" routerLink="/solicitations/new">Nova solicitação</a>
-</div>
-
-<mat-tab-group animationDuration="0ms">
-    <mat-tab *ngIf="canAnswerSolicitations" label="Solicitações disponíveis">
-        Solicitações disponíveis
-    </mat-tab>
-
-    <mat-tab label="Minhas solicitações">
-        <ng-container *ngIf="userSolicitations$ | async as userSolicitations">
-            <app-data-table [data]="userSolicitations" [columnNames]="columnNames">
-            </app-data-table>
-        </ng-container>
-    </mat-tab>
-</mat-tab-group>  
+<app-data-table [data]="rows" [columnNames]="columnNames"></app-data-table>

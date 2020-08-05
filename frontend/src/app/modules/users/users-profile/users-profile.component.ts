@@ -11,7 +11,7 @@ import { UserImageComponent } from './user-image/user-image.component';
 
 @Component({
   templateUrl: './users-profile.component.html',
-  styleUrls: ['./users-profile.component.css']
+  styleUrls: ['./users-profile.component.css'],
 })
 export class UsersProfileComponent implements OnInit {
   id: number;
@@ -29,7 +29,7 @@ export class UsersProfileComponent implements OnInit {
     private authService: AuthService,
     public dialog: MatDialog
   ) {
-    this.canEdit = this.authService.hasPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]);
+    this.canEdit = this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_USERS]);
   }
 
   ngOnInit(): void {
@@ -45,13 +45,13 @@ export class UsersProfileComponent implements OnInit {
           this.roles = roles;
           resolve();
         },
-        error: reject
+        error: reject,
       });
-    })
+    });
   }
 
   loadRole() {
-    this.selectedRole = this.roles.find(role => role.id === this.selectedRoleId);
+    this.selectedRole = this.roles.find((role) => role.id === this.selectedRoleId);
   }
 
   loadUser() {
@@ -62,21 +62,21 @@ export class UsersProfileComponent implements OnInit {
         if (this.user.profile_image) {
           this.userImageUrl = `${this.baseUrl}/files/${user.profile_image.id}/${user.profile_image.name}`;
         } else {
-          this.userImageUrl = "assets/images/profile.jpg";
+          this.userImageUrl = 'assets/images/profile.jpg';
         }
         this.selectedRoleId = this.user.role.id;
         this.loadRole();
-      }
+      },
     });
   }
 
   onEditUserImage() {
     const dialogRef = this.dialog.open(UserImageComponent, {
       width: '340px',
-      data: { user: this.user }
+      data: { user: this.user },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.loadUser();
     });
   }

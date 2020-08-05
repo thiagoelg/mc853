@@ -41,6 +41,10 @@ export class SolicitationsService {
       );
   }
 
+  fetchUnassignedSolicitations(): Observable<Solicitation[]> {
+    return this.http.get<Solicitation[]>("solicitations/managedByNone").pipe(take(1));
+  }
+
   fetchSolicitation(id: number): Observable<Solicitation> {
     const url = `solicitations/${id}`;
 
