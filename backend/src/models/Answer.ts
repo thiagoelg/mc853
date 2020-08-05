@@ -1,7 +1,7 @@
 import { Model, RelationMappings } from "objection";
 import BaseModel from "./BaseModel";
-import FormQuestion from './FormQuestion';
-import User from './User';
+import FormQuestion from "./FormQuestion";
+import User from "./User";
 
 export interface AnswerData {
   value: string;
@@ -27,25 +27,25 @@ export default class Answer extends BaseModel {
         modelClass: FormQuestion,
         join: {
           from: "answer.form_question_id",
-          to: "form_question.id",
-        },
+          to: "form_question.id"
+        }
       },
       solicitation: {
         relation: Model.HasOneRelation,
         modelClass: FormQuestion,
         join: {
           from: "answer.solicitation_id",
-          to: "form_question.id",
-        },
+          to: "form_question.id"
+        }
       },
       answered_by_user: {
         relation: Model.HasOneRelation,
         modelClass: User,
         join: {
           from: "answer.answered_by_user_id",
-          to: "user.id",
-        },
-      },
+          to: "user.id"
+        }
+      }
     };
   }
 
@@ -58,11 +58,11 @@ export default class Answer extends BaseModel {
         id: { type: "integer" },
         solicitation_id: { type: "number" },
         form_question_id: { type: "number" },
-        value: { type: "string" },
+        value: { type: "text" },
         answered_by_user_id: { type: "number" },
         created_at: { type: "timestamp" },
-        updated_at: { type: "timestamp" },
-      },
+        updated_at: { type: "timestamp" }
+      }
     };
   }
 
@@ -93,7 +93,7 @@ export default class Answer extends BaseModel {
     }
   }
 
-  static async forFormQuestion(data: { solicitation_id: number, form_question_id: number }) {
+  static async forFormQuestion(data: { solicitation_id: number; form_question_id: number }) {
     try {
       const query = Answer.query()
         .where("form_question_id", data.form_question_id)
@@ -106,5 +106,4 @@ export default class Answer extends BaseModel {
       return error;
     }
   }
-
 }

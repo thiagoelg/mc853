@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { map, take, catchError } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Login } from '../models/login';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
@@ -21,7 +21,7 @@ export class AuthService {
     this.token = savedToken || null;
 
     const savedUser = localStorage.getItem('user');
-    this.user = (JSON.parse(savedUser) as User) || null;
+    this.user = (savedUser && (JSON.parse(savedUser) as User)) || null;
 
     if (this.token && this.user) {
       this.setUserPermissions(this.user);

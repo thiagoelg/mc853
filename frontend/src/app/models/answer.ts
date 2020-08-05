@@ -1,5 +1,6 @@
 import { BaseModel } from '.';
 import { User } from './user';
+import { Question } from './question';
 
 export interface AnswerForm {
   form_question_id: number;
@@ -14,4 +15,6 @@ export interface Answer extends BaseModel {
 
   answered_by_user_id: number;
   answered_by_user?: User;
+
+  question?: Question;
 }

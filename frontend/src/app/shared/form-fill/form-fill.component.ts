@@ -91,7 +91,6 @@ export class FormFillComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log({ form: this.form.value });
     this.formData.emit(this.form.value);
   }
 

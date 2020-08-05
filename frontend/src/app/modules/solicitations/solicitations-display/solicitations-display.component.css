@@ -3,15 +3,17 @@
   margin: 0 auto;
   padding: 16px 8px;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .solicitation-content {
-  flex-grow: 1;
+  flex: 1 1 300px;
   padding-right: 32px;
+  max-width: calc(800px - 32px);
 }
 
 .solicitation-meta {
-  flex: 0 0 250px;
+  flex: 0 0 200px;
 }
 
 .meta-item-title {
@@ -53,4 +55,20 @@
   left: -9999px;
   right: -9999px;
   margin: auto;
+}
+
+.solicitation-questions>div:not(:first-child) {
+  margin-top: 24px;
+}
+
+.solicitation-question-item-title {
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.solicitation-question-item-value {
+  color: #444444;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 6px;
 }

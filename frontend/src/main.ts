@@ -8,10 +8,11 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
+  .catch((err) => console.error(err));
 
-Date.prototype.toString = function() {
+Date.prototype.toString = function () {
   function pad(number) {
     if (number < 10) {
       return '0' + number;
@@ -19,5 +20,7 @@ Date.prototype.toString = function() {
     return number;
   }
 
-  return `${pad(this.getDate())}/${pad(this.getMonth())}/${pad(this.getFullYear())} - ${pad(this.getHours())}:${pad(this.getMinutes())}`;
-}
+  return `${pad(this.getDate())}/${pad(this.getMonth())}/${pad(this.getFullYear())}, ${pad(this.getHours())}:${pad(
+    this.getMinutes()
+  )}`;
+};

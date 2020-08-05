@@ -12,7 +12,14 @@
 <div class="solicitation-details" *ngIf="solicitation">
   <div class="solicitation-content">
     <h2>{{ solicitation.form.name }}</h2>
-
+    <div class="solicitation-questions">
+      <ng-container *ngFor="let answer of answers">
+        <div class="solicitation-question-item" *ngIf="answer && answer.question">
+          <div class="solicitation-question-item-title">{{ answer.question.text }}</div>
+          <div class="solicitation-question-item-value">{{ answer.value }}</div>
+        </div>
+      </ng-container>
+    </div>
   </div>
   <div class="solicitation-meta">
     <div class="solicitation-status">
@@ -33,7 +40,7 @@
     <div class="solicitation-atendente">
       <div class="meta-item-title">Responsável</div>
       <div class="meta-item-value">
-        <ng-container *ngIf="!this.responsible; else responsibleBlock">
+        <ng-container *ngIf="!responsible; else responsibleBlock">
           Não atribuído
         </ng-container>
         <ng-template #responsibleBlock>
@@ -46,9 +53,13 @@
         </ng-template>
       </div>
     </div>
+    <div class="solicitation-criada">
+      <div class="meta-item-title">Data de criação</div>
+      <div class="meta-item-value">{{ solicitation.created_at }}</div>
+    </div>
+    <div class="solicitation-assigned" *ngIf="responsible">
+      <div class="meta-item-title">Última atualização</div>
+      <div class="meta-item-value">{{ solicitation.updated_at }}</div>
+    </div>
   </div>
 </div>
-
-<pre>
-  {{solicitation | json}}
-</pre>

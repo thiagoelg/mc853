@@ -15,12 +15,18 @@ export class SolicitationsCreateComponent implements OnInit {
   formId$ = new BehaviorSubject<number>(null);
   form$: Observable<FormFull>;
 
-  constructor(private solicitationsService: SolicitationsService, private formsService: FormsService, private router: Router) {
+  constructor(
+    private solicitationsService: SolicitationsService,
+    private formsService: FormsService,
+    private router: Router
+  ) {
     this.forms$ = this.formsService.fetchForms({ status: true });
   }
 
   ngOnInit(): void {
-    this.form$ = this.formId$.pipe(concatMap(id => id > 0 ? this.solicitationsService.fetchFullForm(id) : of(undefined)));
+    this.form$ = this.formId$.pipe(
+      concatMap((id) => (id > 0 ? this.solicitationsService.fetchFullForm(id) : of(undefined)))
+    );
   }
 
   selectForm(id: number) {
@@ -31,12 +37,11 @@ export class SolicitationsCreateComponent implements OnInit {
   onSubmit(formValue: any) {
     this.solicitationsService.createSolicitation(formValue).subscribe({
       next: (data) => {
-        console.log(data);
         this.router.navigate(['/solicitations', data.id]);
       },
       error: (error) => {
         console.error(error);
-      }
+      },
     });
   }
 

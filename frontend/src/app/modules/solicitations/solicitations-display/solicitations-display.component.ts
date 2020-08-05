@@ -47,7 +47,6 @@ export class SolicitationsDisplayComponent implements OnInit {
     this.solicitation = solicitation;
     this.questions = solicitation.questions;
     this.form = solicitation.form;
-    this.answers = solicitation.answers;
     this.author = solicitation.submitted_by_user;
     this.authorImageUrl = this.author?.profile_image_id
       ? `${this.baseUrl}files/${this.author.profile_image_id}`
@@ -56,6 +55,14 @@ export class SolicitationsDisplayComponent implements OnInit {
     this.responsibleImageUrl = this.responsible?.profile_image_id
       ? `${this.baseUrl}files/${this.responsible.profile_image_id}`
       : 'assets/images/profile.jpg';
+
+    this.answers = [];
+    solicitation.answers.forEach((answer) => {
+      this.answers.push({
+        ...answer,
+        question: this.questions.find((q) => q.id === answer.form_question_id),
+      });
+    });
   }
 
   onAssignToUser() {
