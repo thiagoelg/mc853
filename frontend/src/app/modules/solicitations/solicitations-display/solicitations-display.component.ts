@@ -22,7 +22,7 @@ export class SolicitationsDisplayComponent implements OnInit {
   solicitation: Solicitation;
   questions: Question[];
   form: Form;
-  answers: Answer[];
+  answers: (Answer | { question: Question })[];
   author: User;
   authorImageUrl: string;
   responsible: User;
