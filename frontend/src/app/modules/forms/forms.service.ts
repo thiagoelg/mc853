@@ -52,10 +52,15 @@ export class FormsService {
     return this.http.get<FormFull>(url).pipe(take(1));
   }
 
-  fetchForms(): Observable<Form[]> {
+  fetchForms(filters?: any): Observable<Form[]> {
     const url = 'forms';
-
-    return this.http.get<Form[]>(url).pipe(take(1));
+    let params = new HttpParams();   
+    if (filters) {
+      Object.keys(filters).forEach((key) => {
+        params = params.append(key, filters[key]);
+      });
+    }
+    return this.http.get<Form[]>(url, { params }).pipe(take(1));
   }
 
   fetchResponseTypes(filters?: any): Observable<ResponseType[]> {
@@ -66,7 +71,6 @@ export class FormsService {
         params = params.append(key, filters[key]);
       });
     }
-
     return this.http.get<ResponseType[]>(url, { params }).pipe(take(1));
   }
 

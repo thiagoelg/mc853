@@ -68,23 +68,14 @@ export default class Form extends BaseModel {
   }
 
   static async get(form_id: number) {
-    try {
-      const query = Form.query().findById(form_id).withGraphFetched("form_questions.question.response_type");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+    const query = Form.query().findById(form_id).withGraphFetched("form_questions.question.response_type");
+    return await query;
   }
 
-  static async list() {
-    try {
-      const query = Form.query().withGraphFetched("form_questions.question.response_type").orderBy("id", "asc");
-      return await query;
-    } catch (error) {
-      console.log({ error });
-      return error;
-    }
+  static async list(filters: { [key: string]: any }) {
+    const query = Form.query().withGraphFetched("form_questions.question.response_type").orderBy("id", "asc");
+    BaseModel.applyFilters(query, filters);
+    return await query;
   }
 
   static async setStatus(form_id: number, status: boolean) {

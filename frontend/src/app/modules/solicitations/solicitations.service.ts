@@ -14,12 +14,6 @@ import { AuthService } from 'src/app/security/auth.service';
 export class SolicitationsService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  fetchForms(): Observable<Form[]> {
-    const url = 'forms';
-
-    return this.http.get<Form[]>(url).pipe(take(1));
-  }
-
   fetchSolicitations(): Observable<Solicitation[]> {
     const url = 'solicitations';
 

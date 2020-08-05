@@ -5,7 +5,7 @@ const router = Router();
 
 router.get("/", User.validateToken, async (req: Request, res: Response) => {
   try {
-    const forms = await Form.list();
+    const forms = await Form.list(req.query);
     return res.status(200).send(forms);
   } catch (error) {
     return res.status(500).send(error.toString());

@@ -4,6 +4,7 @@ import { concatMap } from 'rxjs/operators';
 import { Form, FormFull } from 'src/app/models/form';
 import { SolicitationsService } from './../solicitations.service';
 import { Router } from '@angular/router';
+import { FormsService } from '../../forms/forms.service';
 
 @Component({
   templateUrl: './solicitations-create.component.html',
@@ -14,8 +15,8 @@ export class SolicitationsCreateComponent implements OnInit {
   formId$ = new BehaviorSubject<number>(null);
   form$: Observable<FormFull>;
 
-  constructor(private solicitationsService: SolicitationsService, private router: Router) {
-    this.forms$ = this.solicitationsService.fetchForms();
+  constructor(private solicitationsService: SolicitationsService, private formsService: FormsService, private router: Router) {
+    this.forms$ = this.formsService.fetchForms({ status: true });
   }
 
   ngOnInit(): void {
