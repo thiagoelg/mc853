@@ -5,6 +5,14 @@
 
 <ng-container *ngIf="forms">
   <app-data-table [data]="forms" [columnNames]="columnNames" [actions]="actions" (onAction)="onAction($event)" [pageSizeOptions]="[10, 50, 100]">
-
+    <!-- Inner table component when a row is clicked -->
+    <ng-template let-item>
+      <mat-card class="form-details">
+        <mat-card-title>{{ item.text }}</mat-card-title>
+        <div class="form-preview">
+          <app-form-fill [formType]="item" displayOnly="true"></app-form-fill>
+        </div>
+      </mat-card>
+    </ng-template>
   </app-data-table>
 </ng-container>

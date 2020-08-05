@@ -3,21 +3,19 @@
   <div mat-dialog-content>
 
     <!-- Search area -->
-    <p class="search" style="margin: 0;">
-      <mat-form-field appearance="outline">
-        <mat-label>Pesquisar pergunta</mat-label>
-        <input matInput formControlName="searchText" autocomplete="off" #search>
-      </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Pesquisar pergunta</mat-label>
+      <input matInput formControlName="searchText" autocomplete="off" #search>
+    </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Tipo básico de resposta</mat-label>
-        <mat-select #typeInput formControlName='typeFilter'>
-          <mat-option *ngFor="let type of basicTypes" [value]="type.value">
-            {{type.viewValue}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </p>
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo básico de resposta</mat-label>
+      <mat-select #typeInput formControlName='typeFilter'>
+        <mat-option *ngFor="let type of basicTypes" [value]="type.value">
+          {{type.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
     <!-- List of Questions -->
     <mat-selection-list multiple formControlName="questions">
@@ -28,7 +26,7 @@
       >
         <div style="display:flex; justify-content:space-between;align-items:center">
 
-          <div style="display:flex; flex-direction:column">
+          <div style="display:flex; flex-direction:column; margin-right: 16px;">
             {{item.text}}
           </div>
           <div>

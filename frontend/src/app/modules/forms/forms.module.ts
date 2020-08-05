@@ -4,8 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppMaterialModule } from 'src/app/app-material/app-material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsCreateComponent } from './forms-create/forms-create.component';
-import { FormsDisplayComponent } from './forms-display/forms-display.component';
-import { FormsFormQuestionComponent } from './forms-form-question/forms-form-question.component';
 import { FormsQuestionCreateComponent } from './forms-question-create/forms-question-create.component';
 import { FormsQuestionSelectComponent } from './forms-question-select/forms-question-select.component';
 import { FormsQuestionComponent } from './forms-question/forms-question.component';
@@ -17,14 +15,12 @@ import { FormsComponent } from './forms.component';
 @NgModule({
   declarations: [
     FormsComponent,
-    FormsFormQuestionComponent,
     FormsQuestionComponent,
     FormsResponseTypeComponent,
     FormsResponseTypeCreateComponent,
     FormsQuestionCreateComponent,
     FormsCreateComponent,
-    FormsQuestionSelectComponent,
-    FormsDisplayComponent
+    FormsQuestionSelectComponent
   ],
   imports: [CommonModule, AppMaterialModule, FormsRoutingModule, ReactiveFormsModule, SharedModule],
 })

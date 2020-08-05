@@ -38,6 +38,10 @@ export class FormFillComponent implements OnInit {
     this.setElementTypes();
 
     this.formCreated = true;
+
+    if (this.displayOnly) {
+      this.form.disable();
+    }
   }
 
   private buildForm() {
