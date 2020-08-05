@@ -98,7 +98,7 @@ export class SolicitationsDisplayComponent implements OnInit {
   }
 
   get canAssignToSelectedUser(): boolean {
-    return true;
+    return this.authService.hasAllPermissions([PermissionGuard.PERMISSIONS.MANAGE_SOLICITATIONS]);
   }
 
   onAssignToSelectedUser() {
