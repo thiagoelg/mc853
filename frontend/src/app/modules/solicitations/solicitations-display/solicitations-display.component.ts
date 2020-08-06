@@ -67,7 +67,7 @@ export class SolicitationsDisplayComponent implements OnInit {
 
   buildForm() {
     this.postForm = this.fb.group({
-      content: ['', [Validators.required]],
+      content: ['', []],
     });
   }
 
@@ -81,6 +81,9 @@ export class SolicitationsDisplayComponent implements OnInit {
         this.ngOnInit();
         this.postForm.reset();
         this.errorMsg = null;
+        this.postForm.controls.content.markAsPristine();
+        this.postForm.controls.content.markAsUntouched();
+        this.postForm.controls.content.updateValueAndValidity();
       },
       error: (error) => {
         this.errorMsg = error.error.message;

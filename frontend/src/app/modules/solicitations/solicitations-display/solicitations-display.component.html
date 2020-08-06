@@ -64,7 +64,7 @@
           </div>
           <div class="action-area">
             <div class="submit-button">
-              <button mat-raised-button color="primary" type="submit" [disabled]="!postForm.valid">
+              <button mat-raised-button color="primary" type="submit" [disabled]="!postForm.controls.content.value">
                 Enviar
               </button>
             </div>
