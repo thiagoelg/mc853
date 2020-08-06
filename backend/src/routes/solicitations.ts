@@ -24,12 +24,6 @@ router.get("/", User.validateToken, async (req: Request, res: Response) => {
 router.get("/submittedBy/:user_id", User.validateToken, async (req: Request, res: Response) => {
   try {
     const user_id = Number(req.params["user_id"]);
-    // const current_user_id = req.body.decoded?.user?.id;
-
-    // if (current_user_id != user_id && !req.body.decoded.hasPermission("manage_solicitations")) {
-    //   return res.status(403).send("You do not have permission to view solicitation from others.");
-    // }
-
     const solicitations = await Solicitation.listSubmittedByUser(user_id);
 
     return res.status(200).send(solicitations);
@@ -42,10 +36,6 @@ router.get("/managedBy/:user_id", User.validateToken, async (req: Request, res: 
   try {
     const user_id = Number(req.params["user_id"]);
 
-    // if (!req.body.decoded.hasPermission("manage_solicitations")) {
-    //   return res.status(403).send("You do not have permission to manage solicitations.");
-    // }
-
     const solicitations = await Solicitation.listManagedByUser(user_id);
 
     return res.status(200).send(solicitations);
@@ -57,10 +47,6 @@ router.get("/managedBy/:user_id", User.validateToken, async (req: Request, res: 
 router.get("/managedByMe", User.validateToken, async (req: Request, res: Response) => {
   try {
     const current_user_id = req.body.decoded?.user?.id;
-
-    // if (!req.body.decoded.hasPermission("manage_solicitations")) {
-    //   return res.status(403).send("You do not have permission manage solicitations");
-    // }
 
     const solicitations = await Solicitation.listManagedByUser(current_user_id);
 

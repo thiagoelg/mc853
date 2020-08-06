@@ -1,9 +1,9 @@
-version: '3'
+version: "3"
 
 services:
   server:
     container_name: RESPONSIVE_BACKEND
-    build: '.'
+    build: "."
     volumes:
       - ./:/node-app/build
       - ./node_modules:/node-app/node_modules
@@ -22,7 +22,7 @@ services:
     networks:
       - pg-network
     ports:
-      - '9001:9001'
+      - "9001:9001"
 
   db:
     image: postgres
@@ -40,6 +40,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
+    container_name: RESPONSIVE_PGADMIN
     environment:
       PGADMIN_DEFAULT_EMAIL: pgadmin
       PGADMIN_DEFAULT_PASSWORD: pgadmin
@@ -53,6 +54,6 @@ services:
 volumes:
   pgdata:
 
-networks: 
+networks:
   pg-network:
     driver: bridge

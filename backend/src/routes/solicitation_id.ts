@@ -7,13 +7,6 @@ router.get("/", User.validateToken, async (req: Request, res: Response) => {
   try {
     const solicitation_id = Number(req.params["solicitation_id"]);
     const solicitation = (await Solicitation.get(solicitation_id)) as Solicitation;
-    // const user_id: number = Number(req.body.decoded.user.id);
-
-    // if (user_id != solicitation.submitted_by_user_id && !req.body.decoded.hasPermission("manage_solicitations")) {
-    //   return res
-    //     .status(403)
-    //     .send("You do not have permission manage solicitations and this one was not created by you.");
-    // }
 
     return res.status(200).send(solicitation);
   } catch (error) {
@@ -46,10 +39,6 @@ router.put("/managedBy/:user_id", User.validateToken, async (req: Request, res: 
     const solicitation_id = Number(req.params["solicitation_id"]);
     const user_id = Number(req.params["user_id"]);
 
-    // if (!req.body.decoded.hasPermission("manage_solicitations")) {
-    //   return res.status(403).send("You do not have permission manage solicitations");
-    // }
-
     const solicitation = await Solicitation.changeManaged({ solicitation_id, user_id });
 
     return res.status(200).send(solicitation);
@@ -62,10 +51,6 @@ router.put("/managedByMe", User.validateToken, async (req: Request, res: Respons
   try {
     const solicitation_id = Number(req.params["solicitation_id"]);
     const user_id = Number(req.body.decoded.user.id);
-
-    // if (!req.body.decoded.hasPermission("answer_solicitation")) {
-    //   return res.status(403).send("You do not have permission to answer solicitations");
-    // }
 
     const solicitation = await Solicitation.changeManaged({ solicitation_id, user_id });
 

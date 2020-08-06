@@ -7,8 +7,8 @@
     "stop": "docker-compose stop",
     "build": "docker-compose build",
     "down": "docker-compose down -v",
-    "run:migrations": "docker exec -it RESPONSIVE_BACKEND_PROD npx knex migrate:latest",
-    "run:seeds": "docker exec -it RESPONSIVE_BACKEND_PROD npx knex seed:run"
+    "migrations": "docker exec -it RESPONSIVE_BACKEND_PROD npx knex migrate:latest",
+    "seeds": "docker exec -it RESPONSIVE_BACKEND_PROD npx knex seed:run"
   },
   "author": "",
   "license": "ISC"

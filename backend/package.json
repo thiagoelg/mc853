@@ -13,7 +13,9 @@
     "knex:migrate:rollback": "knex --cwd src migrate:rollback",
     "knex:seed:make": "knex --cwd src seed:make",
     "knex:seed:run": "knex --cwd src seed:run",
+    "docker:knex:migrations:run": "docker exec -ti RESPONSIVE_BACKEND npm run knex:migrate:latest",
     "docker:knex:seed:run": "docker exec -ti RESPONSIVE_BACKEND npm run knex:seed:run",
+    "docker:build": "docker-compose build",
     "docker:start": "docker-compose up -d",
     "docker:stop": "docker-compose stop",
     "docker:down": "docker-compose down -v"

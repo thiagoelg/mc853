@@ -1,16 +1,16 @@
-version: '3'
+version: "3"
 
 services:
   server_prod:
     container_name: RESPONSIVE_BACKEND_PROD
-    build: '.'
+    build: "."
     volumes:
       - ../build:/node-app/build
       - ../node_modules/:/node-app/node_modules
       - ../.env:/node-app/build/.env
       - ../.env.example:/node-app/build/.env.example
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
       DB_PASSWORD: pgadmin
       DB_USER: pgadmin
       DB_NAME: responsive
@@ -24,7 +24,7 @@ services:
     networks:
       - pg-network-prod
     ports:
-      - '9001:9001'
+      - "80:9001"
 
   db_prod:
     image: postgres
@@ -56,6 +56,6 @@ services:
 volumes:
   pgdata:
 
-networks: 
+networks:
   pg-network-prod:
     driver: bridge
